@@ -1,8 +1,16 @@
+import {
+  SetColorOutOfRangeError,
+  SetIndexOutOfRangeError,
+  SetIndexTakenError,
+} from "../errors";
 import { LocalDb } from "../localDb/localDB";
 import { MoveSSHClient } from "../moveClient/MoveSSHClient";
 import {
+  refreshTestDataInContainer,
   startMockAbletonMoveServer,
   stopMockAbletonMoveServer,
+  TEST_SET_ID,
+  wipeTestDb,
 } from "../testUtils";
 import { MoveManager } from "./MoveManager";
 
@@ -12,18 +20,20 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await stopMockAbletonMoveServer();
-});
+}, 20000);
 
 let moveManager: MoveManager;
+let ssh: MoveSSHClient;
 beforeEach(async () => {
-  const localDb = new LocalDb("./testDb");
-  const ssh = new MoveSSHClient({
+  const testDbPath = "./testDb";
+  wipeTestDb(testDbPath);
+  const localDb = new LocalDb(testDbPath);
+  ssh = new MoveSSHClient({
     host: "localhost",
     port: 2222,
     username: "ableton",
     privKeyPath: "./test.key",
   });
-
   moveManager = new MoveManager(localDb, ssh);
 });
 
@@ -33,10 +43,72 @@ describe("MoveManager", () => {
     const allSets = await moveManager.getAllSets();
     expect(allSets.length).toBeGreaterThan(0);
     //Find the testing set
+    const testingSet = allSets.find((set) => set.meta.id === TEST_SET_ID);
+    expect(testingSet).not.toBeUndefined();
+    expect(testingSet?.meta.name).toBe("TestSet");
+    expect(testingSet?.meta.index).toBe(19);
+    expect(testingSet?.meta.color).toBe(19);
   });
 
-  //   it("should get all sets", async () => {
-  //     const sets = await moveManager.getAllSets();
-  //     expect(sets.length).toBeGreaterThan(0);
-  //   });
+  it("should get all sets", async () => {
+    await moveManager.downloadAllSets();
+    const sets = await moveManager.getAllSets();
+    expect(sets.length).toBeGreaterThan(0);
+    //Find the testing set
+    const testingSet = sets.find((set) => set.meta.id === TEST_SET_ID);
+    expect(testingSet).not.toBeUndefined();
+    expect(testingSet?.meta.name).toBe("TestSet");
+    expect(testingSet?.meta.index).toBe(19);
+    expect(testingSet?.meta.color).toBe(19);
+  });
+
+  describe("wipeAllSetsOnDevice", () => {
+    it("should wipe all sets on the device", async () => {
+      await moveManager.wipeAllSetsOnDevice();
+      const sets = await moveManager.downloadAllSets();
+      expect(sets.length).toBe(0);
+    });
+  });
+
+  describe("uploadSet", () => {
+    beforeEach(async () => {
+      await refreshTestDataInContainer();
+    }, 20000);
+
+    it("should upload a set", async () => {
+      await moveManager.downloadAllSets();
+      await moveManager.wipeAllSetsOnDevice();
+      await moveManager.uploadSet(TEST_SET_ID);
+      const sets = await moveManager.downloadAllSets();
+      expect(sets.length).toBe(1);
+      expect(sets[0].meta.id).toEqual(TEST_SET_ID);
+      expect(sets[0].meta.name).toEqual("TestSet");
+      expect(sets[0].meta.index).toEqual(19);
+      expect(sets[0].meta.color).toEqual(19);
+      expect(sets[0].meta.wasExternallyModified).toEqual(false);
+      expect(sets[0].meta.localCloudState).toEqual("notSynced");
+      expect(sets[0].meta.lastModifiedTime).toEqual("2025-04-18T15:00:24Z");
+    });
+
+    it("should not upload a set if the given set index is taken. Also throws if index or color is out of range", async () => {
+      await moveManager.downloadAllSets();
+      await moveManager.wipeAllSetsOnDevice();
+      await moveManager.uploadSet(TEST_SET_ID);
+      expect(async () => {
+        await moveManager.uploadSet(TEST_SET_ID);
+      }).rejects.toThrow(SetIndexTakenError);
+      expect(async () => {
+        await moveManager.uploadSet(TEST_SET_ID, undefined, 32);
+      }).rejects.toThrow(SetIndexOutOfRangeError);
+      expect(async () => {
+        await moveManager.uploadSet(TEST_SET_ID, undefined, -1);
+      }).rejects.toThrow(SetIndexOutOfRangeError);
+      expect(async () => {
+        await moveManager.uploadSet(TEST_SET_ID, undefined, undefined, 27);
+      }).rejects.toThrow(SetColorOutOfRangeError);
+      expect(async () => {
+        await moveManager.uploadSet(TEST_SET_ID, undefined, undefined, -1);
+      }).rejects.toThrow(SetColorOutOfRangeError);
+    });
+  });
 });

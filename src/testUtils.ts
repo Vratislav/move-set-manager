@@ -7,6 +7,8 @@ import { MOVE_SET_DIR_PATH } from "./model/abletonMove";
 import { getDirectoryListing } from "./moveClient/sshUtils";
 import { SFTPWrapper } from "ssh2";
 
+export const TEST_SET_ID = "0aa3ea3a-0a1b-4169-b3d9-14d72575d7ec";
+
 function setupTestUserLibrary() {
   const workingDir = process.cwd();
   const userLibraryTestDir = path.join(workingDir, "UserLibrary_Test");
@@ -19,16 +21,30 @@ function setupTestUserLibrary() {
   fs.cpSync(userLibraryDir, userLibraryTestDir, { recursive: true });
 }
 
-function wipeTestDb(dbPath: string) {
+export function wipeTestDb(dbPath: string) {
   if (fs.existsSync(dbPath)) {
     fs.rmSync(dbPath, { recursive: true });
   }
 }
 
+export async function refreshTestDataInContainer() {
+  const ssh = new NodeSSH();
+  await ssh.connect({
+    host: "127.0.0.1",
+    port: 2222,
+    privateKeyPath: "./test.key",
+    username: "ableton",
+  });
+  const sftp = await ssh.requestSFTP();
+  await copyTestUserLibraryIntoDockerFileSystem();
+  await setupSetExtendedAttributes(sftp, ssh);
+  ssh.dispose();
+}
+
 async function copyTestUserLibraryIntoDockerFileSystem() {
   return new Promise<void>((resolve, reject) => {
     const command =
-      "docker exec openssh-server sh -c 'mkdir -p /data/UserData/UserLibrary && cp -a /data/UserData/UserLibrary_Test/. /data/UserData/UserLibrary/ && chown -R 501:20 /data/UserData/UserLibrary'";
+      "docker exec openssh-server sh -c 'rm -rf /data/UserData/UserLibrary && mkdir -p /data/UserData/UserLibrary && cp -a /data/UserData/UserLibrary_Test/. /data/UserData/UserLibrary/ && chown -R 501:20 /data/UserData/UserLibrary'";
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(error);
@@ -118,18 +134,7 @@ export async function startMockAbletonMoveServer() {
   let serverStarted = false;
   while (i < 10) {
     try {
-      const ssh = new NodeSSH();
-
-      await ssh.connect({
-        host: "127.0.0.1",
-        port: 2222,
-        privateKeyPath: "./test.key",
-        username: "ableton",
-      });
-      const sftp = await ssh.requestSFTP();
-      await copyTestUserLibraryIntoDockerFileSystem();
-      await setupSetExtendedAttributes(sftp, ssh);
-      ssh.dispose();
+      await refreshTestDataInContainer();
       serverStarted = true;
       break;
     } catch (e) {
@@ -157,7 +162,10 @@ export async function stopMockAbletonMoveServer() {
         reject(error);
       }
       console.log(stdout);
-      resolve();
+      //wait for 1 second
+      setTimeout(() => {
+        resolve();
+      }, 3000);
     });
   });
 }

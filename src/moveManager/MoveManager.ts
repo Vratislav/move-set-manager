@@ -1,3 +1,8 @@
+import {
+  SetColorOutOfRangeError,
+  SetIndexOutOfRangeError,
+  SetIndexTakenError,
+} from "../errors";
 import { initLocalDb, LocalDb } from "../localDb/localDB";
 import { MovePage } from "../model/page";
 import { Set } from "../model/set";
@@ -45,13 +50,13 @@ export class MoveManager {
       index = set.meta.index;
     }
     if (index > 31 || index < 0) {
-      throw new Error(`Index ${index} is out of range`);
+      throw new SetIndexOutOfRangeError(`Index ${index} is out of range`);
     }
     if (color === undefined) {
       color = set.meta.color;
     }
     if (color < 0 || color > 26) {
-      throw new Error(`Color ${color} is out of range`);
+      throw new SetColorOutOfRangeError(`Color ${color} is out of range`);
     }
     if (setsOnDevice === undefined) {
       setsOnDevice = await this.ssh.listSets();
@@ -61,7 +66,7 @@ export class MoveManager {
     }
     const setOnDevice = setsOnDevice.find((s) => s.meta.index === index);
     if (setOnDevice) {
-      throw new Error(
+      throw new SetIndexTakenError(
         `Index ${index} is already occupied by ${setOnDevice.meta.name}`
       );
     }
