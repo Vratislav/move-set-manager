@@ -1,0 +1,4767 @@
+{
+  "$schema": "http://tech.ableton.com/schema/song/1.4.6/song.json",
+  "stepEditorResolution": "1/16",
+  "tempo": 76.0,
+  "globalGrooveAmount": 0.0,
+  "rootNote": 7,
+  "scale": "Major",
+  "melodicLayout": "inKey",
+  "tracks": [
+    {
+      "kind": "midi",
+      "name": "",
+      "color": 3,
+      "clipSlots": [
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        }
+      ],
+      "isArmed": false,
+      "isNoteRepeatOn": false,
+      "noteRepeatRate": "1/16",
+      "noteRepeatArpeggio": {
+        "style": "chordRepeat"
+      },
+      "uiOctaveIndex": 4,
+      "devices": [
+        {
+          "presetUri": "ableton:/packs/abl-core-library/Track%20Presets/Drums/Electronic/Cortex%20Kit.json",
+          "kind": "instrumentRack",
+          "name": "Cortex Kit",
+          "lockId": 1001,
+          "lockSeal": -973461132,
+          "parameters": {
+            "Enabled": true,
+            "Macro0": 0.0,
+            "Macro1": 0.0,
+            "Macro2": 0.0,
+            "Macro3": 0.0,
+            "Macro4": 0.0,
+            "Macro5": 0.0,
+            "Macro6": 0.0,
+            "Macro7": 0.0
+          },
+          "chains": [
+            {
+              "name": "",
+              "color": 0,
+              "devices": [
+                {
+                  "presetUri": null,
+                  "kind": "drumRack",
+                  "name": "Cortex Kit",
+                  "lockId": 1001,
+                  "lockSeal": 830049224,
+                  "parameters": {
+                    "Enabled": true,
+                    "Macro0": 0.0,
+                    "Macro1": 0.0,
+                    "Macro2": 0.0,
+                    "Macro3": 0.0,
+                    "Macro4": 0.0,
+                    "Macro5": 0.0,
+                    "Macro6": 0.0,
+                    "Macro7": 0.0
+                  },
+                  "chains": [
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 3.081831216812134,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 6952.353515625,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.1388888955116272,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.1640625,
+                            "Volume": -10.300000190734863
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Buzz%20Hymned.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 36,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 4.370148658752441,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 13732.7734375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.15625,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 2,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -13.80000114440918
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Grounded%201.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 40,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 1.179419994354248,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -7.820000648498535
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Shadowed.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 37,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": -0.13999998569488525,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 22.96206283569336,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 2,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -9.400002479553223
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Burned%201.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -60.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 41,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 60.0,
+                            "Voice_Envelope_Hold": 0.3000001013278961,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -13.300000190734863
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Burned%202.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -46.99999237060547
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 39,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.2200000286102295,
+                            "Voice_Detune": 0.009999990463256836,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 2.824144124984741,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 5350.9365234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.1884920597076416,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -10.700002670288086
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Burned%203.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 38,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": -0.25999999046325684,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 0.5309327840805054,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 11736.4482421875,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.6646825671195984,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 4,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -16.160001754760742
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Click%20Unsounded.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 44,
+                        "sendingNote": 60,
+                        "chokeGroup": 1
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.2200000286102295,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 3.3630285263061523,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 13732.7734375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.2182539701461792,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -13.70000171661377
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Grounded%202.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -30.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 43,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.13999998569488525,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 0.24494904279708862,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -19.900001525878906
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Click%20Grounded.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 42,
+                        "sendingNote": 60,
+                        "chokeGroup": 1
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.2999999523162842,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 0.1727382093667984,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-S-R",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -16.600000381469727
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Strike%20Charred.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 45,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": -0.07999998331069946,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 4.768896102905273,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 11137.720703125,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.2281745970249176,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": -1,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -22.000001907348633
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Metallic%20Grounded.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 46,
+                        "sendingNote": 60,
+                        "chokeGroup": 1
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "FM",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.15999996662139893,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 1.179419994354248,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-S-R",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -16.80000114440918
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/FX%20Hit/FX%20Strike%20Streamed.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 47,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "FM",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.13999998569488525,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 5.204033851623535,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 19812.61328125,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.6150793433189392,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.2578125,
+                            "Volume": -17.10000228881836
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/FX%20Hit/FX%20Buzz%20Unsounded.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -24.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 48,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "FM",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": -0.4399999976158142,
+                            "Voice_Detune": 0.13999998569488525,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 4.370148658752441,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.0,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -9.500000953674316
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/Misc%20Percussion/Metallic%20Charred.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -70.0
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 50,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "FM",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": -0.2200000286102295,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 1.0808043479919434,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-S-R",
+                            "Voice_Filter_Frequency": 21999.990234375,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.3571428656578064,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.34375,
+                            "Volume": -14.300002098083496
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/FX%20Hit/FX%20Strike%20Doubled.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": -16.600000381469727
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 49,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    },
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "drumCell",
+                          "name": "",
+                          "parameters": {
+                            "Effect_EightBitFilterDecay": 5.0,
+                            "Effect_EightBitResamplingRate": 14080.0,
+                            "Effect_FmAmount": 0.0,
+                            "Effect_FmFrequency": 999.9998779296875,
+                            "Effect_LoopLength": 0.30000001192092896,
+                            "Effect_LoopOffset": 0.0,
+                            "Effect_NoiseAmount": 0.0,
+                            "Effect_NoiseFrequency": 10000.0009765625,
+                            "Effect_On": true,
+                            "Effect_PitchEnvelopeAmount": 0.0,
+                            "Effect_PitchEnvelopeDecay": 0.29999998211860657,
+                            "Effect_PunchAmount": 0.0,
+                            "Effect_PunchTime": 0.12015999853610992,
+                            "Effect_RingModAmount": 0.0,
+                            "Effect_RingModFrequency": 999.9998168945313,
+                            "Effect_StretchFactor": 1.0,
+                            "Effect_StretchGrainSize": 0.09999999403953552,
+                            "Effect_SubOscAmount": 0.0,
+                            "Effect_SubOscFrequency": 59.99999237060547,
+                            "Effect_Type": "Ring Mod",
+                            "Enabled": true,
+                            "NotePitchBend": true,
+                            "Pan": 0.0,
+                            "Voice_Detune": 0.0,
+                            "Voice_Envelope_Attack": 0.00009999999747378752,
+                            "Voice_Envelope_Decay": 7.6251397132873535,
+                            "Voice_Envelope_Hold": 0.0010000000474974513,
+                            "Voice_Envelope_Mode": "A-H-D",
+                            "Voice_Filter_Frequency": 20877.673828125,
+                            "Voice_Filter_On": true,
+                            "Voice_Filter_PeakGain": 1.0,
+                            "Voice_Filter_Resonance": 0.283203125,
+                            "Voice_Filter_Type": "Lowpass",
+                            "Voice_Gain": 1.0,
+                            "Voice_ModulationAmount": 0.0,
+                            "Voice_ModulationSource": "Velocity",
+                            "Voice_ModulationTarget": "Filter",
+                            "Voice_PitchToEnvelopeModulation": false,
+                            "Voice_PlaybackLength": 1.0,
+                            "Voice_PlaybackStart": 0.0,
+                            "Voice_Transpose": 0,
+                            "Voice_VelocityToVolume": 0.3499999940395355,
+                            "Volume": -19.400001525878906
+                          },
+                          "deviceData": {
+                            "sampleUri": "ableton:/packs/abl-core-library/Samples/Drums/E-Percussion/E-Perc%20Blop%20Charred.wav"
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": true,
+                            "amount": {
+                              "value": -1.4659695625305176,
+                              "presetValue": -70.0
+                            }
+                          }
+                        ]
+                      },
+                      "drumZoneSettings": {
+                        "receivingNote": 51,
+                        "sendingNote": 60,
+                        "chokeGroup": null
+                      }
+                    }
+                  ],
+                  "returnChains": [
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "reverb",
+                          "name": "",
+                          "parameters": {
+                            "AllPassGain": 0.9219444394111633,
+                            "AllPassSize": 0.7699999809265137,
+                            "BandFreq": 402.4820251464844,
+                            "BandHighOn": true,
+                            "BandLowOn": true,
+                            "BandWidth": 4.572916507720947,
+                            "ChorusOn": false,
+                            "CutOn": false,
+                            "DecayTime": 3542.771728515625,
+                            "DiffuseDelay": 0.2142857164144516,
+                            "EarlyReflectModDepth": 3.2428934574127197,
+                            "EarlyReflectModFreq": 0.1093868613243103,
+                            "Enabled": true,
+                            "FlatOn": false,
+                            "FreezeOn": false,
+                            "HighFilterType": "Shelf",
+                            "MixDiffuse": 1.995300054550171,
+                            "MixDirect": 1.0,
+                            "MixReflect": 1.792531132698059,
+                            "PreDelay": 7.023662090301514,
+                            "RoomSize": 67.26939392089844,
+                            "RoomType": "SuperEco",
+                            "ShelfHiFreq": 1469.94873046875,
+                            "ShelfHiGain": 0.8833333849906921,
+                            "ShelfHighOn": true,
+                            "ShelfLoFreq": 670.7686157226563,
+                            "ShelfLoGain": 0.6166667342185974,
+                            "ShelfLowOn": true,
+                            "SizeModDepth": 0.15581557154655457,
+                            "SizeModFreq": 2.3727688789367676,
+                            "SizeSmoothing": "Fast",
+                            "SpinOn": true,
+                            "StereoSeparation": 107.62000274658203
+                          },
+                          "deviceData": {}
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": [
+                          {
+                            "isEnabled": false,
+                            "amount": -70.0
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "presetUri": null,
+                  "kind": "saturator",
+                  "name": "",
+                  "parameters": {
+                    "BaseDrive": -6.519681930541992,
+                    "BassShaperThreshold": -50.0,
+                    "ColorDepth": 0.5669288635253906,
+                    "ColorFrequency": 2572.674072265625,
+                    "ColorOn": true,
+                    "ColorWidth": 0.7165354490280151,
+                    "DryWet": 0.3310000002384186,
+                    "Enabled": true,
+                    "Oversampling": false,
+                    "PostClip": "off",
+                    "PostDrive": -2.2659945487976074,
+                    "PreDcFilter": false,
+                    "PreDrive": 2.551179885864258,
+                    "Type": "Soft Sine",
+                    "WsCurve": 0.7890625,
+                    "WsDamp": 0.0,
+                    "WsDepth": 0.0234375,
+                    "WsDrive": 1.0,
+                    "WsLin": 0.171875,
+                    "WsPeriod": 0.1328125
+                  },
+                  "deviceData": {}
+                }
+              ],
+              "mixer": {
+                "pan": 0.0,
+                "solo-cue": false,
+                "speakerOn": true,
+                "volume": 0.0,
+                "sends": []
+              }
+            }
+          ]
+        }
+      ],
+      "mixer": {
+        "pan": 0.0,
+        "solo-cue": false,
+        "speakerOn": true,
+        "volume": 0.0,
+        "sends": []
+      }
+    },
+    {
+      "kind": "midi",
+      "name": "",
+      "color": 21,
+      "clipSlots": [
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        }
+      ],
+      "isArmed": false,
+      "isNoteRepeatOn": false,
+      "noteRepeatRate": "1/16",
+      "noteRepeatArpeggio": {
+        "style": "chordRepeat"
+      },
+      "uiOctaveIndex": 2,
+      "devices": [
+        {
+          "presetUri": "ableton:/packs/abl-core-library/Track%20Presets/Bass/Sub%20Stomach.json",
+          "kind": "instrumentRack",
+          "name": "Sub Stomach",
+          "lockId": 1001,
+          "lockSeal": 173828468,
+          "parameters": {
+            "Enabled": true,
+            "Macro0": 0.0,
+            "Macro1": 0.0,
+            "Macro2": 0.0,
+            "Macro3": 0.0,
+            "Macro4": 0.0,
+            "Macro5": 0.0,
+            "Macro6": 0.0,
+            "Macro7": 0.0
+          },
+          "chains": [
+            {
+              "name": "",
+              "color": 0,
+              "devices": [
+                {
+                  "presetUri": null,
+                  "kind": "instrumentRack",
+                  "name": "Wavetable",
+                  "lockId": 1001,
+                  "lockSeal": 570097652,
+                  "parameters": {
+                    "Enabled": true,
+                    "Macro0": {
+                      "value": 53.12800979614258,
+                      "customName": "Filter Cutoff"
+                    },
+                    "Macro1": {
+                      "value": 28.575002670288086,
+                      "customName": "Filter Reso"
+                    },
+                    "Macro2": {
+                      "value": 27.0,
+                      "customName": "Wave Position"
+                    },
+                    "Macro3": {
+                      "value": 0.0,
+                      "customName": "FM"
+                    },
+                    "Macro4": {
+                      "value": 76.20000457763672,
+                      "customName": "Punch"
+                    },
+                    "Macro5": {
+                      "value": 63.77641677856445,
+                      "customName": "Pitch Decay"
+                    },
+                    "Macro6": {
+                      "value": 59.0,
+                      "customName": "Release"
+                    },
+                    "Macro7": {
+                      "value": 0.0,
+                      "customName": "Glide"
+                    }
+                  },
+                  "chains": [
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "wavetable",
+                          "name": "",
+                          "parameters": {
+                            "Enabled": true,
+                            "HiQ": false,
+                            "MonoPoly": "Mono",
+                            "PolyVoices": "4",
+                            "Voice_Filter1_CircuitBpNoMo": "Clean",
+                            "Voice_Filter1_CircuitLpHp": "Clean",
+                            "Voice_Filter1_Drive": 0.0,
+                            "Voice_Filter1_Frequency": {
+                              "value": 19999.99609375,
+                              "macroMapping": {
+                                "macroIndex": 0,
+                                "rangeMin": 30.0,
+                                "rangeMax": 20479.998046875
+                              }
+                            },
+                            "Voice_Filter1_Morph": 0.0,
+                            "Voice_Filter1_On": true,
+                            "Voice_Filter1_Resonance": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 1,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.800000011920929
+                              }
+                            },
+                            "Voice_Filter1_Slope": "24",
+                            "Voice_Filter1_Type": "Lowpass",
+                            "Voice_Filter2_CircuitBpNoMo": "Clean",
+                            "Voice_Filter2_CircuitLpHp": "Clean",
+                            "Voice_Filter2_Drive": 0.0,
+                            "Voice_Filter2_Frequency": 70.88089752197266,
+                            "Voice_Filter2_Morph": 0.0,
+                            "Voice_Filter2_On": false,
+                            "Voice_Filter2_Resonance": 0.0,
+                            "Voice_Filter2_Slope": "12",
+                            "Voice_Filter2_Type": "Notch",
+                            "Voice_Global_FilterRouting": "Serial",
+                            "Voice_Global_Glide": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 7,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.10000000149011612
+                              }
+                            },
+                            "Voice_Global_Transpose": 0,
+                            "Voice_Modulators_Amount": 1.0,
+                            "Voice_Modulators_AmpEnvelope_LoopMode": "None",
+                            "Voice_Modulators_AmpEnvelope_Slopes_Attack": 0.0,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Decay": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Release": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Sustain": 0.0,
+                            "Voice_Modulators_AmpEnvelope_Times_Attack": 0.01448996365070343,
+                            "Voice_Modulators_AmpEnvelope_Times_Decay": 4.984600067138672,
+                            "Voice_Modulators_AmpEnvelope_Times_Release": {
+                              "value": 0.5999999642372131,
+                              "macroMapping": {
+                                "macroIndex": 6,
+                                "rangeMin": 0.029999999329447746,
+                                "rangeMax": 7.0
+                              }
+                            },
+                            "Voice_Modulators_Envelope2_LoopMode": "None",
+                            "Voice_Modulators_Envelope2_Slopes_Attack": 0.7058823108673096,
+                            "Voice_Modulators_Envelope2_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope2_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope2_Times_Attack": 0.0,
+                            "Voice_Modulators_Envelope2_Times_Decay": 0.4204076826572418,
+                            "Voice_Modulators_Envelope2_Times_Release": 6.329150676727295,
+                            "Voice_Modulators_Envelope2_Values_Final": 0.0,
+                            "Voice_Modulators_Envelope2_Values_Initial": 0.0,
+                            "Voice_Modulators_Envelope2_Values_Peak": 0.0,
+                            "Voice_Modulators_Envelope2_Values_Sustain": 0.0,
+                            "Voice_Modulators_Envelope3_LoopMode": "None",
+                            "Voice_Modulators_Envelope3_Slopes_Attack": 0.0,
+                            "Voice_Modulators_Envelope3_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope3_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope3_Times_Attack": 0.0010000001639127731,
+                            "Voice_Modulators_Envelope3_Times_Decay": {
+                              "value": 0.5999999642372131,
+                              "macroMapping": {
+                                "macroIndex": 5,
+                                "rangeMin": 0.001500000013038516,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Modulators_Envelope3_Times_Release": 0.5999999642372131,
+                            "Voice_Modulators_Envelope3_Values_Final": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Initial": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Peak": {
+                              "value": 1.0,
+                              "macroMapping": {
+                                "macroIndex": 4,
+                                "rangeMin": 0.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Modulators_Envelope3_Values_Sustain": 0.0,
+                            "Voice_Modulators_Lfo1_Retrigger": true,
+                            "Voice_Modulators_Lfo1_Shape_Amount": 1.0,
+                            "Voice_Modulators_Lfo1_Shape_PhaseOffset": 0.0,
+                            "Voice_Modulators_Lfo1_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo1_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo1_Time_AttackTime": 0.0,
+                            "Voice_Modulators_Lfo1_Time_Rate": 0.9999998807907104,
+                            "Voice_Modulators_Lfo1_Time_Sync": "Free",
+                            "Voice_Modulators_Lfo1_Time_SyncedRate": 15,
+                            "Voice_Modulators_Lfo2_Retrigger": true,
+                            "Voice_Modulators_Lfo2_Shape_Amount": 1.0,
+                            "Voice_Modulators_Lfo2_Shape_PhaseOffset": 0.0,
+                            "Voice_Modulators_Lfo2_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo2_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo2_Time_AttackTime": 0.0,
+                            "Voice_Modulators_Lfo2_Time_Rate": 0.9999998807907104,
+                            "Voice_Modulators_Lfo2_Time_Sync": "Free",
+                            "Voice_Modulators_Lfo2_Time_SyncedRate": 15,
+                            "Voice_Modulators_TimeScale": 0.0,
+                            "Voice_Oscillator1_Effects_Effect1": 0.0,
+                            "Voice_Oscillator1_Effects_Effect2": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 3,
+                                "rangeMin": 0.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Oscillator1_Effects_EffectMode": "Fm",
+                            "Voice_Oscillator1_Gain": 1.0,
+                            "Voice_Oscillator1_On": true,
+                            "Voice_Oscillator1_Pan": 0.0,
+                            "Voice_Oscillator1_Pitch_Detune": 0.0,
+                            "Voice_Oscillator1_Pitch_Transpose": 0,
+                            "Voice_Oscillator1_Wavetables_WavePosition": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 2,
+                                "rangeMin": 0.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Oscillator2_Effects_Effect1": 0.0,
+                            "Voice_Oscillator2_Effects_Effect2": 0.0,
+                            "Voice_Oscillator2_Effects_EffectMode": "None",
+                            "Voice_Oscillator2_Gain": 1.0,
+                            "Voice_Oscillator2_On": false,
+                            "Voice_Oscillator2_Pan": 0.0,
+                            "Voice_Oscillator2_Pitch_Detune": 0.0,
+                            "Voice_Oscillator2_Pitch_Transpose": 24,
+                            "Voice_Oscillator2_Wavetables_WavePosition": 0.0,
+                            "Voice_SubOscillator_Gain": 0.0,
+                            "Voice_SubOscillator_On": false,
+                            "Voice_SubOscillator_Tone": 1.0,
+                            "Voice_SubOscillator_Transpose": "0",
+                            "Voice_Unison_Amount": 0.0,
+                            "Voice_Unison_Mode": "None",
+                            "Voice_Unison_VoiceCount": 2,
+                            "Volume": 0.7934070229530334
+                          },
+                          "deviceData": {
+                            "spriteUri1": "ableton:/device-resources/wavetable-sprites/Basic%20Shapes",
+                            "spriteUri2": "ableton:/device-resources/wavetable-sprites/Basic%20Shapes",
+                            "modulations": {
+                              "Voice_Global_AmpModulation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.6499999761581421,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Global_PitchModulation": [
+                                0.0,
+                                0.421875,
+                                0.734375,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.041666626930236816,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator1_Wavetables_WavePosition": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                1.0
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "presetUri": null,
+                  "kind": "saturator",
+                  "name": "",
+                  "parameters": {
+                    "BaseDrive": -12.0,
+                    "BassShaperThreshold": -50.0,
+                    "ColorDepth": 0.0,
+                    "ColorFrequency": 1000.0001831054688,
+                    "ColorOn": true,
+                    "ColorWidth": 0.30000001192092896,
+                    "DryWet": 1.0,
+                    "Enabled": true,
+                    "Oversampling": false,
+                    "PostClip": "off",
+                    "PostDrive": -21.200000762939453,
+                    "PreDcFilter": true,
+                    "PreDrive": 22.999998092651367,
+                    "Type": "Analog Clip",
+                    "WsCurve": 0.05000000074505806,
+                    "WsDamp": 0.0,
+                    "WsDepth": 0.0,
+                    "WsDrive": 1.0,
+                    "WsLin": 0.5,
+                    "WsPeriod": 0.0
+                  },
+                  "deviceData": {}
+                },
+                {
+                  "presetUri": null,
+                  "kind": "saturator",
+                  "name": "",
+                  "parameters": {
+                    "BaseDrive": -2.8125,
+                    "BassShaperThreshold": -50.0,
+                    "ColorDepth": 0.0,
+                    "ColorFrequency": 1000.0,
+                    "ColorOn": true,
+                    "ColorWidth": 0.30000001192092896,
+                    "DryWet": 1.0,
+                    "Enabled": true,
+                    "Oversampling": false,
+                    "PostClip": "hard",
+                    "PostDrive": -5.440000534057617,
+                    "PreDcFilter": false,
+                    "PreDrive": 11.28000259399414,
+                    "Type": "Bass Shaper",
+                    "WsCurve": 0.05000000074505806,
+                    "WsDamp": 0.0,
+                    "WsDepth": 0.0,
+                    "WsDrive": 1.0,
+                    "WsLin": 0.5,
+                    "WsPeriod": 0.0
+                  },
+                  "deviceData": {}
+                }
+              ],
+              "mixer": {
+                "pan": 0.0,
+                "solo-cue": false,
+                "speakerOn": true,
+                "volume": 0.0,
+                "sends": []
+              }
+            }
+          ]
+        }
+      ],
+      "mixer": {
+        "pan": 0.0,
+        "solo-cue": false,
+        "speakerOn": true,
+        "volume": 0.0,
+        "sends": []
+      }
+    },
+    {
+      "kind": "midi",
+      "name": "",
+      "color": 14,
+      "clipSlots": [
+        {
+          "hasStop": true,
+          "clip": {
+            "isPlaying": true,
+            "name": "",
+            "color": 14,
+            "isEnabled": true,
+            "region": {
+              "start": 0.0,
+              "end": 4.0,
+              "loop": {
+                "start": 0.0,
+                "end": 4.0,
+                "isEnabled": true
+              }
+            },
+            "grooveId": 1,
+            "notes": [
+              {
+                "noteNumber": 31,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.10733225108225108,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 31,
+                "startTime": 0.10733199092574093,
+                "duration": 3.8926682692307693,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 35,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.07720222485847486,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 9.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 35,
+                "startTime": 0.0772019647019647,
+                "duration": 3.9227982954545455,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 9.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 38,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.2559716325341325,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 38,
+                "startTime": 0.25597137237762235,
+                "duration": 3.744028887778888,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3790521978021978,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 42,
+                "startTime": 3.461437780969031,
+                "duration": 0.5385624791874792,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37830528846153844,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 45,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.06163445929070929,
+                "velocity": 127.0,
+                "offVelocity": 0.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 3.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 45,
+                "startTime": 0.06163419913419913,
+                "duration": 3.938366061022311,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37985634157509157,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 3.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 52,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.17345154845154845,
+                "velocity": 127.0,
+                "offVelocity": 0.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 52,
+                "startTime": 0.1734512882950383,
+                "duration": 3.826548971861472,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3798277243589744,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 59,
+                "startTime": 3.924446126789877,
+                "duration": 0.07555413336663337,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              },
+              {
+                "noteNumber": 64,
+                "startTime": 3.882338754995005,
+                "duration": 0.11766150516150516,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              }
+            ],
+            "stepEditorScrollPosition": 0.0,
+            "envelopes": []
+          }
+        },
+        {
+          "hasStop": true,
+          "clip": {
+            "name": "",
+            "color": 14,
+            "isEnabled": true,
+            "region": {
+              "start": 0.0,
+              "end": 16.0,
+              "loop": {
+                "start": 0.0,
+                "end": 16.0,
+                "isEnabled": true
+              }
+            },
+            "grooveId": 1,
+            "notes": [
+              {
+                "noteNumber": 31,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.10733225108225108,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 31,
+                "startTime": 0.10733199092574093,
+                "duration": 3.8926682692307693,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 31,
+                "startTime": 4.107331990925741,
+                "duration": 7.992668269230769,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.5647435897435897,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.6763595779220779,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.8252000603563103,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.8996204316516817,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 1.1973013965201464,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.9042509573759574,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.3135765276390274,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 2.6484533695471195,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 3.0205260884948384,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 3.2065910651848153,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 35,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.07720222485847486,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 9.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 35,
+                "startTime": 0.0772019647019647,
+                "duration": 3.9227982954545455,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 9.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 35,
+                "startTime": 4.077201964701965,
+                "duration": 8.022798295454546,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37867861305361306,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4530989843489843,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.4902946012321012,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.5275190954878455,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 4.0
+                    },
+                    {
+                      "time": 0.5647149725274725,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 0.6019394667832167,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.6391350836663336,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.6763309607059607,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 9.0
+                    },
+                    {
+                      "time": 0.8251714431401932,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 0.8623959373959375,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 0.8995918144355645,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.0112364198301698,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.122852408008658,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 1.2344686563436564,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.3461132617382618,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.4949537441724943,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 1.5321496212121213,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 1.718214597902098,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 1.9414465742590743,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.462388392857143,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.760069357725608,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 2.7972652347652347,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 5.0
+                    },
+                    {
+                      "time": 2.834489729020979,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 6.0
+                    },
+                    {
+                      "time": 3.0949461996336995,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 7.0
+                    },
+                    {
+                      "time": 3.578663523976024,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 8.0
+                    },
+                    {
+                      "time": 3.7275040064102565,
+                      "value": 9.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 38,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.2559716325341325,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 38,
+                "startTime": 0.25597137237762235,
+                "duration": 3.744028887778888,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3790521978021978,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 38,
+                "startTime": 4.255971372377623,
+                "duration": 3.744028887778888,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3790521978021978,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 42,
+                "startTime": 3.461437780969031,
+                "duration": 0.5385624791874792,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37830528846153844,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 42,
+                "startTime": 7.461437780969031,
+                "duration": 0.5385624791874792,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37830528846153844,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.4155011655011655,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 0.45272565975690976,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 0.48992127664002666,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 3.0
+                    },
+                    {
+                      "time": 0.5271457708957709,
+                      "value": 4.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 45,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.06163445929070929,
+                "velocity": 127.0,
+                "offVelocity": 0.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 3.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 45,
+                "startTime": 0.06163419913419913,
+                "duration": 3.938366061022311,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37985634157509157,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 3.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 45,
+                "startTime": 4.0616341991341995,
+                "duration": 8.03836606102231,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.37985634157509157,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 0.0
+                    },
+                    {
+                      "time": 0.8635736659174159,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 1.0
+                    },
+                    {
+                      "time": 1.607747460872461,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 2.0
+                    },
+                    {
+                      "time": 2.6496024808524807,
+                      "value": 3.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 52,
+                "startTime": -2.6015651015651016e-7,
+                "duration": 0.17345154845154845,
+                "velocity": 127.0,
+                "offVelocity": 0.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 52,
+                "startTime": 0.1734512882950383,
+                "duration": 3.826548971861472,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3798277243589744,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 52,
+                "startTime": 4.1734512882950385,
+                "duration": 7.926548971861472,
+                "velocity": 127.0,
+                "offVelocity": 64.0,
+                "automations": {
+                  "Pressure": [
+                    {
+                      "time": 0.3798277243589744,
+                      "value": 0.0
+                    }
+                  ]
+                }
+              },
+              {
+                "noteNumber": 59,
+                "startTime": 3.924446126789877,
+                "duration": 0.07555413336663337,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              },
+              {
+                "noteNumber": 59,
+                "startTime": 7.924446126789877,
+                "duration": 0.07555413336663337,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              },
+              {
+                "noteNumber": 64,
+                "startTime": 3.882338754995005,
+                "duration": 0.11766150516150516,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              },
+              {
+                "noteNumber": 64,
+                "startTime": 7.882338754995005,
+                "duration": 0.11766150516150516,
+                "velocity": 127.0,
+                "offVelocity": 64.0
+              }
+            ],
+            "stepEditorScrollPosition": 4.0,
+            "envelopes": []
+          }
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        }
+      ],
+      "isArmed": false,
+      "isNoteRepeatOn": false,
+      "noteRepeatRate": "1/16",
+      "noteRepeatArpeggio": {
+        "style": "chordRepeat"
+      },
+      "uiOctaveIndex": 2,
+      "devices": [
+        {
+          "presetUri": "ableton:/packs/abl-core-library/Track%20Presets/Pad/Airport%20Pad.json",
+          "kind": "instrumentRack",
+          "name": "Airport Pad",
+          "lockId": 1001,
+          "lockSeal": -931844814,
+          "parameters": {
+            "Enabled": true,
+            "Macro0": 0.0,
+            "Macro1": 0.0,
+            "Macro2": 0.0,
+            "Macro3": 0.0,
+            "Macro4": 0.0,
+            "Macro5": 0.0,
+            "Macro6": 0.0,
+            "Macro7": 0.0
+          },
+          "chains": [
+            {
+              "name": "",
+              "color": 0,
+              "devices": [
+                {
+                  "presetUri": null,
+                  "kind": "instrumentRack",
+                  "name": "Wavetable",
+                  "lockId": 1001,
+                  "lockSeal": 570097652,
+                  "parameters": {
+                    "Enabled": true,
+                    "Macro0": {
+                      "value": 82.0,
+                      "customName": "Filter Cutoff"
+                    },
+                    "Macro1": {
+                      "value": 0.0,
+                      "customName": "FM"
+                    },
+                    "Macro2": {
+                      "value": 0.0,
+                      "customName": "LFO Amount"
+                    },
+                    "Macro3": {
+                      "value": 93.0,
+                      "customName": "LFO Rate"
+                    },
+                    "Macro4": {
+                      "value": 50.6015625,
+                      "customName": "Attack"
+                    },
+                    "Macro5": {
+                      "value": 127.0,
+                      "presetValue": 78.0,
+                      "customName": "Release"
+                    },
+                    "Macro6": {
+                      "value": 35.92509078979492,
+                      "presetValue": 0.0,
+                      "customName": "Wave Fold"
+                    },
+                    "Macro7": {
+                      "value": 0.0,
+                      "customName": "Wave Unison"
+                    }
+                  },
+                  "chains": [
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "wavetable",
+                          "name": "",
+                          "parameters": {
+                            "Enabled": true,
+                            "HiQ": false,
+                            "MonoPoly": "Poly",
+                            "PolyVoices": "4",
+                            "Voice_Filter1_CircuitBpNoMo": "Clean",
+                            "Voice_Filter1_CircuitLpHp": "Clean",
+                            "Voice_Filter1_Drive": 0.0,
+                            "Voice_Filter1_Frequency": {
+                              "value": 19999.99609375,
+                              "macroMapping": {
+                                "macroIndex": 0,
+                                "rangeMin": 254.90272521972656,
+                                "rangeMax": 1617.3638916015625
+                              }
+                            },
+                            "Voice_Filter1_Morph": 0.0,
+                            "Voice_Filter1_On": true,
+                            "Voice_Filter1_Resonance": 0.0595238097012043,
+                            "Voice_Filter1_Slope": "12",
+                            "Voice_Filter1_Type": "Bandpass",
+                            "Voice_Filter2_CircuitBpNoMo": "Clean",
+                            "Voice_Filter2_CircuitLpHp": "Clean",
+                            "Voice_Filter2_Drive": 0.0,
+                            "Voice_Filter2_Frequency": {
+                              "value": 19999.99609375,
+                              "macroMapping": {
+                                "macroIndex": 0,
+                                "rangeMin": 80.0,
+                                "rangeMax": 20479.998046875
+                              }
+                            },
+                            "Voice_Filter2_Morph": 0.0,
+                            "Voice_Filter2_On": true,
+                            "Voice_Filter2_Resonance": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 0,
+                                "rangeMin": 0.537109375,
+                                "rangeMax": 0.0
+                              }
+                            },
+                            "Voice_Filter2_Slope": "12",
+                            "Voice_Filter2_Type": "Lowpass",
+                            "Voice_Global_FilterRouting": "Split",
+                            "Voice_Global_Glide": 0.0,
+                            "Voice_Global_Transpose": 12,
+                            "Voice_Modulators_Amount": 1.0,
+                            "Voice_Modulators_AmpEnvelope_LoopMode": "None",
+                            "Voice_Modulators_AmpEnvelope_Slopes_Attack": 0.0,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Decay": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Release": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Sustain": 0.6574141383171082,
+                            "Voice_Modulators_AmpEnvelope_Times_Attack": {
+                              "value": 0.0010000001639127731,
+                              "macroMapping": {
+                                "macroIndex": 4,
+                                "rangeMin": 0.0,
+                                "rangeMax": 20.0
+                              }
+                            },
+                            "Voice_Modulators_AmpEnvelope_Times_Decay": 3.608527421951294,
+                            "Voice_Modulators_AmpEnvelope_Times_Release": {
+                              "value": 0.5999999642372131,
+                              "macroMapping": {
+                                "macroIndex": 5,
+                                "rangeMin": 0.001500000013038516,
+                                "rangeMax": 11.0
+                              }
+                            },
+                            "Voice_Modulators_Envelope2_LoopMode": "None",
+                            "Voice_Modulators_Envelope2_Slopes_Attack": 0.0,
+                            "Voice_Modulators_Envelope2_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope2_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope2_Times_Attack": 4.710171699523926,
+                            "Voice_Modulators_Envelope2_Times_Decay": 20.0,
+                            "Voice_Modulators_Envelope2_Times_Release": 4.132379055023193,
+                            "Voice_Modulators_Envelope2_Values_Final": 0.5270270109176636,
+                            "Voice_Modulators_Envelope2_Values_Initial": 1.0,
+                            "Voice_Modulators_Envelope2_Values_Peak": 0.9729729890823364,
+                            "Voice_Modulators_Envelope2_Values_Sustain": 0.9459459185600281,
+                            "Voice_Modulators_Envelope3_LoopMode": "None",
+                            "Voice_Modulators_Envelope3_Slopes_Attack": 0.0,
+                            "Voice_Modulators_Envelope3_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope3_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope3_Times_Attack": 0.0010000001639127731,
+                            "Voice_Modulators_Envelope3_Times_Decay": 0.5999999642372131,
+                            "Voice_Modulators_Envelope3_Times_Release": 0.5999999642372131,
+                            "Voice_Modulators_Envelope3_Values_Final": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Initial": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Peak": 1.0,
+                            "Voice_Modulators_Envelope3_Values_Sustain": 0.5,
+                            "Voice_Modulators_Lfo1_Retrigger": true,
+                            "Voice_Modulators_Lfo1_Shape_Amount": {
+                              "value": 1.0,
+                              "macroMapping": {
+                                "macroIndex": 2,
+                                "rangeMin": 0.6000000238418579,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Modulators_Lfo1_Shape_PhaseOffset": 61.875,
+                            "Voice_Modulators_Lfo1_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo1_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo1_Time_AttackTime": 0.0,
+                            "Voice_Modulators_Lfo1_Time_Rate": 0.9999998807907104,
+                            "Voice_Modulators_Lfo1_Time_Sync": "Tempo",
+                            "Voice_Modulators_Lfo1_Time_SyncedRate": {
+                              "value": 15,
+                              "macroMapping": {
+                                "macroIndex": 3,
+                                "rangeMin": 0.0,
+                                "rangeMax": 21.0
+                              }
+                            },
+                            "Voice_Modulators_Lfo2_Retrigger": true,
+                            "Voice_Modulators_Lfo2_Shape_Amount": {
+                              "value": 1.0,
+                              "macroMapping": {
+                                "macroIndex": 7,
+                                "rangeMin": 1.0,
+                                "rangeMax": 0.0
+                              }
+                            },
+                            "Voice_Modulators_Lfo2_Shape_PhaseOffset": 275.625,
+                            "Voice_Modulators_Lfo2_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo2_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo2_Time_AttackTime": 0.0,
+                            "Voice_Modulators_Lfo2_Time_Rate": 0.09339956194162369,
+                            "Voice_Modulators_Lfo2_Time_Sync": "Free",
+                            "Voice_Modulators_Lfo2_Time_SyncedRate": 15,
+                            "Voice_Modulators_TimeScale": 0.0,
+                            "Voice_Oscillator1_Effects_Effect1": 0.671875,
+                            "Voice_Oscillator1_Effects_Effect2": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 1,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.5
+                              }
+                            },
+                            "Voice_Oscillator1_Effects_EffectMode": "Fm",
+                            "Voice_Oscillator1_Gain": 0.5542168617248535,
+                            "Voice_Oscillator1_On": true,
+                            "Voice_Oscillator1_Pan": 0.0,
+                            "Voice_Oscillator1_Pitch_Detune": -0.078125,
+                            "Voice_Oscillator1_Pitch_Transpose": 0,
+                            "Voice_Oscillator1_Wavetables_WavePosition": 0.4476190507411957,
+                            "Voice_Oscillator2_Effects_Effect1": 0.0,
+                            "Voice_Oscillator2_Effects_Effect2": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 6,
+                                "rangeMin": 0.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Oscillator2_Effects_EffectMode": "Modern",
+                            "Voice_Oscillator2_Gain": 0.42168673872947693,
+                            "Voice_Oscillator2_On": true,
+                            "Voice_Oscillator2_Pan": 0.0,
+                            "Voice_Oscillator2_Pitch_Detune": 0.1484375,
+                            "Voice_Oscillator2_Pitch_Transpose": 0,
+                            "Voice_Oscillator2_Wavetables_WavePosition": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 7,
+                                "rangeMin": 0.4099999964237213,
+                                "rangeMax": 0.28125
+                              }
+                            },
+                            "Voice_SubOscillator_Gain": 1.0,
+                            "Voice_SubOscillator_On": true,
+                            "Voice_SubOscillator_Tone": 0.2698412835597992,
+                            "Voice_SubOscillator_Transpose": "-1",
+                            "Voice_Unison_Amount": {
+                              "value": 0.30000001192092896,
+                              "macroMapping": {
+                                "macroIndex": 7,
+                                "rangeMin": 0.054999999701976776,
+                                "rangeMax": 0.6000000238418579
+                              }
+                            },
+                            "Voice_Unison_Mode": "Classic",
+                            "Voice_Unison_VoiceCount": 2,
+                            "Volume": 0.22884657979011536
+                          },
+                          "deviceData": {
+                            "spriteUri1": "ableton:/device-resources/wavetable-sprites/Echoes",
+                            "spriteUri2": "ableton:/device-resources/wavetable-sprites/Plastic%20Shimmer",
+                            "modulations": {
+                              "Voice_Filter1_Frequency": [
+                                -0.296875,
+                                0.203125,
+                                0.03125,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Filter2_Frequency": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.3499999940395355,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Global_AmpModulation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.6499999761581421,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Global_PitchModulation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.041666626930236816,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator1_Effects_Effect1": [
+                                0.0,
+                                0.40625,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator1_Pan": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                -0.234375,
+                                0.203125,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator1_Wavetables_WavePosition": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                -0.1875,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator2_Wavetables_WavePosition": [
+                                0.0,
+                                0.0,
+                                0.265625,
+                                0.0,
+                                0.46875,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_SubOscillator_Tone": [
+                                0.0,
+                                -0.703125,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "presetUri": null,
+                  "kind": "chorus",
+                  "name": "Chorus-Ensemble",
+                  "parameters": {
+                    "Amount": 0.5,
+                    "DryWet": 0.42330706119537354,
+                    "Enabled": true,
+                    "Feedback": 0.36000001430511475,
+                    "HighpassEnabled": true,
+                    "HighpassFrequency": 206.83578491210938,
+                    "InvertFeedback": false,
+                    "Mode": "Classic",
+                    "OutputGain": 0.8062484860420227,
+                    "Rate": 0.6199193596839905,
+                    "Shaping": 0.0,
+                    "VibratoOffset": 0.0,
+                    "Warmth": 0.002178693190217018,
+                    "Width": 1.125
+                  },
+                  "deviceData": {}
+                },
+                {
+                  "presetUri": null,
+                  "kind": "reverb",
+                  "name": "Reverb",
+                  "parameters": {
+                    "AllPassGain": 0.7849444150924683,
+                    "AllPassSize": 0.5551587343215942,
+                    "BandFreq": 1239.7005615234375,
+                    "BandHighOn": true,
+                    "BandLowOn": true,
+                    "BandWidth": 6.875,
+                    "ChorusOn": true,
+                    "CutOn": true,
+                    "DecayTime": 5806.2666015625,
+                    "DiffuseDelay": 0.7142857313156128,
+                    "EarlyReflectModDepth": 5.2581787109375,
+                    "EarlyReflectModFreq": 0.1246071383357048,
+                    "Enabled": true,
+                    "FlatOn": true,
+                    "FreezeOn": false,
+                    "HighFilterType": "Shelf",
+                    "MixDiffuse": 1.0906381607055664,
+                    "MixDirect": {
+                      "value": 0.9205931425094604,
+                      "presetValue": 0.39307084679603577
+                    },
+                    "MixReflect": 1.7301405668258667,
+                    "PreDelay": 30.48705291748047,
+                    "RoomSize": 499.99993896484375,
+                    "RoomType": "SuperEco",
+                    "ShelfHiFreq": 2213.310302734375,
+                    "ShelfHiGain": 0.5833333134651184,
+                    "ShelfHighOn": true,
+                    "ShelfLoFreq": 90.00000762939453,
+                    "ShelfLoGain": 1.0,
+                    "ShelfLowOn": true,
+                    "SizeModDepth": 0.29084306955337524,
+                    "SizeModFreq": 2.9055471420288086,
+                    "SizeSmoothing": "Fast",
+                    "SpinOn": true,
+                    "StereoSeparation": 115.23809814453125
+                  },
+                  "deviceData": {}
+                }
+              ],
+              "mixer": {
+                "pan": 0.0,
+                "solo-cue": false,
+                "speakerOn": true,
+                "volume": 0.0,
+                "sends": []
+              }
+            }
+          ]
+        }
+      ],
+      "mixer": {
+        "pan": 0.0,
+        "solo-cue": false,
+        "speakerOn": true,
+        "volume": 5.198311805725098,
+        "sends": []
+      }
+    },
+    {
+      "kind": "midi",
+      "name": "",
+      "color": 7,
+      "clipSlots": [
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        },
+        {
+          "hasStop": true,
+          "clip": null
+        }
+      ],
+      "isArmed": true,
+      "isNoteRepeatOn": false,
+      "noteRepeatRate": "1/16",
+      "noteRepeatArpeggio": {
+        "style": "chordRepeat"
+      },
+      "uiOctaveIndex": 4,
+      "devices": [
+        {
+          "presetUri": "ableton:/packs/abl-core-library/Track%20Presets/Winds/Basic%20Synth%20Flute.json",
+          "kind": "instrumentRack",
+          "name": "Basic Synth Flute",
+          "lockId": 1001,
+          "lockSeal": 558599474,
+          "parameters": {
+            "Enabled": true,
+            "Macro0": 0.0,
+            "Macro1": 0.0,
+            "Macro2": 0.0,
+            "Macro3": 0.0,
+            "Macro4": 0.0,
+            "Macro5": 0.0,
+            "Macro6": 0.0,
+            "Macro7": 0.0
+          },
+          "chains": [
+            {
+              "name": "",
+              "color": 0,
+              "devices": [
+                {
+                  "presetUri": null,
+                  "kind": "instrumentRack",
+                  "name": "Wavetable",
+                  "lockId": 1001,
+                  "lockSeal": 570097652,
+                  "parameters": {
+                    "Enabled": true,
+                    "Macro0": {
+                      "value": 44.663604736328125,
+                      "presetValue": 37.0,
+                      "customName": "FIlter Freq"
+                    },
+                    "Macro1": {
+                      "value": 127.0,
+                      "presetValue": 51.0,
+                      "customName": "Filter Reso"
+                    },
+                    "Macro2": {
+                      "value": 27.18654441833496,
+                      "presetValue": 83.0,
+                      "customName": "Tone"
+                    },
+                    "Macro3": {
+                      "value": 117.29051971435547,
+                      "presetValue": 95.25,
+                      "customName": "FM Tune"
+                    },
+                    "Macro4": {
+                      "value": 78.64678955078125,
+                      "presetValue": 43.99224090576172,
+                      "customName": "Attack"
+                    },
+                    "Macro5": {
+                      "value": 14.370037078857422,
+                      "presetValue": 74.0,
+                      "customName": "Release"
+                    },
+                    "Macro6": {
+                      "value": 100.0076675415039,
+                      "presetValue": 17.0,
+                      "customName": "Unison"
+                    },
+                    "Macro7": {
+                      "value": 127.0,
+                      "presetValue": 69.79167175292969,
+                      "customName": "Noise"
+                    }
+                  },
+                  "chains": [
+                    {
+                      "name": "",
+                      "color": 0,
+                      "devices": [
+                        {
+                          "presetUri": null,
+                          "kind": "wavetable",
+                          "name": "",
+                          "parameters": {
+                            "Enabled": true,
+                            "HiQ": false,
+                            "MonoPoly": "Poly",
+                            "PolyVoices": "4",
+                            "Voice_Filter1_CircuitBpNoMo": "Clean",
+                            "Voice_Filter1_CircuitLpHp": "Clean",
+                            "Voice_Filter1_Drive": 0.0,
+                            "Voice_Filter1_Frequency": {
+                              "value": 19999.99609375,
+                              "macroMapping": {
+                                "macroIndex": 0,
+                                "rangeMin": 200.0,
+                                "rangeMax": 1000.0
+                              }
+                            },
+                            "Voice_Filter1_Morph": 0.0,
+                            "Voice_Filter1_On": true,
+                            "Voice_Filter1_Resonance": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 1,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.8999999761581421
+                              }
+                            },
+                            "Voice_Filter1_Slope": "12",
+                            "Voice_Filter1_Type": "Bandpass",
+                            "Voice_Filter2_CircuitBpNoMo": "Clean",
+                            "Voice_Filter2_CircuitLpHp": "Clean",
+                            "Voice_Filter2_Drive": 0.0,
+                            "Voice_Filter2_Frequency": 199.99998474121094,
+                            "Voice_Filter2_Morph": 0.0,
+                            "Voice_Filter2_On": true,
+                            "Voice_Filter2_Resonance": 0.0,
+                            "Voice_Filter2_Slope": "12",
+                            "Voice_Filter2_Type": "Highpass",
+                            "Voice_Global_FilterRouting": "Serial",
+                            "Voice_Global_Glide": 0.0,
+                            "Voice_Global_Transpose": 0,
+                            "Voice_Modulators_Amount": 0.8999999761581421,
+                            "Voice_Modulators_AmpEnvelope_LoopMode": "None",
+                            "Voice_Modulators_AmpEnvelope_Slopes_Attack": 0.0,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Decay": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Slopes_Release": 0.5,
+                            "Voice_Modulators_AmpEnvelope_Sustain": 0.4565376341342926,
+                            "Voice_Modulators_AmpEnvelope_Times_Attack": {
+                              "value": 0.0010000001639127731,
+                              "macroMapping": {
+                                "macroIndex": 4,
+                                "rangeMin": 0.0020000000949949026,
+                                "rangeMax": 0.75
+                              }
+                            },
+                            "Voice_Modulators_AmpEnvelope_Times_Decay": 0.30000004172325134,
+                            "Voice_Modulators_AmpEnvelope_Times_Release": {
+                              "value": 0.5999999642372131,
+                              "macroMapping": {
+                                "macroIndex": 5,
+                                "rangeMin": 0.001500000013038516,
+                                "rangeMax": 8.0
+                              }
+                            },
+                            "Voice_Modulators_Envelope2_LoopMode": "None",
+                            "Voice_Modulators_Envelope2_Slopes_Attack": 0.0,
+                            "Voice_Modulators_Envelope2_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope2_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope2_Times_Attack": 0.07000000029802322,
+                            "Voice_Modulators_Envelope2_Times_Decay": 0.059999994933605194,
+                            "Voice_Modulators_Envelope2_Times_Release": 0.1266317516565323,
+                            "Voice_Modulators_Envelope2_Values_Final": 0.0,
+                            "Voice_Modulators_Envelope2_Values_Initial": 0.0,
+                            "Voice_Modulators_Envelope2_Values_Peak": 1.0,
+                            "Voice_Modulators_Envelope2_Values_Sustain": 0.0,
+                            "Voice_Modulators_Envelope3_LoopMode": "Trigger",
+                            "Voice_Modulators_Envelope3_Slopes_Attack": 0.0,
+                            "Voice_Modulators_Envelope3_Slopes_Decay": 0.5,
+                            "Voice_Modulators_Envelope3_Slopes_Release": 0.5,
+                            "Voice_Modulators_Envelope3_Times_Attack": 0.023317093029618263,
+                            "Voice_Modulators_Envelope3_Times_Decay": 0.09411708265542984,
+                            "Voice_Modulators_Envelope3_Times_Release": 0.5999999642372131,
+                            "Voice_Modulators_Envelope3_Values_Final": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Initial": 0.0,
+                            "Voice_Modulators_Envelope3_Values_Peak": 1.0,
+                            "Voice_Modulators_Envelope3_Values_Sustain": 0.0,
+                            "Voice_Modulators_Lfo1_Retrigger": true,
+                            "Voice_Modulators_Lfo1_Shape_Amount": 0.3046875,
+                            "Voice_Modulators_Lfo1_Shape_PhaseOffset": 0.0,
+                            "Voice_Modulators_Lfo1_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo1_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo1_Time_AttackTime": 0.0,
+                            "Voice_Modulators_Lfo1_Time_Rate": 2.3892199993133545,
+                            "Voice_Modulators_Lfo1_Time_Sync": "Free",
+                            "Voice_Modulators_Lfo1_Time_SyncedRate": 15,
+                            "Voice_Modulators_Lfo2_Retrigger": true,
+                            "Voice_Modulators_Lfo2_Shape_Amount": 0.171875,
+                            "Voice_Modulators_Lfo2_Shape_PhaseOffset": 0.0,
+                            "Voice_Modulators_Lfo2_Shape_Shaping": 0.0,
+                            "Voice_Modulators_Lfo2_Shape_Type": "Sine",
+                            "Voice_Modulators_Lfo2_Time_AttackTime": 0.05269654095172882,
+                            "Voice_Modulators_Lfo2_Time_Rate": 7.060628414154053,
+                            "Voice_Modulators_Lfo2_Time_Sync": "Free",
+                            "Voice_Modulators_Lfo2_Time_SyncedRate": 15,
+                            "Voice_Modulators_TimeScale": 0.0,
+                            "Voice_Oscillator1_Effects_Effect1": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 3,
+                                "rangeMin": -1.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Oscillator1_Effects_Effect2": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 2,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.23000000417232513
+                              }
+                            },
+                            "Voice_Oscillator1_Effects_EffectMode": "Fm",
+                            "Voice_Oscillator1_Gain": 1.0,
+                            "Voice_Oscillator1_On": true,
+                            "Voice_Oscillator1_Pan": 0.0,
+                            "Voice_Oscillator1_Pitch_Detune": 0.0,
+                            "Voice_Oscillator1_Pitch_Transpose": 0,
+                            "Voice_Oscillator1_Wavetables_WavePosition": {
+                              "value": 0.0,
+                              "macroMapping": {
+                                "macroIndex": 2,
+                                "rangeMin": 0.30000001192092896,
+                                "rangeMax": 0.75
+                              }
+                            },
+                            "Voice_Oscillator2_Effects_Effect1": 1.0,
+                            "Voice_Oscillator2_Effects_Effect2": 1.0,
+                            "Voice_Oscillator2_Effects_EffectMode": "Fm",
+                            "Voice_Oscillator2_Gain": {
+                              "value": 1.0,
+                              "macroMapping": {
+                                "macroIndex": 7,
+                                "rangeMin": 0.0,
+                                "rangeMax": 1.0
+                              }
+                            },
+                            "Voice_Oscillator2_On": true,
+                            "Voice_Oscillator2_Pan": 0.0,
+                            "Voice_Oscillator2_Pitch_Detune": 0.0,
+                            "Voice_Oscillator2_Pitch_Transpose": 0,
+                            "Voice_Oscillator2_Wavetables_WavePosition": 0.8761904835700989,
+                            "Voice_SubOscillator_Gain": 0.0,
+                            "Voice_SubOscillator_On": false,
+                            "Voice_SubOscillator_Tone": 0.0,
+                            "Voice_SubOscillator_Transpose": "0",
+                            "Voice_Unison_Amount": {
+                              "value": 0.30000001192092896,
+                              "macroMapping": {
+                                "macroIndex": 6,
+                                "rangeMin": 0.0,
+                                "rangeMax": 0.5
+                              }
+                            },
+                            "Voice_Unison_Mode": "Classic",
+                            "Voice_Unison_VoiceCount": 2,
+                            "Volume": 0.9660508632659912
+                          },
+                          "deviceData": {
+                            "spriteUri1": "ableton:/device-resources/wavetable-sprites/Marimba",
+                            "spriteUri2": "ableton:/device-resources/wavetable-sprites/Pouring%20Rain",
+                            "modulations": {
+                              "Voice_Filter1_Frequency": [
+                                0.0,
+                                0.21875,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Global_AmpModulation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.6499999761581421,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Global_PitchModulation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.02083333395421505,
+                                0.0,
+                                0.0,
+                                0.041666626930236816,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0
+                              ],
+                              "Voice_Modulators_AmpEnvelope_Sustain": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.46875,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Modulators_Lfo2_Shape_Amount": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator1_Wavetables_WavePosition": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ],
+                              "Voice_Oscillator2_Gain": [
+                                0.0,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "mixer": {
+                        "pan": 0.0,
+                        "solo-cue": false,
+                        "speakerOn": true,
+                        "volume": 0.0,
+                        "sends": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "presetUri": null,
+                  "kind": "saturator",
+                  "name": "Saturator",
+                  "parameters": {
+                    "BaseDrive": 0.0,
+                    "BassShaperThreshold": -50.0,
+                    "ColorDepth": 0.0,
+                    "ColorFrequency": 1000.0,
+                    "ColorOn": true,
+                    "ColorWidth": 0.30000001192092896,
+                    "DryWet": 1.0,
+                    "Enabled": true,
+                    "Oversampling": false,
+                    "PostClip": "off",
+                    "PostDrive": -1.0,
+                    "PreDcFilter": false,
+                    "PreDrive": 2.0,
+                    "Type": "Soft Sine",
+                    "WsCurve": 0.05000000074505806,
+                    "WsDamp": 0.0,
+                    "WsDepth": 0.0,
+                    "WsDrive": 1.0,
+                    "WsLin": 0.5,
+                    "WsPeriod": 0.0
+                  },
+                  "deviceData": {}
+                },
+                {
+                  "presetUri": null,
+                  "kind": "reverb",
+                  "name": "Reverb",
+                  "parameters": {
+                    "AllPassGain": 0.6022777557373047,
+                    "AllPassSize": 0.6700000166893005,
+                    "BandFreq": 1616.5811767578125,
+                    "BandHighOn": true,
+                    "BandLowOn": true,
+                    "BandWidth": 8.114582061767578,
+                    "ChorusOn": true,
+                    "CutOn": false,
+                    "DecayTime": 1726.8905029296875,
+                    "DiffuseDelay": 0.6349206566810608,
+                    "EarlyReflectModDepth": 19.52410888671875,
+                    "EarlyReflectModFreq": 0.3499999940395355,
+                    "Enabled": true,
+                    "FlatOn": false,
+                    "FreezeOn": false,
+                    "HighFilterType": "Shelf",
+                    "MixDiffuse": 1.7941275835037231,
+                    "MixDirect": 0.10999999940395355,
+                    "MixReflect": 1.7179083824157715,
+                    "PreDelay": 50.0,
+                    "RoomSize": 1.9801640510559082,
+                    "RoomType": "SuperEco",
+                    "ShelfHiFreq": 6591.9853515625,
+                    "ShelfHiGain": 0.4833333492279053,
+                    "ShelfHighOn": true,
+                    "ShelfLoFreq": 341.3493957519531,
+                    "ShelfLoGain": 0.6499999761581421,
+                    "ShelfLowOn": true,
+                    "SizeModDepth": 0.07368063181638718,
+                    "SizeModFreq": 1.7510427236557007,
+                    "SizeSmoothing": "Fast",
+                    "SpinOn": true,
+                    "StereoSeparation": 102.99212646484375
+                  },
+                  "deviceData": {}
+                }
+              ],
+              "mixer": {
+                "pan": 0.0,
+                "solo-cue": false,
+                "speakerOn": true,
+                "volume": 0.0,
+                "sends": []
+              }
+            }
+          ]
+        }
+      ],
+      "mixer": {
+        "pan": 0.0,
+        "solo-cue": false,
+        "speakerOn": true,
+        "volume": 0.0,
+        "sends": []
+      }
+    }
+  ],
+  "returnTracks": [],
+  "masterTrack": {
+    "color": 4,
+    "devices": [
+      {
+        "presetUri": "ableton:/packs/abl-core-library/Audio%20Effects/Dynamics/Punch%20Glue.json",
+        "kind": "audioEffectRack",
+        "name": "Punch Glue",
+        "lockId": 1001,
+        "lockSeal": -100211998,
+        "parameters": {
+          "Enabled": true,
+          "Macro0": 63.35280227661133,
+          "Macro1": 63.5,
+          "Macro2": 63.35280227661133,
+          "Macro3": {
+            "value": 32.8900260925293,
+            "customName": "Comp Hi Pass"
+          },
+          "Macro4": {
+            "value": 29.73539161682129,
+            "customName": "Release"
+          },
+          "Macro5": {
+            "value": 101.88977014790208,
+            "presetValue": 44.9728889465332,
+            "customName": "Threshold"
+          },
+          "Macro6": {
+            "value": 0.0,
+            "presetValue": 10.583333969116211
+          },
+          "Macro7": {
+            "value": 127.0,
+            "customName": "Comp Dry/Wet"
+          }
+        },
+        "chains": [
+          {
+            "name": "",
+            "color": 0,
+            "devices": [
+              {
+                "presetUri": null,
+                "kind": "channelEq",
+                "name": "",
+                "parameters": {
+                  "Enabled": true,
+                  "Gain": 1.0,
+                  "HighShelfGain": {
+                    "value": 0.9999999403953552,
+                    "macroMapping": {
+                      "macroIndex": 2,
+                      "rangeMin": 0.18000000715255737,
+                      "rangeMax": 5.599999904632568
+                    }
+                  },
+                  "HighpassOn": false,
+                  "LowShelfGain": {
+                    "value": 0.9999999403953552,
+                    "macroMapping": {
+                      "macroIndex": 0,
+                      "rangeMin": 0.18000000715255737,
+                      "rangeMax": 5.599999904632568
+                    }
+                  },
+                  "MidFrequency": 579.9998779296875,
+                  "MidGain": {
+                    "value": 1.0,
+                    "macroMapping": {
+                      "macroIndex": 1,
+                      "rangeMin": 0.25,
+                      "rangeMax": 4.0
+                    }
+                  }
+                },
+                "deviceData": {}
+              },
+              {
+                "presetUri": null,
+                "kind": "compressor",
+                "name": "",
+                "parameters": {
+                  "Attack": 1.0,
+                  "AutoReleaseControlOnOff": false,
+                  "DryWet": {
+                    "value": 1.0,
+                    "macroMapping": {
+                      "macroIndex": 7,
+                      "rangeMin": 0.0,
+                      "rangeMax": 1.0
+                    }
+                  },
+                  "Enabled": {
+                    "value": true,
+                    "macroMapping": {
+                      "macroIndex": 7,
+                      "rangeMin": 1.0,
+                      "rangeMax": 127.0
+                    }
+                  },
+                  "ExpansionRatio": 1.149999976158142,
+                  "Gain": {
+                    "value": 0.0,
+                    "macroMapping": {
+                      "macroIndex": 6,
+                      "rangeMin": 0.0,
+                      "rangeMax": 36.0
+                    }
+                  },
+                  "GainCompensation": false,
+                  "Knee": 0.10000000149011612,
+                  "LogEnvelope": true,
+                  "Model": "RMS",
+                  "Ratio": 2.0,
+                  "Release": {
+                    "value": 30.0,
+                    "macroMapping": {
+                      "macroIndex": 4,
+                      "rangeMin": 1.0,
+                      "rangeMax": 1000.0
+                    }
+                  },
+                  "SideChainEq_Freq": {
+                    "value": 80.0,
+                    "macroMapping": {
+                      "macroIndex": 3,
+                      "rangeMin": 30.0,
+                      "rangeMax": 15000.0
+                    }
+                  },
+                  "SideChainEq_Gain": 0.0,
+                  "SideChainEq_Mode": "High pass",
+                  "SideChainEq_On": true,
+                  "SideChainEq_Q": 0.4099999964237213,
+                  "Threshold": {
+                    "value": 1.0,
+                    "macroMapping": {
+                      "macroIndex": 5,
+                      "rangeMin": 0.003162277629598975,
+                      "rangeMax": 1.0
+                    }
+                  }
+                },
+                "deviceData": {}
+              }
+            ],
+            "mixer": {
+              "pan": 0.0,
+              "solo-cue": false,
+              "speakerOn": true,
+              "volume": 0.0,
+              "sends": []
+            }
+          }
+        ]
+      },
+      {
+        "presetUri": "ableton:/packs/abl-core-library/Audio%20Effects/Saturator/Analog%20Clip.json",
+        "kind": "saturator",
+        "name": "Analog Clip",
+        "parameters": {
+          "BaseDrive": 0.0,
+          "BassShaperThreshold": -50.0,
+          "ColorDepth": 0.0,
+          "ColorFrequency": 1000.0,
+          "ColorOn": true,
+          "ColorWidth": 0.30000001192092896,
+          "DryWet": {
+            "value": 0.0,
+            "presetValue": 1.0
+          },
+          "Enabled": true,
+          "Oversampling": false,
+          "PostClip": "off",
+          "PostDrive": -7.0,
+          "PreDcFilter": false,
+          "PreDrive": 9.0,
+          "Type": "Analog Clip",
+          "WsCurve": 0.05000000074505806,
+          "WsDamp": 0.0,
+          "WsDepth": 0.0,
+          "WsDrive": 1.0,
+          "WsLin": 0.5,
+          "WsPeriod": 0.0
+        },
+        "deviceData": {}
+      },
+      {
+        "presetUri": null,
+        "kind": "limiter",
+        "name": "",
+        "parameters": {
+          "AutoRelease": false,
+          "Ceiling": -0.30000001192092896,
+          "Enabled": true,
+          "Gain": 0.0,
+          "LegacySmoothing": true,
+          "LinkAmount": 1.0,
+          "LinkAmountMidSide": 0.0,
+          "Lookahead": "1.5 ms",
+          "Maximize": false,
+          "MaximizeOutput": 0.0,
+          "MaximizeThreshold": 0.0,
+          "Mode": "Standard",
+          "Release": 100.0,
+          "Routing": "L/R"
+        },
+        "deviceData": {}
+      }
+    ],
+    "mixer": {
+      "pan": 0.0,
+      "volume": 0.0
+    }
+  },
+  "scenes": [
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    },
+    {
+      "name": "",
+      "color": null
+    }
+  ],
+  "grooves": [
+    {
+      "id": 1,
+      "name": "Swing 16ths",
+      "base": "1/16",
+      "loop": {
+        "start": 0.0,
+        "end": 4.0
+      },
+      "events": [
+        {
+          "time": 0.0
+        },
+        {
+          "time": 0.3333333333333333
+        },
+        {
+          "time": 0.5
+        },
+        {
+          "time": 0.8333333333333334
+        },
+        {
+          "time": 1.0
+        },
+        {
+          "time": 1.3333333333333333
+        },
+        {
+          "time": 1.5
+        },
+        {
+          "time": 1.8333333333333333
+        },
+        {
+          "time": 2.0
+        },
+        {
+          "time": 2.3333333333333335
+        },
+        {
+          "time": 2.5
+        },
+        {
+          "time": 2.8333333333333335
+        },
+        {
+          "time": 3.0
+        },
+        {
+          "time": 3.3333333333333335
+        },
+        {
+          "time": 3.5
+        },
+        {
+          "time": 3.8333333333333335
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "usedFeatures": [
+      "Compressor Device",
+      "Compressor Side Chain EQ",
+      "Saturator BassShaper Curve Type",
+      "Saturator Hard Post Clip"
+    ]
+  }
+}

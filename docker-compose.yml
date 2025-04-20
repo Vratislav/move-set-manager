@@ -1,0 +1,22 @@
+---
+services:
+  openssh-server:
+    mac_address: "66:a6:1d:a3:d8:07"
+    build: .
+    # image: lscr.io/linuxserver/openssh-server:latest # Keep this commented out or remove it
+    container_name: openssh-server
+    hostname: openssh-server #optional
+    environment:
+      - PUID=501
+      - PGID=20
+      - TZ=Etc/UTC
+      - PUBLIC_KEY_FILE="./test.key.pub" #optional
+      - SUDO_ACCESS=true #optional
+      - USER_NAME=ableton #optional
+      - LOG_STDOUT=false #optional
+    volumes:
+      - ./ssh_config:/config
+      - ./UserLibrary_Test:/data/UserData/UserLibrary_Test
+    ports:
+      - 2222:2222
+    restart: unless-stopped

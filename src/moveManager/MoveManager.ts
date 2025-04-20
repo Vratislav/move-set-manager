@@ -1,0 +1,204 @@
+import { initLocalDb, LocalDb } from "../localDb/localDB";
+import { MovePage } from "../model/page";
+import { Set } from "../model/set";
+import { MoveSSHClient } from "../moveClient/MoveSSHClient";
+
+export class MoveManager {
+  private readonly localDb: LocalDb;
+  private readonly ssh: MoveSSHClient;
+  private isPerformingOperation = false;
+
+  constructor(localDb: LocalDb, ssh: MoveSSHClient) {
+    this.localDb = localDb;
+    this.ssh = ssh;
+  }
+
+  private async begin() {
+    this.isPerformingOperation = true;
+    await this.localDb.init();
+    await this.ssh.connect();
+  }
+
+  private async end() {
+    if (this.isPerformingOperation) {
+      this.isPerformingOperation = false;
+      await this.ssh.disconnect();
+    }
+  }
+
+  private getDefaultPageName(moveMacAddress: string) {
+    return `default-${moveMacAddress.replace(/:/g, "-")}`;
+  }
+
+  private async _uploadSet(
+    setId: string,
+    name: string | undefined,
+    index: number | undefined,
+    color: number | undefined,
+    setsOnDevice: Set[] | undefined
+  ) {
+    const set = await this.localDb.getSet(setId);
+    if (!set) {
+      throw new Error(`Set ${setId} not found`);
+    }
+    if (index === undefined) {
+      index = set.meta.index;
+    }
+    if (index > 31 || index < 0) {
+      throw new Error(`Index ${index} is out of range`);
+    }
+    if (color === undefined) {
+      color = set.meta.color;
+    }
+    if (color < 0 || color > 26) {
+      throw new Error(`Color ${color} is out of range`);
+    }
+    if (setsOnDevice === undefined) {
+      setsOnDevice = await this.ssh.listSets();
+    }
+    if (name === undefined) {
+      name = set.meta.name;
+    }
+    const setOnDevice = setsOnDevice.find((s) => s.meta.index === index);
+    if (setOnDevice) {
+      throw new Error(
+        `Index ${index} is already occupied by ${setOnDevice.meta.name}`
+      );
+    }
+    const uploadedSet = await this.ssh.uploadSet({
+      ...set,
+      meta: {
+        ...set.meta,
+        name,
+        index,
+        color,
+      },
+    });
+    setsOnDevice.push(uploadedSet);
+  }
+
+  public async uploadSet(
+    setId: string,
+    name?: string,
+    index?: number,
+    color?: number
+  ) {
+    try {
+      await this.begin();
+      await this._uploadSet(setId, name, index, color, undefined);
+    } finally {
+      await this.end();
+    }
+  }
+
+  public async uploadPage(pageId: string) {
+    try {
+      await this.begin();
+      const page = await this.localDb.getPage(pageId);
+      if (!page) {
+        throw new Error(`Page ${pageId} not found`);
+      }
+      //Check that every index in the page is unique
+      const indices = new Set();
+      for (const setInPage of page.sets) {
+        if (indices.has(setInPage.index)) {
+          throw new Error(`Index ${setInPage.index} is already occupied`);
+        }
+        indices.add(setInPage.index);
+      }
+      await this._wipeAllSetsOnDevice();
+      const setsOnDevice = await this.ssh.listSets();
+      for (const setInPage of page.sets) {
+        await this._uploadSet(
+          setInPage.id,
+          setInPage.alias,
+          setInPage.index,
+          setInPage.color,
+          setsOnDevice
+        );
+      }
+    } finally {
+      await this.end();
+    }
+  }
+
+  public async wipeAllSetsOnDevice() {
+    try {
+      await this.begin();
+      await this._wipeAllSetsOnDevice();
+    } finally {
+      await this.end();
+    }
+  }
+
+  private async _wipeAllSetsOnDevice() {
+    const sets = await this.ssh.listSets();
+    for (const set of sets) {
+      await this.ssh.deleteSet(set.meta.id);
+    }
+  }
+
+  public async downloadAllSets() {
+    try {
+      await this.begin();
+      await this.localDb.startDbUpdate();
+      const moveMacAddress = (await this.ssh.getMACAddress()) || "UNKNOWN";
+      let moveDevice = await this.localDb.getDevice(moveMacAddress);
+      console.log(`moveDevice: ${moveDevice?.id}`);
+      let page: MovePage | undefined;
+      if (!moveDevice) {
+        page = {
+          id: this.getDefaultPageName(moveMacAddress),
+          name: "Default",
+          sets: [],
+        };
+        moveDevice = {
+          id: moveMacAddress,
+          name: "Ableton Move Device",
+          currentPageId: page.id,
+        };
+        console.log(
+          `Adding new Move device: ${moveDevice.name} with default page ${page.id}`
+        );
+        await this.localDb.updateDevice(moveDevice);
+        await this.localDb.commitDbUpdate(`New Move device: ${moveMacAddress}`);
+      } else {
+        page = await this.localDb.getPage(moveDevice.currentPageId);
+        if (!page) {
+          page = {
+            id: this.getDefaultPageName(moveMacAddress),
+            name: "Default",
+            sets: [],
+          };
+        }
+      }
+      const sets = await this.ssh.listSets();
+      page.sets = [];
+      for (const set of sets) {
+        await this.localDb.saveSet(set, moveMacAddress, async (setDirPath) => {
+          await this.ssh.downloadSet(set.meta.id, setDirPath);
+        });
+        page.sets.push({
+          id: set.meta.id,
+          index: set.meta.index,
+          color: set.meta.color,
+        });
+      }
+      await this.localDb.updatePage(page);
+      await this.localDb.commitDbUpdate(
+        `Downloaded current sets from ${moveMacAddress}`
+      );
+      return sets;
+    } catch (e) {
+      throw e;
+    } finally {
+      await this.end();
+    }
+  }
+
+  public async getAllSets() {
+    await this.localDb.init();
+    const sets = await this.localDb.getSets();
+    return sets;
+  }
+}
