@@ -35,6 +35,7 @@ export type SSHConnectionOpts = {
   host?: string;
   port: number;
   privKeyPath: string;
+  privKeyPassphrase?: string;
   username?: string;
 };
 
@@ -54,6 +55,7 @@ export class MoveSSHClient implements IMoveSSHClient {
       host: this.connectionOpts.host,
       port: this.connectionOpts.port,
       privateKeyPath: this.connectionOpts.privKeyPath,
+      passphrase: this.connectionOpts.privKeyPassphrase,
       username: this.connectionOpts.username,
     });
     this.sftp = await this.ssh.requestSFTP();
