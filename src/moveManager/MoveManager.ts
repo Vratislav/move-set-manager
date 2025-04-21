@@ -218,4 +218,45 @@ export class MoveManager {
     const page = await this.localDb.getPage(pageId);
     return page;
   }
+
+  public async createPage(page: MovePage, deviceId: string | undefined) {
+    await this.localDb.init();
+    await this.localDb.updatePage(page);
+    if (deviceId) {
+      const device = await this.localDb.getDevice(deviceId);
+      if (!device) {
+        throw new Error(`Device ${deviceId} not found`);
+      }
+      device.currentPageId = page.id;
+      await this.localDb.updateDevice(device);
+    }
+    await this.localDb.commitDbUpdate(
+      `Created page: ${page.name} (${page.id})`
+    );
+  }
+
+  public async updatePage(page: MovePage) {
+    await this.localDb.init();
+    await this.localDb.updatePage(page);
+    await this.localDb.commitDbUpdate(
+      `Updated page: ${page.name} (${page.id})`
+    );
+  }
+
+  public async setActivePage(pageId: string, deviceId: string) {
+    await this.localDb.init();
+    const page = await this.localDb.getPage(pageId);
+    if (!page) {
+      throw new Error(`Page ${pageId} not found`);
+    }
+    const device = await this.localDb.getDevice(deviceId);
+    if (!device) {
+      throw new Error(`Device ${deviceId} not found`);
+    }
+    device.currentPageId = pageId;
+    await this.localDb.updateDevice(device);
+    await this.localDb.commitDbUpdate(
+      `Set active page to ${page.name} on device ${device.name} (${pageId}  -> ${deviceId})`
+    );
+  }
 }
