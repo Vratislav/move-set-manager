@@ -6,7 +6,9 @@ import { Flex, Box } from '@radix-ui/themes';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
 import { Sidebar } from './components/Sidebar';
+import { EditSetForm } from './components/EditSetForm';
 import { SetData } from './components/MoveGridSet';
+import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
 
 // --- Mock Data --- //
@@ -50,6 +52,11 @@ const generateMockSets = (pageName: string): (SetData | null)[] => {
   }
   return sets;
 };
+
+// Mock data for other versions - Moved here from Sidebar
+const mockOtherVersions: VersionInfo[] = [
+  { id: 'punchy-d324c', name: 'Make it more punchy', revision: '(d324c)', isLockable: true },
+];
 // ----------------- //
 
 function App(): React.JSX.Element {
@@ -128,12 +135,22 @@ function App(): React.JSX.Element {
             />
           </Flex>
 
+          {/* Sidebar now wraps the content (EditSetForm) */}
           <Sidebar
-            selectedSet={selectedSet}
+            title="Set Details"
+            idLabel={selectedSet ? `id: ${selectedSet.id}` : undefined}
             isOpen={isSidebarOpen}
             onClose={handleCloseSidebar}
-            onUpdateSet={handleUpdateSet} // Pass mock update handler
-          />
+          >
+            {/* Conditionally render EditSetForm only if a set is selected */}
+            {selectedSet && (
+              <EditSetForm
+                set={selectedSet}
+                otherVersions={mockOtherVersions}
+                onUpdateSet={handleUpdateSet}
+              />
+            )}
+          </Sidebar>
         </Box>
       </QueryClientProvider>
     </trpcReact.Provider>
