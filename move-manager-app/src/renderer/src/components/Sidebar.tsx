@@ -33,7 +33,7 @@ const mockColors = [
 
 // Mock data for other versions
 const mockOtherVersions: VersionInfo[] = [
-  { id: 'punchy-d324c', name: 'Make it more punchy', revision: '(d324c)', isEditable: true },
+  { id: 'punchy-d324c', name: 'Make it more punchy', revision: '(d324c)', isLockable: true },
   // Add more mock versions here if needed
 ];
 
@@ -42,6 +42,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSet, isOpen, onClose, 
 
   // State for the selected version in the radio group
   const [selectedVersionId, setSelectedVersionId] = useState<string>('current');
+  // State for the locked version ID
+  const [lockedVersionId, setLockedVersionId] = useState<string | null>(null);
 
   // --- Mock Handlers (keep using console.log for now) --- //
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +62,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSet, isOpen, onClose, 
     console.log('Version changed:', versionId);
     setSelectedVersionId(versionId); // Update state
   };
-  const handleEditVersionClick = (versionId: string) => {
-    console.log('Edit version clicked:', versionId);
-    // Add logic for editing a version (e.g., open a modal)
+  const handleLockVersionToggle = (versionId: string) => {
+    const newLockedId = lockedVersionId === versionId ? null : versionId;
+    setLockedVersionId(newLockedId);
+    console.log(`Toggled lock for version: ${versionId}. New Locked ID: ${newLockedId}`);
+    // Note: In a real app, you might want to prevent changing selectedVersionId
+    // if a version is locked, or handle that interaction differently.
   };
   // ------------------------------------------------------ //
 
@@ -127,8 +132,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSet, isOpen, onClose, 
           currentRevision={selectedSet.revision}
           otherVersions={mockOtherVersions} // Pass mock other versions
           selectedVersionId={selectedVersionId} // Pass state
+          lockedVersionId={lockedVersionId} // Pass locked state
           onVersionChange={handleVersionChange} // Pass handler
-          onEditVersionClick={handleEditVersionClick} // Pass edit handler
+          onLockVersionToggle={handleLockVersionToggle} // Pass lock toggle handler
         />
 
       </Flex>
