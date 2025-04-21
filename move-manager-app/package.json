@@ -23,7 +23,9 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@radix-ui/themes": "^3.2.1",
     "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-router": "^1.116.0",
     "@trpc/client": "^10",
     "@trpc/react-query": "^10",
     "@trpc/server": "^10",
