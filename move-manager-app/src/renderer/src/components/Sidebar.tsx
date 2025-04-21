@@ -72,9 +72,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSet, isOpen, onClose, 
         {/* Header */}
         <Flex justify="between" align="center">
           <Heading size="5">Set Details</Heading>
-          <IconButton variant="ghost" color="gray" onClick={onClose} aria-label="Close sidebar">
-            <Cross1Icon />
-          </IconButton>
+          <Flex align="center" gap="3">
+            <Text size="1" color="gray">id: {selectedSet.id}</Text>
+            <IconButton variant="ghost" color="gray" onClick={onClose} aria-label="Close sidebar">
+              <Cross1Icon />
+            </IconButton>
+          </Flex>
         </Flex>
 
         <Separator size="4" />
