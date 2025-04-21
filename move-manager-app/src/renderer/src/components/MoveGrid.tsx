@@ -6,9 +6,15 @@ interface MoveGridProps {
   sets: (SetData | null)[]; // Array of 32 sets or null for empty slots
   onSlotClick: (index: number, set: SetData | null) => void; // Pass index and set/null
   onDeleteSet: (setId: string) => void;
+  highlightedIndex: number | null; // Index of the slot to highlight
 }
 
-export const MoveGrid: React.FC<MoveGridProps> = ({ sets, onSlotClick, onDeleteSet }) => {
+export const MoveGrid: React.FC<MoveGridProps> = ({
+  sets,
+  onSlotClick,
+  onDeleteSet,
+  highlightedIndex,
+}) => {
   if (sets.length !== 32) {
     console.error('MoveGrid requires exactly 32 sets (including null for empty slots).');
     // Render placeholder or error state
@@ -23,6 +29,7 @@ export const MoveGrid: React.FC<MoveGridProps> = ({ sets, onSlotClick, onDeleteS
           set={set}
           onClick={() => onSlotClick(index, set)} // Always trigger, pass index and set/null
           onDelete={onDeleteSet}
+          isHighlighted={index === highlightedIndex} // Highlight based on index
         />
       ))}
     </Grid>

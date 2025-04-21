@@ -155,6 +155,18 @@ function App(): React.JSX.Element {
     return allPossibleSets.filter(s => !currentSetIds.has(s.id));
   }, [currentPageSets]);
 
+  // Determine which grid index should be highlighted
+  const highlightedIndex = useMemo(() => {
+    if (sidebarMode === 'edit' && selectedSet) {
+      // Find the index of the selected set in the current page grid
+      return currentPageSets.findIndex(s => s?.id === selectedSet.id);
+    }
+    if (sidebarMode === 'assign') {
+      return selectedSlotIndex;
+    }
+    return null; // No highlight if sidebar is closed or mode is null
+  }, [sidebarMode, selectedSet, selectedSlotIndex, currentPageSets]);
+
   return (
     <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
@@ -174,6 +186,7 @@ function App(): React.JSX.Element {
               sets={currentPageSets}
               onSlotClick={handleSlotClick}
               onDeleteSet={handleDeleteSet}
+              highlightedIndex={highlightedIndex}
             />
           </Flex>
 

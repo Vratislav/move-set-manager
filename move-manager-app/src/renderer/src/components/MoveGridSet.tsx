@@ -14,9 +14,10 @@ interface MoveGridSetProps {
   set: SetData | null;
   onClick: () => void;
   onDelete: (setId: string) => void;
+  isHighlighted: boolean;
 }
 
-export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete }) => {
+export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete, isHighlighted }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleDelete = (e: React.MouseEvent) => {
@@ -42,10 +43,12 @@ export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 'var(--space-2)',
+        padding: isHighlighted ? 'calc(var(--space-2) - 1px)' : 'var(--space-2)',
         transition: 'background-color 0.1s ease-in-out',
         overflow: 'hidden',
-        border: `1px solid ${set ? 'var(--gray-a5)' : 'var(--gray-a4)'}`
+        border: isHighlighted
+          ? `2px solid var(--blue-a7)` // Highlight for selected
+          : `1px solid ${set ? 'var(--gray-a5)' : 'var(--gray-a4)'}`, // Default border
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
