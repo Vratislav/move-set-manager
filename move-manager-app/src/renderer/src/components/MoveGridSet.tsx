@@ -33,8 +33,8 @@ export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete
     <Box
       style={{
         position: 'relative',
-        height: '100px', // Adjust height as needed
-        width: '100%',
+        height: '100px', // Current height
+        width: '100px', // Make width equal to height
         backgroundColor: isHovered ? hoverBgColor : bgColor,
         borderRadius: 'var(--radius-3)',
         cursor: 'pointer',
