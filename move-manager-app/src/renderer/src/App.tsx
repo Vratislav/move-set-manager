@@ -1,12 +1,13 @@
 import { ipcLink } from 'electron-trpc/renderer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { trpcReact } from './trpc';
 import { Flex, Box } from '@radix-ui/themes';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
 import { Sidebar } from './components/Sidebar';
 import { EditSetForm } from './components/EditSetForm';
+import { AssignSetToGridForm } from './components/AssignSetToGridForm';
 import { SetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
@@ -14,41 +15,33 @@ import './App.css'; // Import global styles
 // --- Mock Data --- //
 const mockPages = ['Page 1', 'Page 2', 'Empty Page'];
 
+// Generate a larger pool of potential sets
+const allPossibleSets: SetData[] = Array.from({ length: 50 }, (_, i) => {
+  const colors = ['cyan', 'blue', 'green', 'orange', 'red', 'purple', 'yellow', 'pink'];
+  const colorName = colors[i % colors.length];
+  return {
+    id: `Set-${i + 1}`,
+    name: `Awesome Set ${i + 1}`,
+    revision: `rev${Math.floor(Math.random() * 10)}`,
+    color: `var(--${colorName}-a7)`,
+    alias: Math.random() > 0.8 ? `Alias ${i}` : undefined,
+  };
+});
+
 const generateMockSets = (pageName: string): (SetData | null)[] => {
   if (pageName === 'Empty Page') {
     return Array(32).fill(null);
   }
-  const colors = [
-    'var(--cyan-a7)',
-    'var(--blue-a7)',
-    'var(--green-a7)',
-    'var(--orange-a7)',
-    'var(--red-a7)',
-    'var(--purple-a7)',
-    'var(--yellow-a7)',
-    'var(--pink-a7)'
-  ];
   const sets: (SetData | null)[] = Array(32).fill(null);
-  for (let i = 0; i < 15; i++) {
-    // Sprinkle some sets randomly
+  // Sprinkle some sets from the pool onto the page
+  const setsForThisPage = [...allPossibleSets].sort(() => 0.5 - Math.random()).slice(0, 15); // Take 15 random sets
+  let placedCount = 0;
+  while (placedCount < setsForThisPage.length) {
     const index = Math.floor(Math.random() * 32);
     if (sets[index] === null) {
-      const setId = `${pageName.replace(' ', '')}-Set${i + 1}`;
-      sets[index] = {
-        id: setId,
-        name: `Set ${i + 1}`,
-        revision: `rev${Math.floor(Math.random() * 5) + 1}`,
-        color: colors[i % colors.length],
-        alias: Math.random() > 0.7 ? `Alias ${i}` : undefined,
-      };
+      sets[index] = setsForThisPage[placedCount];
+      placedCount++;
     }
-  }
-  // Ensure at least one specific set for testing sidebar
-  if (pageName === 'Page 1' && sets[5] === null) {
-    sets[5] = { id: 'P1-TestSet', name: 'Test Set', revision: 'revT', color: 'var(--blue-a7)' };
-  }
-  if (pageName === 'Page 2' && sets[10] === null) {
-    sets[10] = { id: 'P2-AnotherSet', name: 'Another One', revision: 'revA', color: 'var(--green-a7)', alias: 'DJ Khaled' };
   }
   return sets;
 };
@@ -71,19 +64,34 @@ function App(): React.JSX.Element {
   const [currentPageSets, setCurrentPageSets] = useState<(SetData | null)[]>(() => generateMockSets(selectedPage));
   const [selectedSet, setSelectedSet] = useState<SetData | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
+  const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
 
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
     setCurrentPageSets(generateMockSets(page));
     setSelectedSet(null); // Close sidebar when changing page
     setIsSidebarOpen(false);
+    setSidebarMode(null);
+    setSelectedSlotIndex(null);
     console.log(`Selected page: ${page}`);
   };
 
-  const handleSetClick = (set: SetData) => {
-    setSelectedSet(set);
+  const handleSlotClick = (index: number, set: SetData | null) => {
+    if (set) {
+      // Clicked on a slot with a set -> Edit mode
+      setSelectedSet(set);
+      setSidebarMode('edit');
+      setSelectedSlotIndex(null); // Not needed for edit mode
+      console.log(`Selected set for editing: ${set.name} at index ${index}`);
+    } else {
+      // Clicked on an empty slot -> Assign mode
+      setSelectedSet(null); // No specific set selected
+      setSidebarMode('assign');
+      setSelectedSlotIndex(index); // Remember which slot to assign to
+      console.log(`Selected empty slot for assignment at index ${index}`);
+    }
     setIsSidebarOpen(true);
-    console.log(`Selected set: ${set.name}`);
   };
 
   const handleDeleteSet = (setId: string) => {
@@ -98,6 +106,8 @@ function App(): React.JSX.Element {
 
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
+    setSidebarMode(null);
+    setSelectedSlotIndex(null);
     // Optionally deselect the set when closing?
     // setSelectedSet(null);
   };
@@ -112,6 +122,38 @@ function App(): React.JSX.Element {
     // setCurrentPageSets(prev => prev.map(s => s?.id === selectedSet?.id ? { ...s, ...updatedSet } : s));
     // setSelectedSet(prev => prev ? { ...prev, ...updatedSet } : null);
   };
+
+  // Handler for assigning a set from the AssignSetToGridForm
+  const handleAssignSet = (setId: string) => {
+    if (selectedSlotIndex === null) return; // Should not happen
+
+    const set_to_assign = allPossibleSets.find(s => s.id === setId);
+    if (!set_to_assign) return; // Set not found in available sets
+
+    console.log(`Assigning set ${setId} (${set_to_assign.name}) to slot index ${selectedSlotIndex}`);
+
+    // Update the grid state (replace null at selectedSlotIndex with the chosen set)
+    setCurrentPageSets(prevSets => {
+      const newSets = [...prevSets];
+      // Basic check: ensure the set isn't already on this page in another slot
+      if (newSets.some(s => s?.id === setId)) {
+         console.warn(`Set ${setId} is already on this page.`);
+         // Potentially show user feedback here
+         return prevSets; // Don't assign if already present
+      }
+      newSets[selectedSlotIndex] = set_to_assign;
+      return newSets;
+    });
+
+    // Close the sidebar after assignment
+    handleCloseSidebar();
+  };
+
+  // Determine available sets (those in allPossibleSets but not in currentPageSets)
+  const availableSetsForAssignment = useMemo(() => {
+    const currentSetIds = new Set(currentPageSets.filter(s => s !== null).map(s => s!.id));
+    return allPossibleSets.filter(s => !currentSetIds.has(s.id));
+  }, [currentPageSets]);
 
   return (
     <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
@@ -130,24 +172,30 @@ function App(): React.JSX.Element {
             />
             <MoveGrid
               sets={currentPageSets}
-              onSetClick={handleSetClick}
+              onSlotClick={handleSlotClick}
               onDeleteSet={handleDeleteSet}
             />
           </Flex>
 
-          {/* Sidebar now wraps the content (EditSetForm) */}
+          {/* Sidebar now wraps the content (EditSetForm or AssignSetToGridForm) */}
           <Sidebar
-            title="Set Details"
-            idLabel={selectedSet ? `id: ${selectedSet.id}` : undefined}
+            title={sidebarMode === 'edit' ? 'Set Details' : sidebarMode === 'assign' ? 'Assign Set to Slot' : ''}
+            idLabel={sidebarMode === 'edit' && selectedSet ? `id: ${selectedSet.id}` : undefined}
             isOpen={isSidebarOpen}
             onClose={handleCloseSidebar}
           >
-            {/* Conditionally render EditSetForm only if a set is selected */}
-            {selectedSet && (
+            {/* Conditionally render correct form based on sidebarMode */}
+            {sidebarMode === 'edit' && selectedSet && (
               <EditSetForm
                 set={selectedSet}
                 otherVersions={mockOtherVersions}
                 onUpdateSet={handleUpdateSet}
+              />
+            )}
+            {sidebarMode === 'assign' && (
+              <AssignSetToGridForm
+                availableSets={availableSetsForAssignment}
+                onAssignSet={handleAssignSet}
               />
             )}
           </Sidebar>

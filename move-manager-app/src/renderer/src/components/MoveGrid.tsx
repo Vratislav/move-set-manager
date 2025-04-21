@@ -4,11 +4,11 @@ import { MoveGridSet, SetData } from './MoveGridSet';
 
 interface MoveGridProps {
   sets: (SetData | null)[]; // Array of 32 sets or null for empty slots
-  onSetClick: (set: SetData) => void;
+  onSlotClick: (index: number, set: SetData | null) => void; // Pass index and set/null
   onDeleteSet: (setId: string) => void;
 }
 
-export const MoveGrid: React.FC<MoveGridProps> = ({ sets, onSetClick, onDeleteSet }) => {
+export const MoveGrid: React.FC<MoveGridProps> = ({ sets, onSlotClick, onDeleteSet }) => {
   if (sets.length !== 32) {
     console.error('MoveGrid requires exactly 32 sets (including null for empty slots).');
     // Render placeholder or error state
@@ -21,7 +21,7 @@ export const MoveGrid: React.FC<MoveGridProps> = ({ sets, onSetClick, onDeleteSe
         <MoveGridSet
           key={set ? set.id : `empty-${index}`}
           set={set}
-          onClick={() => set && onSetClick(set)} // Only trigger click if set exists
+          onClick={() => onSlotClick(index, set)} // Always trigger, pass index and set/null
           onDelete={onDeleteSet}
         />
       ))}
