@@ -42,14 +42,6 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
           onChange={onChange}
           style={{ flexGrow: 1 }}
         />
-        <IconButton
-          variant="ghost"
-          size="1"
-          aria-label={`Edit ${label.toLowerCase()}`}
-          // onClick={onEditClick} // Add if needed
-        >
-          <Pencil1Icon />
-        </IconButton>
       </Flex>
     </LabeledSection>
   );

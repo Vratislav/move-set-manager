@@ -119,9 +119,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedSet, isOpen, onClose, 
                 ))}
               </Select.Content>
             </Select.Root>
-            <IconButton variant="ghost" size="1" aria-label="Edit color">
-              <Pencil1Icon />
-            </IconButton>
           </Flex>
         </LabeledSection>
 
