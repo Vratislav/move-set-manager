@@ -49,7 +49,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
         <Flex gap="3">
           <ActionButton onClick={onDuplicatePage}>Duplicate page</ActionButton>
-          <ActionButton onClick={onUpdatePage}>Update page from move</ActionButton>
+          <ActionButton onClick={onUpdatePage}>Download page from move</ActionButton>
           <ActionButton onClick={onUploadPage}>Upload page to move</ActionButton>
         </Flex>
       </Flex>
