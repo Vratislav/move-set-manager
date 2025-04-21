@@ -187,6 +187,7 @@ function App(): React.JSX.Element {
             {/* Conditionally render correct form based on sidebarMode */}
             {sidebarMode === 'edit' && selectedSet && (
               <EditSetForm
+                key={selectedSet.id}
                 set={selectedSet}
                 otherVersions={mockOtherVersions}
                 onUpdateSet={handleUpdateSet}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Flex,
   Select,
@@ -36,8 +36,17 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
   onUpdateSet,
 }) => {
   // Internal state for version selection and locking
-  const [selectedVersionId, setSelectedVersionId] = useState<string>('current');
+  const [selectedVersionId, setSelectedVersionId] = useState('current');
   const [lockedVersionId, setLockedVersionId] = useState<string | null>(null);
+
+  // Reset internal state when the set prop changes
+  useEffect(() => {
+    setSelectedVersionId('current');
+    setLockedVersionId(null);
+    // Note: If text fields were controlled, reset their state here too.
+    // Since we are using the `key` prop on EditSetForm now, their
+    // internal state is reset by React remounting them.
+  }, [set.id]); // Dependency array ensures this runs when the set ID changes
 
   // --- Mock Handlers (pointing to console logs for now) ---
   // These could eventually call onUpdateSet
