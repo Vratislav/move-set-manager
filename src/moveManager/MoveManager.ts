@@ -206,4 +206,16 @@ export class MoveManager {
     const sets = await this.localDb.getSets();
     return sets;
   }
+
+  public async getAllPages() {
+    await this.localDb.init();
+    const pages = await this.localDb.getPages();
+    return pages;
+  }
+
+  public async getPage(pageId: string) {
+    await this.localDb.init();
+    const page = await this.localDb.getPage(pageId);
+    return page;
+  }
 }

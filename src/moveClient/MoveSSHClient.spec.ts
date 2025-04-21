@@ -13,7 +13,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await stopMockAbletonMoveServer();
-});
+}, 10000);
 
 const connectionOpts = {
   port: 2222,

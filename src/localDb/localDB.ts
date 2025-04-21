@@ -285,17 +285,28 @@ export class LocalDb {
   }
 
   public async updatePage(page: MovePage) {
-    const pagesPath = path.join(this.rootDirPath, PAGES_DIR, page.id);
+    const pagesPath = path.join(this.rootDirPath, PAGES_DIR, `${page.id}.json`);
     await fs.promises.writeFile(pagesPath, JSON.stringify(page, null, 2));
   }
 
   public async getPage(pageId: string): Promise<MovePage | undefined> {
-    const pagesPath = path.join(this.rootDirPath, PAGES_DIR, pageId);
+    const pagesPath = path.join(this.rootDirPath, PAGES_DIR, `${pageId}.json`);
     if (!fs.existsSync(pagesPath)) {
       return undefined;
     }
     const page = await fs.promises.readFile(pagesPath, "utf8");
     return JSON.parse(page);
+  }
+
+  public async getPages(): Promise<MovePage[]> {
+    const pagesPath = path.join(this.rootDirPath, PAGES_DIR);
+    const pages = await fs.promises.readdir(pagesPath);
+    //filter out non-json files
+    const jsonPages = pages.filter((page) => page.endsWith(".json"));
+    return jsonPages.map((page) => {
+      const contents = fs.readFileSync(path.join(pagesPath, page), "utf8");
+      return JSON.parse(contents) as MovePage;
+    });
   }
 
   public async saveSet(
