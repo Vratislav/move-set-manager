@@ -1,0 +1,17 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Start off-screen (adjust width as needed) */
+    width: 350px; /* Adjust width as needed */
+    height: 100%;
+    background-color: var(--gray-2);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    border-left: 1px solid var(--gray-a5);
+    overflow-y: auto; /* Add scroll if content exceeds height */
+  }
+  
+  .sidebar.open {
+    right: 0; /* Slide in */
+  } 

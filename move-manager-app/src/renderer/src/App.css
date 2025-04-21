@@ -1,0 +1,13 @@
+/* Add any global or App-specific styles here */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* Ensures Radix theme takes full viewport height */
+  background-color: var(--gray-1);
+}
+
+/* Optional: Style for the main content area if needed */
+/* .main-content { */
+  /* ... */
+/* } */ 

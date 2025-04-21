@@ -1,0 +1,87 @@
+import React, { useState } from 'react';
+import { Box, Text, Flex, IconButton } from '@radix-ui/themes';
+import { Cross2Icon } from '@radix-ui/react-icons';
+
+export interface SetData {
+  id: string;
+  name: string;
+  revision: string;
+  color: string; // e.g., 'var(--cyan-9)' or '#aabbcc'
+  alias?: string;
+}
+
+interface MoveGridSetProps {
+  set: SetData | null;
+  onClick: () => void;
+  onDelete: (setId: string) => void;
+}
+
+export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering onClick for the parent Box
+    if (set) {
+      onDelete(set.id);
+    }
+  };
+
+  const bgColor = set ? set.color : 'var(--gray-3)';
+  const hoverBgColor = set ? 'var(--gray-a4)' : 'var(--gray-4)';
+
+  return (
+    <Box
+      style={{
+        position: 'relative',
+        height: '100px', // Adjust height as needed
+        width: '100%',
+        backgroundColor: isHovered ? hoverBgColor : bgColor,
+        borderRadius: 'var(--radius-3)',
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 'var(--space-2)',
+        transition: 'background-color 0.1s ease-in-out',
+        overflow: 'hidden',
+        border: `1px solid ${set ? 'var(--gray-a5)' : 'var(--gray-a4)'}`
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
+    >
+      {set ? (
+        <>
+          <Text size="2" weight="bold" align="center" style={{ color: 'var(--gray-12)' }}>
+            {set.name}
+          </Text>
+          <Text size="1" style={{ color: 'var(--gray-11)' }}>
+            ({set.revision})
+          </Text>
+          {isHovered && (
+            <IconButton
+              variant="ghost"
+              color="red"
+              highContrast
+              size="1"
+              style={{
+                position: 'absolute',
+                top: 'var(--space-1)',
+                right: 'var(--space-1)',
+              }}
+              onClick={handleDelete}
+              aria-label="Remove set"
+            >
+              <Cross2Icon />
+            </IconButton>
+          )}
+        </>
+      ) : (
+        <Text size="1" style={{ color: 'var(--gray-9)' }}>
+          Empty
+        </Text>
+      )}
+    </Box>
+  );
+}; 
