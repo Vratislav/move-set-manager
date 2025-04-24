@@ -1,7 +1,7 @@
-import { MoveSetInPage } from "./set";
+import { MoveSetInPage } from './set'
 
 export type MovePage = {
-  id: string;
-  name: string;
-  sets: MoveSetInPage[];
-};
+  id: string
+  name: string
+  sets: MoveSetInPage[]
+}
