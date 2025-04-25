@@ -54,6 +54,11 @@ const mockOtherVersions: VersionInfo[] = [
 
 function App(): React.JSX.Element {     
 
+  const { data: devices } = trpcReact.getAllDevices.useQuery()
+  console.log(devices)
+
+ 
+
   const [selectedPage, setSelectedPage] = useState<string>(mockPages[0]);
   const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(() => generateMockSets(selectedPage));
   const [selectedSet, setSelectedSet] = useState<ReactSetData | null>(null);
