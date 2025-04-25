@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import { Theme, ThemePanel } from '@radix-ui/themes'
-
+import TrpcQueryProvider from './TrpcQueryProvider'   
 
 createRoot(document.getElementById('root')!).render(
 
@@ -11,7 +11,9 @@ createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
     <Theme accentColor="grass" radius="large" appearance="dark">
-      <App />
+      <TrpcQueryProvider>
+        <App />
+      </TrpcQueryProvider>
       {/* <ThemePanel /> */}
     </Theme>
   </StrictMode>

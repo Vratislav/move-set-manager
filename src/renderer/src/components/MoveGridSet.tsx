@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Text, Flex, IconButton } from '@radix-ui/themes';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
-export interface SetData {
+export interface ReactSetData {
   id: string;
   name: string;
   revision: string;
@@ -11,7 +11,7 @@ export interface SetData {
 }
 
 interface MoveGridSetProps {
-  set: SetData | null;
+  set: ReactSetData | null;
   onClick: () => void;
   onDelete: (setId: string) => void;
   isHighlighted: boolean;

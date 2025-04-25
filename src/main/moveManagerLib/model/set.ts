@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 export type MoveSetOnDevice = {
   id: string
   name: string
@@ -36,3 +38,10 @@ export type CompleteSetMetadata = {
 export type SetWithCompleteMetadata = MoveSet & {
   managerMeta: ManagerSetMetadata
 }
+
+export const MoveSetInPageZod = z.object({
+  id: z.string(),
+  alias: z.string().max(32).optional(),
+  color: z.number().min(0).max(26),
+  index: z.number().min(0).max(31)
+})

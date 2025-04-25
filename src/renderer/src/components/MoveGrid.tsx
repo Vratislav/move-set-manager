@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid } from '@radix-ui/themes';
-import { MoveGridSet, SetData } from './MoveGridSet';
+import { MoveGridSet, ReactSetData } from './MoveGridSet';
 
 interface MoveGridProps {
-  sets: (SetData | null)[]; // Array of 32 sets or null for empty slots
-  onSlotClick: (index: number, set: SetData | null) => void; // Pass index and set/null
+  sets: (ReactSetData | null)[]; // Array of 32 sets or null for empty slots
+  onSlotClick: (index: number, set: ReactSetData | null) => void; // Pass index and set/null
   onDeleteSet: (setId: string) => void;
   highlightedIndex: number | null; // Index of the slot to highlight
 }

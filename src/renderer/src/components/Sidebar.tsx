@@ -10,7 +10,7 @@ import {
   Separator,
 } from '@radix-ui/themes';
 import { Pencil1Icon, Cross1Icon } from '@radix-ui/react-icons';
-import { SetData } from './MoveGridSet';
+import { ReactSetData } from './MoveGridSet';
 import { LabeledSection, EditableTextField, VersionsSection, VersionInfo } from './SidebarComponents'; // Import reusable components
 import './Sidebar.css';
 

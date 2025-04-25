@@ -1,10 +1,12 @@
 import { SetColorOutOfRangeError, SetIndexOutOfRangeError, SetIndexTakenError } from '../errors'
 import { initLocalDb, LocalDb } from '../localDb/localDB'
+import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
 import { MoveSet } from '../model/set'
 import { MoveSSHClient } from '../moveClient/MoveSSHClient'
+import { IMoveManager } from './IMoveManager'
 
-export class MoveManager {
+export class MoveManager implements IMoveManager {
   private readonly localDb: LocalDb
   private readonly ssh: MoveSSHClient
   private isPerformingOperation = false
@@ -184,6 +186,12 @@ export class MoveManager {
     } finally {
       await this.end()
     }
+  }
+
+  public async getAllDevices(): Promise<MoveDevice[]> {
+    await this.localDb.init()
+    const devices = await this.localDb.getDevices()
+    return Object.values(devices)
   }
 
   public async getAllSets() {

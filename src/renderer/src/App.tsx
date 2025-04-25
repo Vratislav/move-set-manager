@@ -8,7 +8,7 @@ import { MoveGrid } from './components/MoveGrid';
 import { Sidebar } from './components/Sidebar';
 import { EditSetForm } from './components/EditSetForm';
 import { AssignSetToGridForm } from './components/AssignSetToGridForm';
-import { SetData } from './components/MoveGridSet';
+import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
 
@@ -16,7 +16,7 @@ import './App.css'; // Import global styles
 const mockPages = ['Page 1', 'Page 2', 'Empty Page'];
 
 // Generate a larger pool of potential sets
-const allPossibleSets: SetData[] = Array.from({ length: 50 }, (_, i) => {
+const allPossibleSets: ReactSetData[] = Array.from({ length: 50 }, (_, i) => {
   const colors = ['cyan', 'blue', 'green', 'orange', 'red', 'purple', 'yellow', 'pink'];
   const colorName = colors[i % colors.length];
   return {
@@ -28,11 +28,11 @@ const allPossibleSets: SetData[] = Array.from({ length: 50 }, (_, i) => {
   };
 });
 
-const generateMockSets = (pageName: string): (SetData | null)[] => {
+const generateMockSets = (pageName: string): (ReactSetData | null)[] => {
   if (pageName === 'Empty Page') {
     return Array(32).fill(null);
   }
-  const sets: (SetData | null)[] = Array(32).fill(null);
+  const sets: (ReactSetData | null)[] = Array(32).fill(null);
   // Sprinkle some sets from the pool onto the page
   const setsForThisPage = [...allPossibleSets].sort(() => 0.5 - Math.random()).slice(0, 15); // Take 15 random sets
   let placedCount = 0;
@@ -52,17 +52,11 @@ const mockOtherVersions: VersionInfo[] = [
 ];
 // ----------------- //
 
-function App(): React.JSX.Element {
-  const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    trpcReact.createClient({
-      links: [ipcLink()],
-    }),
-  );
+function App(): React.JSX.Element {     
 
   const [selectedPage, setSelectedPage] = useState<string>(mockPages[0]);
-  const [currentPageSets, setCurrentPageSets] = useState<(SetData | null)[]>(() => generateMockSets(selectedPage));
-  const [selectedSet, setSelectedSet] = useState<SetData | null>(null);
+  const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(() => generateMockSets(selectedPage));
+  const [selectedSet, setSelectedSet] = useState<ReactSetData | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
@@ -77,7 +71,7 @@ function App(): React.JSX.Element {
     console.log(`Selected page: ${page}`);
   };
 
-  const handleSlotClick = (index: number, set: SetData | null) => {
+  const handleSlotClick = (index: number, set: ReactSetData | null) => {
     if (set) {
       // Clicked on a slot with a set -> Edit mode
       setSelectedSet(set);
@@ -116,7 +110,7 @@ function App(): React.JSX.Element {
   const handleDuplicatePage = () => console.log('Duplicate page clicked');
   const handleUpdatePage = () => console.log('Update page from move clicked');
   const handleUploadPage = () => console.log('Upload page to move clicked');
-  const handleUpdateSet = (updatedSet: Partial<SetData>) => {
+  const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
     // In a real app, you'd update the state:
     // setCurrentPageSets(prev => prev.map(s => s?.id === selectedSet?.id ? { ...s, ...updatedSet } : s));
@@ -168,8 +162,7 @@ function App(): React.JSX.Element {
   }, [sidebarMode, selectedSet, selectedSlotIndex, currentPageSets]);
 
   return (
-    <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
+    <>
         {/* We wrap the main content and sidebar potentially */}
         {/* Using Box for now, might need more sophisticated layout later */}
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
@@ -214,8 +207,7 @@ function App(): React.JSX.Element {
             )}
           </Sidebar>
         </Box>
-      </QueryClientProvider>
-    </trpcReact.Provider>
+    </>
   );
 }
 

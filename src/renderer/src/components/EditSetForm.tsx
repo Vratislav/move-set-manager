@@ -6,7 +6,7 @@ import {
   Box,
 } from '@radix-ui/themes';
 import { Pencil1Icon } from '@radix-ui/react-icons'; // Keep for Color Select for now, or remove if not needed
-import { SetData } from './MoveGridSet';
+import { ReactSetData } from './MoveGridSet';
 import {
   LabeledSection,
   EditableTextField,
@@ -25,9 +25,9 @@ const mockColors = [
 ];
 
 interface EditSetFormProps {
-  set: SetData;
+  set: ReactSetData;
   otherVersions: VersionInfo[];
-  onUpdateSet: (updatedSet: Partial<SetData>) => void;
+  onUpdateSet: (updatedSet: Partial<ReactSetData>) => void;
 }
 
 export const EditSetForm: React.FC<EditSetFormProps> = ({

@@ -8,10 +8,10 @@ import {
   Heading,
 } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { SetData } from './MoveGridSet';
+import { ReactSetData } from './MoveGridSet';
 
 interface AssignSetToGridFormProps {
-  availableSets: SetData[];
+  availableSets: ReactSetData[];
   onAssignSet: (setId: string) => void;
 }
 

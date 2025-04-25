@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { createIPCHandler } from 'electron-trpc/main'
 import { appRouter } from './api'
+import { createContext } from './trpc'
 
 function createWindow(): void {
   // Create the browser window.
@@ -19,7 +20,7 @@ function createWindow(): void {
     }
   })
 
-  createIPCHandler({ router: appRouter, windows: [mainWindow] })
+  createIPCHandler({ router: appRouter, windows: [mainWindow], createContext })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
