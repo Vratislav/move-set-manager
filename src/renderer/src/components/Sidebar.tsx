@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Flex,
   Text,
   Heading,
   IconButton,
-  Select,
-  RadioCards,
   Separator,
 } from '@radix-ui/themes';
-import { Pencil1Icon, Cross1Icon } from '@radix-ui/react-icons';
-import { ReactSetData } from './MoveGridSet';
-import { LabeledSection, EditableTextField, VersionsSection, VersionInfo } from './SidebarComponents'; // Import reusable components
+import { Cross1Icon } from '@radix-ui/react-icons';
 import './Sidebar.css';
 
 interface SidebarProps {

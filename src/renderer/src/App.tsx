@@ -1,7 +1,7 @@
 import { ipcLink } from 'electron-trpc/renderer';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useState, useMemo } from 'react';
-import { trpcClient, trpcReact } from './trpc';
+import { trpcClient } from './trpc';
 import { Flex, Box } from '@radix-ui/themes';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
@@ -54,7 +54,7 @@ const mockOtherVersions: VersionInfo[] = [
 
 function App(): React.JSX.Element {     
 
-  const {data: dataDevices} = useQuery(['devices'],{queryFn: async () => {
+  const {data: dataDevices} = useQuery({queryKey: ['devices'], queryFn: async () => {
     console.log('Fetching devices')
     const devices = await trpcClient.getAllDevices.query()
     return devices
