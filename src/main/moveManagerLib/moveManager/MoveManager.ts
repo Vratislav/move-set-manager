@@ -3,6 +3,7 @@ import { initLocalDb, LocalDb } from '../localDb/localDB'
 import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
 import { MoveSet } from '../model/set'
+import { UserSettings } from '../model/userSettings'
 import { MoveSSHClient } from '../moveClient/MoveSSHClient'
 import { IMoveManager } from './IMoveManager'
 
@@ -247,5 +248,16 @@ export class MoveManager implements IMoveManager {
     await this.localDb.commitDbUpdate(
       `Set active page to ${page.name} on device ${device.name} (${pageId}  -> ${deviceId})`
     )
+  }
+
+  public async getUserSettings(): Promise<UserSettings | undefined> {
+    await this.localDb.init()
+    return await this.localDb.getUserSettings()
+  }
+
+  public async updateUserSettings(userSettings: UserSettings) {
+    await this.localDb.init()
+    await this.localDb.updateUserSettings(userSettings)
+    await this.localDb.commitDbUpdate(`Updated user settings`)
   }
 }

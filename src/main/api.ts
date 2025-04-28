@@ -1,7 +1,8 @@
 import { procedure, router } from './trpc'
 import { IMoveManager } from './moveManagerLib/moveManager/IMoveManager'
-import { MovePage, MovePageZod } from './moveManagerLib/model/page'
+import { MovePageZod } from './moveManagerLib/model/page'
 import { z } from 'zod'
+import { UserSettingsZod } from './moveManagerLib/model/userSettings'
 const moveManager: IMoveManager = undefined as any
 
 type GetPageParams = {
@@ -37,6 +38,16 @@ export const appRouter = router({
     .input(z.object({ deviceId: z.string().optional(), page: MovePageZod }))
     .mutation((opts) => {
       return opts.ctx.moveManager.createPage(opts.input.page, opts.input.deviceId)
+    }),
+
+  getUserSettings: procedure.query((opts) => {
+    return opts.ctx.moveManager.getUserSettings()
+  }),
+
+  updateUserSettings: procedure
+    .input(z.object({ userSettings: UserSettingsZod }))
+    .mutation((opts) => {
+      return opts.ctx.moveManager.updateUserSettings(opts.input.userSettings)
     })
 })
 // Export type router type signature,

@@ -10,11 +10,13 @@ import {
 import simpleGit, { CleanOptions, SimpleGit } from 'simple-git'
 import { MoveDevice, MoveDevices } from '../model/device'
 import { MovePage } from '../model/page'
+import { UserSettings } from '../model/userSettings'
 
 const SETS_DIR = 'sets'
 const META_DIR = 'meta'
 const PAGES_DIR = 'pages'
 const DEVICES_FILE = 'devices.json'
+const USER_SETTINGS_FILE = 'userSettings.json'
 const SET_FOLDER_PLACEHOLDER = '_set'
 const SET_SONG_FILE_PATH = path.join(SET_FOLDER_PLACEHOLDER, 'Song.abl')
 
@@ -98,6 +100,20 @@ export class LocalDb {
 
   public isInited() {
     return this._isInited
+  }
+
+  public async getUserSettings(): Promise<UserSettings | undefined> {
+    const userSettingsPath = path.join(this.rootDirPath, USER_SETTINGS_FILE)
+    if (!fs.existsSync(userSettingsPath)) {
+      return undefined
+    }
+    const userSettings = await fs.promises.readFile(userSettingsPath, 'utf8')
+    return JSON.parse(userSettings)
+  }
+
+  public async updateUserSettings(userSettings: UserSettings) {
+    const userSettingsPath = path.join(this.rootDirPath, USER_SETTINGS_FILE)
+    await fs.promises.writeFile(userSettingsPath, JSON.stringify(userSettings, null, 2))
   }
 
   public async getSet(setId: string): Promise<SetWithCompleteMetadata | undefined> {
