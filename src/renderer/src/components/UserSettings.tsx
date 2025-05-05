@@ -101,9 +101,12 @@ export const UserSettings: React.FC<UserSettingsProps> = ({
         <Heading size="3" mb="2">SSH Key</Heading>
         <Separator size="4" mb="3" />
         <Flex direction="column" gap="3">
-          <Text size="2" weight="medium">Path to private key</Text>
+          <label htmlFor="sshKeyPathInput">
+            <Text size="2" weight="medium">Path to private key</Text>
+          </label>
           <Flex gap="2" align="center">
             <TextField.Root
+              id="sshKeyPathInput"
               placeholder="/path/to/your/id_rsa"
               value={sshKeyPath}
               onChange={(e) => setSshKeyPath(e.target.value)}
@@ -113,15 +116,15 @@ export const UserSettings: React.FC<UserSettingsProps> = ({
                ...
             </Button>
           </Flex>
-          <Flex asChild align="center" gap="2">
-            <label>
-              <Checkbox
-                checked={hasPassphrase}
-                onCheckedChange={(checked) => setHasPassphrase(Boolean(checked))}
-              />
-              <Text size="2">SSH Key has a passphrase</Text>
-            </label>
-          </Flex>
+          <label htmlFor="hasPassphraseCheckbox" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+            <Checkbox
+              id="hasPassphraseCheckbox"
+              checked={hasPassphrase}
+              onCheckedChange={(checked) => setHasPassphrase(Boolean(checked))}
+              disabled
+            />
+            <Text size="2">SSH Key has a passphrase (not yet supported)</Text>
+          </label>
         </Flex>
       </Box>
 
@@ -130,23 +133,32 @@ export const UserSettings: React.FC<UserSettingsProps> = ({
           <Heading size="3" mb="2">Custom SSH Settings (Optional)</Heading>
           <Separator size="4" mb="3" />
           <Flex direction="column" gap="3">
-              <Text size="2" weight="medium">Host</Text>
+              <label htmlFor="sshHostInput">
+                  <Text size="2" weight="medium">Host</Text>
+              </label>
               <TextField.Root
+                  id="sshHostInput"
                   placeholder="move.local"
                   value={sshCustomHostname}
                   onChange={(e) => setSshCustomHostname(e.target.value)}
               />
-              <Text size="2" weight="medium">Port</Text>
+              <label htmlFor="sshPortInput">
+                <Text size="2" weight="medium">Port</Text>
+              </label>
               <TextField.Root
-                  type="number" // Use number type for better input control
+                  id="sshPortInput"
+                  type="number"
                   placeholder="22"
                   value={sshCustomPort}
-                  onChange={(e) => setSshCustomPort(e.target.value.replace(/[^0-9]/g, ''))} // Allow only numbers
+                  onChange={(e) => setSshCustomPort(e.target.value.replace(/[^0-9]/g, ''))}
                   min="1"
                   max="65535"
               />
-              <Text size="2" weight="medium">User</Text>
+              <label htmlFor="sshUserInput">
+                 <Text size="2" weight="medium">User</Text>
+              </label>
               <TextField.Root
+                  id="sshUserInput"
                   placeholder="ableton"
                   value={sshCustomUsername}
                   onChange={(e) => setSshCustomUsername(e.target.value)}
