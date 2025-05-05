@@ -2,8 +2,8 @@ import { ipcLink } from 'electron-trpc/renderer';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useState, useMemo } from 'react';
 import { trpcClient } from './trpc';
-import { Flex, Box, IconButton } from '@radix-ui/themes';
-import { GearIcon } from '@radix-ui/react-icons';
+import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
+import { GearIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
 import { Sidebar } from './components/Sidebar';
@@ -222,17 +222,32 @@ function App(): React.JSX.Element {
         {/* We wrap the main content and sidebar potentially */}
         {/* Using Box for now, might need more sophisticated layout later */}
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
-          {/* Settings Button - Top Right */}
-          <IconButton
-            variant="ghost"
-            color="gray"
-            size="3"
-            onClick={handleOpenSettingsModal}
+          {/* Settings Button and Conditional Warning - Top Right */}
+          <Flex
+            gap="2"
+            align="center"
             style={{ position: 'absolute', top: 'var(--space-5)', right: 'var(--space-4)', zIndex: 10 }}
-            aria-label="Open settings"
           >
-            <GearIcon width="20" height="20" />
-          </IconButton>
+            {/* Conditional Warning Label */}
+            {userSettingsData && !userSettingsData.sshPrivateKeyPath && (
+              <Badge color="yellow" variant="soft" size="2">
+                <Flex gap="1" align="center">
+                  <ExclamationTriangleIcon width="14" height="14" />
+                  <Text size="2">No SSH Key path set! Set it here →</Text>
+                </Flex>
+              </Badge>
+            )}
+            {/* Settings Button */}
+            <IconButton
+              variant="ghost"
+              color="gray"
+              size="3"
+              onClick={handleOpenSettingsModal}
+              aria-label="Open settings"
+            >
+              <GearIcon width="20" height="20" />
+            </IconButton>
+          </Flex>
 
           <Flex direction="column" gap="4" p="4">
             <TopBar
