@@ -200,18 +200,22 @@ function App(): React.JSX.Element {
     console.log('Closing settings modal');
   };
 
-  const handleSaveSettings = (settings: { sshKeyPath: string; hasPassphrase: boolean }) => {
+  const handleSaveSettings = (settings) => {
     console.log('Settings saved in App:', settings);
 
-    // Construct the full UserSettings object
-    const settingsToSave: UserSettingsType = { // Use the imported type
+    // Construct the full UserSettingsType object expected by the mutation
+    const settingsToSave: UserSettingsType = { 
       sshPrivateKeyPath: settings.sshKeyPath,
       sshKeyHasPassphrase: settings.hasPassphrase,
+      // Include new custom settings, falling back to undefined if not provided
+      sshCustomHostname: settings.sshCustomHostname,
+      sshCustomPort: settings.sshCustomPort,
+      sshCustomUsername: settings.sshCustomUsername,
+      // Preserve existing onboarding status or default
       onboardingCompleted: userSettingsData?.onboardingCompleted ?? true,
     };
 
     // Call the mutate function provided by the top-level hook
-    // Pass the data object to mutate, as is standard practice for TanStack Query mutations
     updateUserSettingsMutation.mutate(settingsToSave);
 
     handleCloseSettingsModal(); // Close modal after save
@@ -299,6 +303,10 @@ function App(): React.JSX.Element {
             <UserSettings
               initialSshKeyPath={userSettingsData?.sshPrivateKeyPath ?? ''}
               initialHasPassphrase={userSettingsData?.sshKeyHasPassphrase ?? false}
+              // Pass down initial custom settings
+              initialSshCustomHostname={userSettingsData?.sshCustomHostname}
+              initialSshCustomPort={userSettingsData?.sshCustomPort}
+              initialSshCustomUsername={userSettingsData?.sshCustomUsername}
               onSave={handleSaveSettings}
               onClose={handleCloseSettingsModal} // Pass close handler
             />

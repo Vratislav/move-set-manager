@@ -22,6 +22,8 @@ import {
 } from './sshUtils'
 import { assert } from 'console'
 export interface IMoveSSHClient {
+  getConnectionOpts(): SSHConnectionOpts
+  updateConnectionOpts(connectionOpts: SSHConnectionOpts): void
   connect(): Promise<void>
   disconnect(): Promise<void>
   listSets(): Promise<MoveSet[]>
@@ -33,22 +35,35 @@ export interface IMoveSSHClient {
 
 export type SSHConnectionOpts = {
   host?: string
-  port: number
+  port?: number
   privKeyPath: string
   privKeyPassphrase?: string
   username?: string
 }
 
 export class MoveSSHClient implements IMoveSSHClient {
-  private readonly connectionOpts: SSHConnectionOpts
+  private connectionOpts!: SSHConnectionOpts
   private readonly ssh: NodeSSH
   private sftp: SFTPWrapper | undefined
   constructor(connectionOpts: SSHConnectionOpts) {
-    this.connectionOpts = connectionOpts
+    this.updateConnectionOpts(connectionOpts)
+    this.ssh = new NodeSSH()
+  }
+  getConnectionOpts(): SSHConnectionOpts {
+    return this.connectionOpts
+  }
+  updateConnectionOpts(connectionOpts: SSHConnectionOpts): void {
+    this.connectionOpts = { ...connectionOpts }
+    // Default values
     if (!this.connectionOpts.username) {
       this.connectionOpts.username = 'ableton'
     }
-    this.ssh = new NodeSSH()
+    if (!this.connectionOpts.host) {
+      this.connectionOpts.host = 'move.local'
+    }
+    if (!this.connectionOpts.port) {
+      this.connectionOpts.port = 22
+    }
   }
   async connect(): Promise<void> {
     await this.ssh.connect({

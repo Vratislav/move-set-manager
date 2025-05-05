@@ -3,11 +3,12 @@ import { IMoveManager } from './moveManagerLib/moveManager/IMoveManager'
 import { CreateContextOptions } from 'electron-trpc/main'
 import { LocalDb } from './moveManagerLib/localDb/localDB'
 import { MoveManager } from './moveManagerLib/moveManager/MoveManager'
-import { MoveSSHClient } from './moveManagerLib/moveClient/MoveSSHClient'
+import { IMoveSSHClient, MoveSSHClient } from './moveManagerLib/moveClient/MoveSSHClient'
 import path from 'path'
 
 export type RouterContext = {
   moveManager: IMoveManager
+  sshClient: IMoveSSHClient
 }
 
 const ssh = new MoveSSHClient({
@@ -21,7 +22,8 @@ const moveManager = new MoveManager(new LocalDb('./db'), ssh)
 
 export const createContext = async (opts: CreateContextOptions): Promise<RouterContext> => {
   return {
-    moveManager: moveManager as any
+    moveManager: moveManager as any,
+    sshClient: ssh
   }
 }
 

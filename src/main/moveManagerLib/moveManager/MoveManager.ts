@@ -258,6 +258,13 @@ export class MoveManager implements IMoveManager {
   public async updateUserSettings(userSettings: UserSettings) {
     await this.localDb.init()
     await this.localDb.updateUserSettings(userSettings)
+    this.ssh.updateConnectionOpts({
+      ...this.ssh.getConnectionOpts(),
+      privKeyPath: userSettings.sshPrivateKeyPath,
+      host: userSettings.sshCustomHostname,
+      port: userSettings.sshCustomPort,
+      username: userSettings.sshCustomUsername
+    })
     await this.localDb.commitDbUpdate(`Updated user settings`)
   }
 }
