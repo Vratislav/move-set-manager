@@ -1,6 +1,6 @@
 import { ipcLink } from 'electron-trpc/renderer';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { trpcClient } from './trpc';
 import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
 import { GearIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
@@ -14,11 +14,11 @@ import { UserSettings } from './components/UserSettings';
 import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
-import { useGetUserSettings, useUpdateUserSettings } from './queriesAndMutations';
+import { useGetUserSettings, useUpdateUserSettings, useGetAllPages } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 
 // --- Mock Data --- //
-const mockPages = ['Page 1', 'Page 2', 'Empty Page'];
+// const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
 
 // Generate a larger pool of potential sets
 const allPossibleSets: ReactSetData[] = Array.from({ length: 50 }, (_, i) => {
@@ -58,7 +58,7 @@ const mockOtherVersions: VersionInfo[] = [
 // ----------------- //
 
 function App(): React.JSX.Element {     
-
+  // --- Data Fetching --- //
   const {data: dataDevices} = useQuery({queryKey: ['devices'], queryFn: async () => {
     console.log('Fetching devices')
     const devices = await trpcClient.getAllDevices.query()
@@ -69,15 +69,47 @@ function App(): React.JSX.Element {
     console.log(dataDevices)  
   }
 
- 
+  const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
+  const { data: userSettingsData } = useGetUserSettings();
+  const updateUserSettingsMutation = useUpdateUserSettings(); // Call hook at top level
 
-  const [selectedPage, setSelectedPage] = useState<string>(mockPages[0]);
-  const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(() => generateMockSets(selectedPage));
+  // --- State --- //
+  // Derive pages from fetched data, providing an empty array as a fallback
+  const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
+
+  // Select the first page from the fetched data, or empty string if none exist or still loading
+  const [selectedPage, setSelectedPage] = useState<string>('');
+
+  // Update selected page when pages load
+  useEffect(() => {
+    if (pages.length > 0 && !selectedPage) {
+        setSelectedPage(pages[0]);
+    }
+  }, [pages, selectedPage]);
+
+  // Initialize page sets based on the potentially updated selectedPage
+  const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(() => {
+    // Use the initially derived selectedPage if available, otherwise wait
+    const initialPage = pages.length > 0 ? pages[0] : '';
+    return generateMockSets(initialPage);
+  });
   const [selectedSet, setSelectedSet] = useState<ReactSetData | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
+
+  // Update current page sets when selected page changes *after* initial load
+  useEffect(() => {
+      if (selectedPage) { // Only run if selectedPage is set (i.e., pages have loaded or user selected one)
+          setCurrentPageSets(generateMockSets(selectedPage));
+          setSelectedSet(null);
+          setIsSidebarOpen(false);
+          setSidebarMode(null);
+          setSelectedSlotIndex(null);
+          console.log(`Selected page: ${selectedPage}`);
+      }
+  }, [selectedPage]);
 
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
@@ -180,16 +212,6 @@ function App(): React.JSX.Element {
   }, [sidebarMode, selectedSet, selectedSlotIndex, currentPageSets]);
 
   // --- Settings Modal Handlers and data --- //
-  const {data: userSettingsData} = useGetUserSettings()
-  // Call the hook at the top level. It returns a mutation function.
-  // Note: This hook structure is a bit unusual. Usually, mutate takes the variables.
-  // We'll pass a placeholder or initial data here, and the actual data in mutate.
-  // --- CORRECTION: Based on the hook definition, the hook itself needs the data
-  // --- This means the hook likely needs to be recreated when data changes, or use a ref/state.
-  // --- Let's stick to the previous attempt's structure but call mutate differently based on the error.
-
-  const updateUserSettingsMutation = useUpdateUserSettings(); // Call hook at top level
-
   const handleOpenSettingsModal = () => {
     setIsSettingsModalOpen(true);
     console.log('Opening settings modal');
@@ -255,7 +277,7 @@ function App(): React.JSX.Element {
 
           <Flex direction="column" gap="4" p="4">
             <TopBar
-              pages={mockPages}
+              pages={pages} // Use fetched pages
               selectedPage={selectedPage}
               onSelectPage={handleSelectPage}
               onDuplicatePage={handleDuplicatePage}
