@@ -14,8 +14,14 @@ import { UserSettings } from './components/UserSettings';
 import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
-import { useGetUserSettings, useUpdateUserSettings, useGetAllPages } from './queriesAndMutations';
+import {
+    useGetUserSettings,
+    useUpdateUserSettings,
+    useGetAllPages,
+    useGetAllSets
+} from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
+import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 
 // --- Mock Data --- //
 // const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
@@ -57,6 +63,22 @@ const mockOtherVersions: VersionInfo[] = [
 ];
 // ----------------- //
 
+// Grid dimensions
+const GRID_ROWS = 4;
+const GRID_COLS = 8;
+const GRID_SIZE = GRID_ROWS * GRID_COLS;
+
+// Function to map between logical index (0=bottom-left) and visual index (0=top-left)
+// For an 8x4 grid, this transformation is its own inverse.
+const mapGridIndex = (index: number): number => {
+    if (index < 0 || index >= GRID_SIZE) return -1; // Invalid index
+    const logicalRow = Math.floor(index / GRID_COLS);
+    const logicalCol = index % GRID_COLS;
+    const visualRow = (GRID_ROWS - 1) - logicalRow;
+    const visualCol = logicalCol;
+    return visualRow * GRID_COLS + visualCol;
+};
+
 function App(): React.JSX.Element {     
   // --- Data Fetching --- //
   const {data: dataDevices} = useQuery({queryKey: ['devices'], queryFn: async () => {
@@ -70,12 +92,26 @@ function App(): React.JSX.Element {
   }
 
   const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
+  const { data: dataSets, isLoading: isLoadingSets, error: errorSets } = useGetAllSets(); // Fetch sets
   const { data: userSettingsData } = useGetUserSettings();
   const updateUserSettingsMutation = useUpdateUserSettings(); // Call hook at top level
 
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
+
+  // Map fetched sets (MoveSet[]) to the ReactSetData format
+  const allSetsReactData: ReactSetData[] = useMemo(() => {
+    if (!dataSets) return [];
+    const colors = ['cyan', 'blue', 'green', 'orange', 'red', 'purple', 'yellow', 'pink'];
+    return dataSets.map((set, index) => ({
+        id: set.meta.id,
+        name: set.meta.name,
+        revision: '(rev?)',
+        color: `var(--${colors[index % colors.length]}-a7)`,
+        alias: undefined,
+    }));
+  }, [dataSets]);
 
   // Select the first page from the fetched data, or empty string if none exist or still loading
   const [selectedPage, setSelectedPage] = useState<string>('');
@@ -87,60 +123,83 @@ function App(): React.JSX.Element {
     }
   }, [pages, selectedPage]);
 
-  // Initialize page sets based on the potentially updated selectedPage
-  const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(() => {
-    // Use the initially derived selectedPage if available, otherwise wait
-    const initialPage = pages.length > 0 ? pages[0] : '';
-    return generateMockSets(initialPage);
-  });
+  // State for the sets currently displayed on the grid for the selected page (using logical index: 0 = bottom-left)
+  const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(Array(GRID_SIZE).fill(null));
+
   const [selectedSet, setSelectedSet] = useState<ReactSetData | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
 
-  // Update current page sets when selected page changes *after* initial load
+  // Effect to update the grid sets when the selected page or the fetched data changes
   useEffect(() => {
-      if (selectedPage) { // Only run if selectedPage is set (i.e., pages have loaded or user selected one)
-          setCurrentPageSets(generateMockSets(selectedPage));
-          setSelectedSet(null);
-          setIsSidebarOpen(false);
-          setSidebarMode(null);
-          setSelectedSlotIndex(null);
-          console.log(`Selected page: ${selectedPage}`);
+    if (selectedPage && dataPages && allSetsReactData.length > 0) {
+      const currentPageData = dataPages.find(p => p.name === selectedPage);
+      if (currentPageData) {
+        const setMap = new Map(allSetsReactData.map(s => [s.id, s]));
+        
+        // Initialize an empty grid (logical indices)
+        const newGridSets = Array(GRID_SIZE).fill(null);
+
+        // Place sets into the logical grid based on their index in page data
+        currentPageData.sets.forEach(setInfo => {
+            // Assuming setInfo.index is the logical index (0=bottom-left)
+            if (setInfo?.id && setInfo.index >= 0 && setInfo.index < GRID_SIZE) {
+                const setDetails = setMap.get(setInfo.id);
+                if (setDetails) {
+                    newGridSets[setInfo.index] = setDetails; // Use logical index
+                }
+            }
+        });
+
+        setCurrentPageSets(newGridSets);
+        console.log(`Updated grid for page: ${selectedPage} using logical indices`);
+      } else {
+        // Page data not found, clear the grid
+        setCurrentPageSets(Array(GRID_SIZE).fill(null));
       }
-  }, [selectedPage]);
+      setSelectedSet(null);
+      setIsSidebarOpen(false);
+      setSidebarMode(null);
+      setSelectedSlotIndex(null);
+    } else if (!isLoadingPages && !isLoadingSets) {
+        setCurrentPageSets(Array(GRID_SIZE).fill(null));
+    }
+  }, [selectedPage, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
 
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
     setCurrentPageSets(generateMockSets(page));
-    setSelectedSet(null); // Close sidebar when changing page
+    setSelectedSet(null);
     setIsSidebarOpen(false);
     setSidebarMode(null);
     setSelectedSlotIndex(null);
     console.log(`Selected page: ${page}`);
   };
 
-  const handleSlotClick = (index: number, set: ReactSetData | null) => {
+  const handleSlotClick = (abletonMoveIndex: number, set: ReactSetData | null) => {
+    const logicalIndex = mapGridIndex(abletonMoveIndex); // Convert visual index from grid to logical index
+    if (logicalIndex === -1) return; // Ignore invalid index
+
     if (set) {
-      // Clicked on a slot with a set -> Edit mode
-      setSelectedSet(set);
-      setSidebarMode('edit');
-      setSelectedSlotIndex(null); // Not needed for edit mode
-      console.log(`Selected set for editing: ${set.name} at index ${index}`);
+        // Clicked on a slot with a set -> Edit mode
+        setSelectedSet(set);
+        setSidebarMode('edit');
+        setSelectedSlotIndex(null); // Not needed for edit mode
+        console.log(`Selected set for editing: ${set.name} at grid index ${logicalIndex} (AbletonMoveIndex: ${abletonMoveIndex})`);
     } else {
-      // Clicked on an empty slot -> Assign mode
-      setSelectedSet(null); // No specific set selected
-      setSidebarMode('assign');
-      setSelectedSlotIndex(index); // Remember which slot to assign to
-      console.log(`Selected empty slot for assignment at index ${index}`);
+        // Clicked on an empty slot -> Assign mode
+        setSelectedSet(null); // No specific set selected
+        setSidebarMode('assign');
+        setSelectedSlotIndex(logicalIndex); // Remember which logical slot to assign to
+        console.log(`Selected empty slot for assignment at grid index ${logicalIndex} (AbletonMoveIndex: ${abletonMoveIndex})`);
     }
     setIsSidebarOpen(true);
   };
 
   const handleDeleteSet = (setId: string) => {
     setCurrentPageSets((prevSets) => prevSets.map(s => (s?.id === setId ? null : s)));
-    // If the deleted set was the selected one, close the sidebar
     if (selectedSet?.id === setId) {
       setSelectedSet(null);
       setIsSidebarOpen(false);
@@ -152,8 +211,6 @@ function App(): React.JSX.Element {
     setIsSidebarOpen(false);
     setSidebarMode(null);
     setSelectedSlotIndex(null);
-    // Optionally deselect the set when closing?
-    // setSelectedSet(null);
   };
 
   // Mock handlers for TopBar actions
@@ -162,54 +219,66 @@ function App(): React.JSX.Element {
   const handleUploadPage = () => console.log('Upload page to move clicked');
   const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
-    // In a real app, you'd update the state:
-    // setCurrentPageSets(prev => prev.map(s => s?.id === selectedSet?.id ? { ...s, ...updatedSet } : s));
-    // setSelectedSet(prev => prev ? { ...prev, ...updatedSet } : null);
   };
 
   // Handler for assigning a set from the AssignSetToGridForm
   const handleAssignSet = (setId: string) => {
-    if (selectedSlotIndex === null) return; // Should not happen
+    if (selectedSlotIndex === null) return;
 
-    const set_to_assign = allPossibleSets.find(s => s.id === setId);
-    if (!set_to_assign) return; // Set not found in available sets
+    const set_to_assign = allSetsReactData.find(s => s.id === setId);
+    if (!set_to_assign) {
+        console.error(`Set with ID ${setId} not found in fetched sets.`);
+        return;
+    }
 
     console.log(`Assigning set ${setId} (${set_to_assign.name}) to slot index ${selectedSlotIndex}`);
 
-    // Update the grid state (replace null at selectedSlotIndex with the chosen set)
     setCurrentPageSets(prevSets => {
       const newSets = [...prevSets];
-      // Basic check: ensure the set isn't already on this page in another slot
       if (newSets.some(s => s?.id === setId)) {
          console.warn(`Set ${setId} is already on this page.`);
-         // Potentially show user feedback here
-         return prevSets; // Don't assign if already present
+         return prevSets;
       }
       newSets[selectedSlotIndex] = set_to_assign;
       return newSets;
     });
 
-    // Close the sidebar after assignment
     handleCloseSidebar();
   };
 
-  // Determine available sets (those in allPossibleSets but not in currentPageSets)
+  // Determine available sets (those in allSetsReactData but not in currentPageSets)
   const availableSetsForAssignment = useMemo(() => {
     const currentSetIds = new Set(currentPageSets.filter(s => s !== null).map(s => s!.id));
-    return allPossibleSets.filter(s => !currentSetIds.has(s.id));
-  }, [currentPageSets]);
+    return allSetsReactData.filter(s => !currentSetIds.has(s.id));
+  }, [currentPageSets, allSetsReactData]);
 
-  // Determine which grid index should be highlighted
-  const highlightedIndex = useMemo(() => {
+  // Determine which grid index should be highlighted (visual index for the MoveGrid component)
+  const displayHighlightedIndex = useMemo(() => {
+    let logicalHighlightIndex: number | null = null;
     if (sidebarMode === 'edit' && selectedSet) {
-      // Find the index of the selected set in the current page grid
-      return currentPageSets.findIndex(s => s?.id === selectedSet.id);
+      // Find the logical index of the selected set in the current page grid
+      logicalHighlightIndex = currentPageSets.findIndex(s => s?.id === selectedSet.id);
+    } else if (sidebarMode === 'assign') {
+      logicalHighlightIndex = selectedSlotIndex; // This is already the logical index
     }
-    if (sidebarMode === 'assign') {
-      return selectedSlotIndex;
+
+    if (logicalHighlightIndex !== null && logicalHighlightIndex !== -1) {
+        return mapGridIndex(logicalHighlightIndex); // Convert logical index to visual index for highlighting
     }
-    return null; // No highlight if sidebar is closed or mode is null
+    return null; // No highlight
   }, [sidebarMode, selectedSet, selectedSlotIndex, currentPageSets]);
+
+  // Transform the logical currentPageSets into the display order needed by MoveGrid (visual index)
+  const displayGridSets = useMemo(() => {
+    const transformedSets = Array(GRID_SIZE).fill(null);
+    for (let logicalIndex = 0; logicalIndex < GRID_SIZE; logicalIndex++) {
+        const visualIndex = mapGridIndex(logicalIndex);
+        if (visualIndex !== -1) {
+            transformedSets[visualIndex] = currentPageSets[logicalIndex];
+        }
+    }
+    return transformedSets;
+  }, [currentPageSets]);
 
   // --- Settings Modal Handlers and data --- //
   const handleOpenSettingsModal = () => {
@@ -225,36 +294,28 @@ function App(): React.JSX.Element {
   const handleSaveSettings = (settings) => {
     console.log('Settings saved in App:', settings);
 
-    // Construct the full UserSettingsType object expected by the mutation
     const settingsToSave: UserSettingsType = { 
       sshPrivateKeyPath: settings.sshKeyPath,
       sshKeyHasPassphrase: settings.hasPassphrase,
-      // Include new custom settings, falling back to undefined if not provided
       sshCustomHostname: settings.sshCustomHostname,
       sshCustomPort: settings.sshCustomPort,
       sshCustomUsername: settings.sshCustomUsername,
-      // Preserve existing onboarding status or default
       onboardingCompleted: userSettingsData?.onboardingCompleted ?? true,
     };
 
-    // Call the mutate function provided by the top-level hook
     updateUserSettingsMutation.mutate(settingsToSave);
 
-    handleCloseSettingsModal(); // Close modal after save
+    handleCloseSettingsModal();
   };
 
   return (
     <>
-        {/* We wrap the main content and sidebar potentially */}
-        {/* Using Box for now, might need more sophisticated layout later */}
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
-          {/* Settings Button and Conditional Warning - Top Right */}
           <Flex
             gap="2"
             align="center"
             style={{ position: 'absolute', top: 'var(--space-5)', right: 'var(--space-4)', zIndex: 10 }}
           >
-            {/* Conditional Warning Label */}
             {userSettingsData && !userSettingsData.sshPrivateKeyPath && (
               <Badge color="yellow" variant="soft" size="2">
                 <Flex gap="1" align="center">
@@ -263,7 +324,6 @@ function App(): React.JSX.Element {
                 </Flex>
               </Badge>
             )}
-            {/* Settings Button */}
             <IconButton
               variant="ghost"
               color="gray"
@@ -277,7 +337,7 @@ function App(): React.JSX.Element {
 
           <Flex direction="column" gap="4" p="4">
             <TopBar
-              pages={pages} // Use fetched pages
+              pages={pages}
               selectedPage={selectedPage}
               onSelectPage={handleSelectPage}
               onDuplicatePage={handleDuplicatePage}
@@ -285,21 +345,19 @@ function App(): React.JSX.Element {
               onUploadPage={handleUploadPage}
             />
             <MoveGrid
-              sets={currentPageSets}
+              sets={displayGridSets} // Pass the move index ordered sets
               onSlotClick={handleSlotClick}
               onDeleteSet={handleDeleteSet}
-              highlightedIndex={highlightedIndex}
+              highlightedIndex={displayHighlightedIndex} // Pass the move index correct highlight index
             />
           </Flex>
 
-          {/* Sidebar now wraps the content (EditSetForm or AssignSetToGridForm) */}
           <Sidebar
             title={sidebarMode === 'edit' ? 'Set Details' : sidebarMode === 'assign' ? 'Assign Set to Slot' : ''}
             idLabel={sidebarMode === 'edit' && selectedSet ? `id: ${selectedSet.id}` : undefined}
             isOpen={isSidebarOpen}
             onClose={handleCloseSidebar}
           >
-            {/* Conditionally render correct form based on sidebarMode */}
             {sidebarMode === 'edit' && selectedSet && (
               <EditSetForm
                 key={selectedSet.id}
@@ -316,7 +374,6 @@ function App(): React.JSX.Element {
             )}
           </Sidebar>
 
-          {/* Settings Modal */}
           <Modal
             isOpen={isSettingsModalOpen}
             onClose={handleCloseSettingsModal}
@@ -325,12 +382,11 @@ function App(): React.JSX.Element {
             <UserSettings
               initialSshKeyPath={userSettingsData?.sshPrivateKeyPath ?? ''}
               initialHasPassphrase={userSettingsData?.sshKeyHasPassphrase ?? false}
-              // Pass down initial custom settings
               initialSshCustomHostname={userSettingsData?.sshCustomHostname}
               initialSshCustomPort={userSettingsData?.sshCustomPort}
               initialSshCustomUsername={userSettingsData?.sshCustomUsername}
               onSave={handleSaveSettings}
-              onClose={handleCloseSettingsModal} // Pass close handler
+              onClose={handleCloseSettingsModal}
             />
           </Modal>
 
