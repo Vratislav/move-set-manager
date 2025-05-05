@@ -1,0 +1,19 @@
+/* We can leverage Radix Dialog's overlay and content styling */
+/* Add any custom overrides or additional styles here if needed */
+/* For example, ensuring the content has some padding if not provided by children */
+/* .DialogContent > div { padding: var(--space-4); } */ /* Example */
+
+/* Ensure overlay is present (Radix usually handles this) */
+/* .DialogOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayShow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} */
+
+/* Radix Dialog handles centering and basic styling well */ 

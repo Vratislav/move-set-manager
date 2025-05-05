@@ -2,15 +2,20 @@ import { ipcLink } from 'electron-trpc/renderer';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useState, useMemo } from 'react';
 import { trpcClient } from './trpc';
-import { Flex, Box } from '@radix-ui/themes';
+import { Flex, Box, IconButton } from '@radix-ui/themes';
+import { GearIcon } from '@radix-ui/react-icons';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
 import { Sidebar } from './components/Sidebar';
 import { EditSetForm } from './components/EditSetForm';
 import { AssignSetToGridForm } from './components/AssignSetToGridForm';
+import { Modal } from './components/Modal';
+import { UserSettings } from './components/UserSettings';
 import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
+import { useGetUserSettings, useUpdateUserSettings } from './queriesAndMutations';
+import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 
 // --- Mock Data --- //
 const mockPages = ['Page 1', 'Page 2', 'Empty Page'];
@@ -72,6 +77,7 @@ function App(): React.JSX.Element {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
 
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
@@ -173,11 +179,61 @@ function App(): React.JSX.Element {
     return null; // No highlight if sidebar is closed or mode is null
   }, [sidebarMode, selectedSet, selectedSlotIndex, currentPageSets]);
 
+  // --- Settings Modal Handlers and data --- //
+  const {data: userSettingsData} = useGetUserSettings()
+  // Call the hook at the top level. It returns a mutation function.
+  // Note: This hook structure is a bit unusual. Usually, mutate takes the variables.
+  // We'll pass a placeholder or initial data here, and the actual data in mutate.
+  // --- CORRECTION: Based on the hook definition, the hook itself needs the data
+  // --- This means the hook likely needs to be recreated when data changes, or use a ref/state.
+  // --- Let's stick to the previous attempt's structure but call mutate differently based on the error.
+
+  const updateUserSettingsMutation = useUpdateUserSettings(); // Call hook at top level
+
+  const handleOpenSettingsModal = () => {
+    setIsSettingsModalOpen(true);
+    console.log('Opening settings modal');
+  };
+
+  const handleCloseSettingsModal = () => {
+    setIsSettingsModalOpen(false);
+    console.log('Closing settings modal');
+  };
+
+  const handleSaveSettings = (settings: { sshKeyPath: string; hasPassphrase: boolean }) => {
+    console.log('Settings saved in App:', settings);
+
+    // Construct the full UserSettings object
+    const settingsToSave: UserSettingsType = { // Use the imported type
+      sshPrivateKeyPath: settings.sshKeyPath,
+      sshKeyHasPassphrase: settings.hasPassphrase,
+      onboardingCompleted: userSettingsData?.onboardingCompleted ?? true,
+    };
+
+    // Call the mutate function provided by the top-level hook
+    // Pass the data object to mutate, as is standard practice for TanStack Query mutations
+    updateUserSettingsMutation.mutate(settingsToSave);
+
+    handleCloseSettingsModal(); // Close modal after save
+  };
+
   return (
     <>
         {/* We wrap the main content and sidebar potentially */}
         {/* Using Box for now, might need more sophisticated layout later */}
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
+          {/* Settings Button - Top Right */}
+          <IconButton
+            variant="ghost"
+            color="gray"
+            size="3"
+            onClick={handleOpenSettingsModal}
+            style={{ position: 'absolute', top: 'var(--space-5)', right: 'var(--space-4)', zIndex: 10 }}
+            aria-label="Open settings"
+          >
+            <GearIcon width="20" height="20" />
+          </IconButton>
+
           <Flex direction="column" gap="4" p="4">
             <TopBar
               pages={mockPages}
@@ -218,6 +274,21 @@ function App(): React.JSX.Element {
               />
             )}
           </Sidebar>
+
+          {/* Settings Modal */}
+          <Modal
+            isOpen={isSettingsModalOpen}
+            onClose={handleCloseSettingsModal}
+            title="User Settings"
+          >
+            <UserSettings
+              initialSshKeyPath={userSettingsData?.sshPrivateKeyPath ?? ''}
+              initialHasPassphrase={userSettingsData?.sshKeyHasPassphrase ?? false}
+              onSave={handleSaveSettings}
+              onClose={handleCloseSettingsModal} // Pass close handler
+            />
+          </Modal>
+
         </Box>
     </>
   );

@@ -3,6 +3,7 @@ import { IMoveManager } from './moveManagerLib/moveManager/IMoveManager'
 import { MovePageZod } from './moveManagerLib/model/page'
 import { z } from 'zod'
 import { UserSettingsZod } from './moveManagerLib/model/userSettings'
+import { dialog } from 'electron'
 const moveManager: IMoveManager = undefined as any
 
 type GetPageParams = {
@@ -48,7 +49,19 @@ export const appRouter = router({
     .input(z.object({ userSettings: UserSettingsZod }))
     .mutation((opts) => {
       return opts.ctx.moveManager.updateUserSettings(opts.input.userSettings)
+    }),
+
+  openSSHKeyFileSelectionDialog: procedure.mutation(async () => {
+    console.log('Opening SSH key file selection dialog')
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'SSH Private Key', extensions: ['key', 'pem', 'ppk', '*'] }]
     })
+    if (canceled) {
+      return null
+    }
+    return filePaths[0]
+  })
 })
 // Export type router type signature,
 // NOT the router itself.

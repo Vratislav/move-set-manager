@@ -69,16 +69,15 @@ export function useGetUserSettings(){
     }})
 }
 
-export function useUpdateUserSettings(){
+export function useUpdateUserSettings() {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async (variables: { userSettings: UserSettings }) => {
-            console.log('Updating user settings', variables.userSettings)
-            return await trpcClient.updateUserSettings.mutate(variables)
+        mutationFn: async (userSettings: UserSettings) => {
+            console.log('Updating user settings', userSettings)
+            return await trpcClient.updateUserSettings.mutate({ userSettings: userSettings })
         },
-        onSuccess: (data) => {
-            // Update the user settings cache after successful update
-            queryClient.setQueryData(key.userSettings, data)
+        onSuccess: (data, variables) => {
+            queryClient.setQueryData(key.userSettings, variables)
         },
     })
 }
@@ -92,8 +91,14 @@ export function usePing() {
     })
 }
 
-
-
+export function useOpenSSHKeyFileSelectionDialog() {
+    return useMutation({
+        mutationFn: async () => {
+            console.log('Opening SSH key file selection dialog')
+            return await trpcClient.openSSHKeyFileSelectionDialog.mutate()
+        }
+    })
+}
 
 
 
