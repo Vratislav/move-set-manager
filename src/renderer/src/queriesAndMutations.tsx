@@ -1,0 +1,100 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { trpcClient } from "./trpc"
+import { MovePage } from "../../main/moveManagerLib/model/page"
+import { UserSettings } from "../../main/moveManagerLib/model/userSettings"
+
+
+const key = {
+    allDevices: ['devices'] as const,
+    allSets: ['sets'] as const,
+    allPages: ['pages'] as const,
+    page: (pageId: string) => [...key.allPages, 'detail', pageId] as const,
+    userSettings: ['userSettings'] as const,
+}
+
+
+export function useGetAllDevices(){
+   return useQuery({queryKey: key.allDevices, queryFn: async () => {
+        console.log('Fetching devices')
+        const devices = await trpcClient.getAllDevices.query()
+        return devices
+      }})
+}
+
+export function useGetAllSets(){
+    return useQuery({queryKey: key.allSets, queryFn: async () => {
+        console.log('Fetching sets')
+        const sets = await trpcClient.getAllSets.query()
+        return sets
+    }})
+}
+
+export function useGetAllPages(){
+    return useQuery({queryKey: key.allPages, queryFn: async () => {
+        console.log('Fetching pages')
+        const pages = await trpcClient.getAllPages.query()
+        return pages
+    }})
+}
+
+
+export function useGetPage(pageId: string){
+    return useQuery({queryKey: key.page(pageId), queryFn: async () => {
+        console.log(`Fetching page ${pageId}`)
+        const page = await trpcClient.getPage.query({ pageId })
+        return page
+    }})
+}
+
+export function useCreatePage(){
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (variables: { page: MovePage, deviceId?: string }) => {
+            console.log('Creating page', variables.page)
+            return await trpcClient.createPage.mutate(variables)
+        },
+        onSuccess: () => {
+            // Invalidate and refetch pages query after successful creation
+            queryClient.invalidateQueries({ queryKey: key.allPages })
+        },
+    })
+}
+
+
+export function useGetUserSettings(){
+    return useQuery({queryKey: key.userSettings, queryFn: async () => {
+        console.log('Fetching user settings')
+        const settings = await trpcClient.getUserSettings.query()
+        return settings
+    }})
+}
+
+export function useUpdateUserSettings(){
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (variables: { userSettings: UserSettings }) => {
+            console.log('Updating user settings', variables.userSettings)
+            return await trpcClient.updateUserSettings.mutate(variables)
+        },
+        onSuccess: (data) => {
+            // Update the user settings cache after successful update
+            queryClient.setQueryData(key.userSettings, data)
+        },
+    })
+}
+
+export function usePing() {
+    return useMutation({
+        mutationFn: async () => {
+            console.log('Pinging server')
+            return await trpcClient.ping.mutate()
+        }
+    })
+}
+
+
+
+
+
+
+
