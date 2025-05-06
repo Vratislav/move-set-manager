@@ -82,6 +82,19 @@ export function useUpdateUserSettings() {
     })
 }
 
+export function useDownloadAllSets() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async () => {
+            console.log('Downloading all sets')
+            return await trpcClient.downloadAllSets.mutate()
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: key.allSets })
+            queryClient.invalidateQueries({ queryKey: key.allPages })
+        },
+    })
+}
 export function usePing() {
     return useMutation({
         mutationFn: async () => {

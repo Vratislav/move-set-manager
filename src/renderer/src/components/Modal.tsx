@@ -8,9 +8,10 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  hideCloseButton?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, hideCloseButton = false }) => {
   if (!isOpen) {
     return null;
   }
@@ -22,11 +23,13 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
           <Dialog.Title>
             <Heading size="5">{title}</Heading>
           </Dialog.Title>
-          <Dialog.Close>
-            <IconButton variant="ghost" color="gray" onClick={onClose} aria-label="Close modal">
-              <Cross1Icon />
-            </IconButton>
-          </Dialog.Close>
+          {!hideCloseButton && (
+            <Dialog.Close>
+              <IconButton variant="ghost" color="gray" onClick={onClose} aria-label="Close modal">
+                <Cross1Icon />
+              </IconButton>
+            </Dialog.Close>
+          )}
         </Flex>
 
         {/* Content Area */}

@@ -35,6 +35,10 @@ export const appRouter = router({
     return page
   }),
 
+  downloadAllSets: procedure.mutation((opts) => {
+    return opts.ctx.moveManager.downloadAllSets()
+  }),
+
   createPage: procedure
     .input(z.object({ deviceId: z.string().optional(), page: MovePageZod }))
     .mutation((opts) => {

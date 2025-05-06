@@ -18,10 +18,13 @@ import {
     useGetUserSettings,
     useUpdateUserSettings,
     useGetAllPages,
-    useGetAllSets
+    useGetAllSets,
+    useDownloadAllSets
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
+import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
+import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
 
 // --- Mock Data --- //
 // const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
@@ -94,8 +97,8 @@ function App(): React.JSX.Element {
   const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
   const { data: dataSets, isLoading: isLoadingSets, error: errorSets } = useGetAllSets(); // Fetch sets
   const { data: userSettingsData } = useGetUserSettings();
-  const updateUserSettingsMutation = useUpdateUserSettings(); // Call hook at top level
-
+  const updateUserSettingsMutation = useUpdateUserSettings();
+  const downloadAllSetsMutation = useDownloadAllSets();
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
@@ -131,6 +134,7 @@ function App(): React.JSX.Element {
   const [sidebarMode, setSidebarMode] = useState<'edit' | 'assign' | null>(null);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
+  const [syncError, setSyncError] = useState<string | null>(null); // State for sync error message
 
   // Effect to update the grid sets when the selected page or the fetched data changes
   useEffect(() => {
@@ -168,9 +172,16 @@ function App(): React.JSX.Element {
     }
   }, [selectedPage, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
 
+  // Effect to show error modal for downloadAllSetsMutation
+  useEffect(() => {
+    if (downloadAllSetsMutation.isError && downloadAllSetsMutation.error) {
+      setSyncError(downloadAllSetsMutation.error.message || 'An unknown error occurred during sync.');
+    } 
+  }, [downloadAllSetsMutation.isError, downloadAllSetsMutation.error]);
+
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
-    setCurrentPageSets(generateMockSets(page));
+    //setCurrentPageSets(generateMockSets(page));
     setSelectedSet(null);
     setIsSidebarOpen(false);
     setSidebarMode(null);
@@ -215,7 +226,10 @@ function App(): React.JSX.Element {
 
   // Mock handlers for TopBar actions
   const handleDuplicatePage = () => console.log('Duplicate page clicked');
-  const handleUpdatePage = () => console.log('Update page from move clicked');
+  const handleDownloadPage = () => {
+    console.log('Update page from move clicked')
+    downloadAllSetsMutation.mutate()
+  }
   const handleUploadPage = () => console.log('Upload page to move clicked');
   const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
@@ -341,7 +355,7 @@ function App(): React.JSX.Element {
               selectedPage={selectedPage}
               onSelectPage={handleSelectPage}
               onDuplicatePage={handleDuplicatePage}
-              onUpdatePage={handleUpdatePage}
+              onUpdatePage={handleDownloadPage}
               onUploadPage={handleUploadPage}
             />
             <MoveGrid
@@ -388,6 +402,24 @@ function App(): React.JSX.Element {
               onSave={handleSaveSettings}
               onClose={handleCloseSettingsModal}
             />
+          </Modal>
+
+          <Modal
+            isOpen={downloadAllSetsMutation.isPending} // Control with mutation state
+            onClose={() => {}} // No-op as it cannot be closed by user
+            title="Syncing"
+            hideCloseButton={true} // Hide the close button
+          >
+            <SyncingIndicator />
+          </Modal>
+
+          {/* Error Modal for Syncing */}
+          <Modal
+            isOpen={!!syncError} 
+            onClose={() => setSyncError(null)} // Clear error on close
+            title="Sync Error"
+          >
+            {syncError && <ErrorDisplay errorMessage={syncError} onDismiss={() => setSyncError(null)} />}
           </Modal>
 
         </Box>
