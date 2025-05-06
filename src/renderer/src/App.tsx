@@ -26,6 +26,7 @@ import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib
 import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
+import { getColorForColorIndex } from './utils/setColors'; // Import color utility
 
 // --- Mock Data --- //
 // const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
@@ -108,14 +109,16 @@ function App(): React.JSX.Element {
   // Map fetched sets (MoveSet[]) to the ReactSetData format
   const allSetsReactData: ReactSetData[] = useMemo(() => {
     if (!dataSets) return [];
-    const colors = ['cyan', 'blue', 'green', 'orange', 'red', 'purple', 'yellow', 'pink'];
-    return dataSets.map((set, index) => ({
-        id: set.meta.id,
-        name: set.meta.name,
-        revision: '(rev?)',
-        color: `var(--${colors[index % colors.length]}-a7)`,
-        alias: undefined,
-    }));
+    return dataSets.map((set) => {
+        const colorInfo = getColorForColorIndex(set.meta.color); // Get color info using the index
+        return {
+            id: set.meta.id,
+            name: set.meta.name,
+            revision: '(rev?)', // Assuming revision still needs to be determined or is static for now
+            color: `var(--${colorInfo.name}-a${colorInfo.grade})`, // Construct Radix Alpha color string
+            alias: undefined, // Assuming alias is not yet available or handled elsewhere
+        };
+    });
   }, [dataSets]);
 
   // Select the first page from the fetched data, or empty string if none exist or still loading
