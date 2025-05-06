@@ -11,6 +11,7 @@ export class MoveManager implements IMoveManager {
   private readonly localDb: LocalDb
   private readonly ssh: MoveSSHClient
   private isPerformingOperation = false
+  private sshConfigLoadedFromSettings = false
 
   constructor(localDb: LocalDb, ssh: MoveSSHClient) {
     this.localDb = localDb
@@ -20,6 +21,19 @@ export class MoveManager implements IMoveManager {
   private async begin() {
     this.isPerformingOperation = true
     await this.localDb.init()
+    if (!this.sshConfigLoadedFromSettings) {
+      const userSettings = await this.localDb.getUserSettings()
+      if (userSettings) {
+        this.ssh.updateConnectionOpts({
+          ...this.ssh.getConnectionOpts(),
+          privKeyPath: userSettings.sshPrivateKeyPath,
+          host: userSettings.sshCustomHostname,
+          port: userSettings.sshCustomPort,
+          username: userSettings.sshCustomUsername
+        })
+      }
+      this.sshConfigLoadedFromSettings = true
+    }
     await this.ssh.connect()
   }
 

@@ -22,7 +22,7 @@
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "ssh:test": "ssh -i test.key -p 2222 ableton@localhost",
-    "ssh:test:init": "docker exec openssh-server sh -c 'mkdir -p /data/UserData/UserLibrary && cp -a /data/UserData/UserLibrary_Test/. /data/UserData/UserLibrary/ && chown -R 501:20 /data/UserData/UserLibrary'"
+    "ssh:test:init": "ts-node scripts/refreshTestDataInContainer.ts"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",

@@ -95,6 +95,16 @@ export function useDownloadAllSets() {
         },
     })
 }
+
+export function useUploadPage() {
+    return useMutation({
+        mutationFn: async (pageId: string) => {
+            console.log('Uploading page', pageId)
+            return await trpcClient.uploadPage.mutate({ pageId })
+        }
+    })
+}
+
 export function usePing() {
     return useMutation({
         mutationFn: async () => {
