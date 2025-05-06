@@ -109,6 +109,8 @@ export class MoveManager implements IMoveManager {
       if (!page) {
         throw new Error(`Page ${pageId} not found`)
       }
+      const moveMacAddress = (await this.ssh.getMACAddress()) || 'UNKNOWN'
+      let moveDevice = await this.localDb.getDevice(moveMacAddress)
       //Check that every index in the page is unique
       const indices = new Set()
       for (const setInPage of page.sets) {
@@ -127,6 +129,11 @@ export class MoveManager implements IMoveManager {
           setInPage.color,
           setsOnDevice
         )
+      }
+      if (moveDevice) {
+        if (moveDevice.currentPageId !== page.id) {
+          await this.setActivePage(pageId, moveDevice.id)
+        }
       }
     } finally {
       await this.end()

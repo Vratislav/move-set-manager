@@ -19,7 +19,8 @@ import {
     useUpdateUserSettings,
     useGetAllPages,
     useGetAllSets,
-    useDownloadAllSets
+    useDownloadAllSets,
+    useUploadPage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
@@ -99,6 +100,7 @@ function App(): React.JSX.Element {
   const { data: userSettingsData } = useGetUserSettings();
   const updateUserSettingsMutation = useUpdateUserSettings();
   const downloadAllSetsMutation = useDownloadAllSets();
+  const uploadPageMutation = useUploadPage();
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
@@ -172,12 +174,19 @@ function App(): React.JSX.Element {
     }
   }, [selectedPage, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
 
-  // Effect to show error modal for downloadAllSetsMutation
+  // Effect to show error modal for sync operations
   useEffect(() => {
     if (downloadAllSetsMutation.isError && downloadAllSetsMutation.error) {
-      setSyncError(downloadAllSetsMutation.error.message || 'An unknown error occurred during sync.');
-    } 
-  }, [downloadAllSetsMutation.isError, downloadAllSetsMutation.error]);
+      setSyncError(downloadAllSetsMutation.error.message || 'An unknown error occurred during download sync.');
+      downloadAllSetsMutation.reset(); // Reset mutation state after handling error
+    } else if (uploadPageMutation.isError && uploadPageMutation.error) {
+      setSyncError(uploadPageMutation.error.message || 'An unknown error occurred during upload sync.');
+      uploadPageMutation.reset(); // Reset mutation state after handling error
+    }
+  }, [
+    downloadAllSetsMutation.isError, downloadAllSetsMutation.error, downloadAllSetsMutation,
+    uploadPageMutation.isError, uploadPageMutation.error, uploadPageMutation
+  ]);
 
   const handleSelectPage = (page: string) => {
     setSelectedPage(page);
@@ -228,9 +237,24 @@ function App(): React.JSX.Element {
   const handleDuplicatePage = () => console.log('Duplicate page clicked');
   const handleDownloadPage = () => {
     console.log('Update page from move clicked')
+    setSyncError(null); // Clear previous errors
     downloadAllSetsMutation.mutate()
   }
-  const handleUploadPage = () => console.log('Upload page to move clicked');
+  const handleUploadPage = () => {
+    console.log('Upload page to move clicked for page:', selectedPage);
+    if (!selectedPage) {
+      setSyncError("No page selected to upload.");
+      return;
+    }
+    // Find the selected page details from dataPages to get its ID
+    const pageToUpload = dataPages?.find(p => p.name === selectedPage);
+    if (!pageToUpload) {
+        setSyncError(`Could not find details for page: ${selectedPage}`);
+        return;
+    }
+    setSyncError(null); // Clear previous errors
+    uploadPageMutation.mutate(pageToUpload.id);
+  };
   const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
   };
@@ -322,6 +346,8 @@ function App(): React.JSX.Element {
     handleCloseSettingsModal();
   };
 
+  const isSyncing = downloadAllSetsMutation.isPending || uploadPageMutation.isPending;
+
   return (
     <>
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
@@ -405,10 +431,10 @@ function App(): React.JSX.Element {
           </Modal>
 
           <Modal
-            isOpen={downloadAllSetsMutation.isPending} // Control with mutation state
+            isOpen={isSyncing} // Use the combined isSyncing state
             onClose={() => {}} // No-op as it cannot be closed by user
             title="Syncing"
-            hideCloseButton={true} // Hide the close button
+            hideCloseButton={true}
           >
             <SyncingIndicator />
           </Modal>
