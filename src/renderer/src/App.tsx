@@ -26,20 +26,21 @@ import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib
 import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
-import { getColorForColorIndex } from './utils/setColors'; // Import color utility
+import { COLORS, getColorForColorIndex } from './utils/setColors'; // Import color utility
 
 // --- Mock Data --- //
 // const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
 
 // Generate a larger pool of potential sets
 const allPossibleSets: ReactSetData[] = Array.from({ length: 50 }, (_, i) => {
-  const colors = ['cyan', 'blue', 'green', 'orange', 'red', 'purple', 'yellow', 'pink'];
-  const colorName = colors[i % colors.length];
+  const colorIndex = i % COLORS.length; // Use actual color index
+  const colorInfo = getColorForColorIndex(colorIndex);
   return {
     id: `Set-${i + 1}`,
     name: `Awesome Set ${i + 1}`,
     revision: `rev${Math.floor(Math.random() * 10)}`,
-    color: `var(--${colorName}-a7)`,
+    colorIndex: colorIndex, // Assign colorIndex
+    color: `var(--${colorInfo.name}-${colorInfo.grade})`, // Derive color string
     alias: Math.random() > 0.8 ? `Alias ${i}` : undefined,
   };
 });
@@ -115,7 +116,8 @@ function App(): React.JSX.Element {
             id: set.meta.id,
             name: set.meta.name,
             revision: '(rev?)', // Assuming revision still needs to be determined or is static for now
-            color: `var(--${colorInfo.name}-a${colorInfo.grade})`, // Construct Radix Alpha color string
+            colorIndex: set.meta.color, // Use set.meta.color as the colorIndex
+            color: `var(--${colorInfo.name}-${colorInfo.grade})`, // Construct Radix Alpha color string
             alias: undefined, // Assuming alias is not yet available or handled elsewhere
         };
     });
@@ -260,6 +262,20 @@ function App(): React.JSX.Element {
   };
   const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
+    // When implementing, if updatedSet contains colorIndex,
+    // ensure to re-derive the `color` string for consistency if needed for display elsewhere.
+    // For example:
+    // setCurrentPageSets(prevSets => prevSets.map(s => {
+    //   if (s && s.id === updatedSet.id) {
+    //     const newSetData = { ...s, ...updatedSet };
+    //     if (updatedSet.colorIndex !== undefined) {
+    //       const newColorInfo = getColorForColorIndex(updatedSet.colorIndex);
+    //       newSetData.color = `var(--${newColorInfo.name}-${newColorInfo.grade})`;
+    //     }
+    //     return newSetData;
+    //   }
+    //   return s;
+    // }));
   };
 
   // Handler for assigning a set from the AssignSetToGridForm

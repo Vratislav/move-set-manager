@@ -1,4 +1,4 @@
-type Color = {
+export type Color = {
   name: string
   grade: number
   abletonName: string

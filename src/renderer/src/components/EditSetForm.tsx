@@ -5,8 +5,8 @@ import {
   Separator,
   Box,
 } from '@radix-ui/themes';
-import { Pencil1Icon } from '@radix-ui/react-icons'; // Keep for Color Select for now, or remove if not needed
 import { ReactSetData } from './MoveGridSet';
+import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorIndexForColor } from '../utils/setColors';
 import {
   LabeledSection,
   EditableTextField,
@@ -14,15 +14,6 @@ import {
   VersionInfo,
 } from './SidebarComponents';
 
-// Mock colors - copied from Sidebar, might need to be passed as prop later
-const mockColors = [
-  { name: 'Cyan', value: 'var(--cyan-9)' },
-  { name: 'Blue', value: 'var(--blue-9)' },
-  { name: 'Green', value: 'var(--green-9)' },
-  { name: 'Orange', value: 'var(--orange-9)' },
-  { name: 'Red', value: 'var(--red-9)' },
-  { name: 'Purple', value: 'var(--purple-9)' },
-];
 
 interface EditSetFormProps {
   set: ReactSetData;
@@ -58,9 +49,26 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
     console.log('Form: Alias changed:', e.target.value);
     // onUpdateSet({ alias: e.target.value });
   };
-  const handleColorChange = (colorValue: string) => {
-    console.log('Form: Color changed:', colorValue);
-    // onUpdateSet({ color: colorValue });
+  const handleColorChange = (colorValueString: string) => {
+    console.log('Form: Color changed to value:', colorValueString);
+    // Parse colorValueString 'var(--name-grade)' to find the matching color object
+    const match = colorValueString.match(/var\(--(.*?)-(\d+)\)/);
+    if (match) {
+      const name = match[1];
+      const grade = parseInt(match[2], 10);
+      const selectedColorObject = COLORS.find(c => c.name === name && c.grade === grade);
+      if (selectedColorObject) {
+        const newColorIndex = getColorIndexForColor(selectedColorObject);
+        console.log('Form: New color index:', newColorIndex);
+        onUpdateSet({ colorIndex: newColorIndex });
+        // If onUpdateSet also needs the color string for some reason:
+        // onUpdateSet({ colorIndex: newColorIndex, color: colorValueString });
+      } else {
+        console.error('Could not find color object for:', colorValueString);
+      }
+    } else {
+      console.error('Could not parse color string:', colorValueString);
+    }
   };
   // ------------------------------------------------------ //
 
@@ -98,17 +106,27 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
       {/* Color - Using LabeledSection */}
       <LabeledSection label="Color">
         <Flex align="center" gap="2">
-          <Select.Root value={set.color} onValueChange={handleColorChange}>
+          <Select.Root
+            value={set.colorIndex !== undefined ? `var(--${getColorForColorIndex(set.colorIndex).name}-${getColorForColorIndex(set.colorIndex).grade})` : ''}
+            onValueChange={handleColorChange}
+          >
             <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />
             <Select.Content position="popper">
-              {mockColors.map((color) => (
-                <Select.Item key={color.value} value={color.value}>
-                  <Flex align="center" gap="2">
-                    <Box width="12px" height="12px" style={{ backgroundColor: color.value, borderRadius: '50%' }} />
-                    {color.name}
-                  </Flex>
-                </Select.Item>
-              ))}
+              {COLORS.map((color: SetColorType, index: number) => {
+                const colorValue = `var(--${color.name}-${color.grade})`;
+                return (
+                  <Select.Item key={colorValue} value={colorValue}>
+                    <Flex align="center" gap="2">
+                      <Box
+                        width="12px"
+                        height="12px"
+                        style={{ backgroundColor: colorValue, borderRadius: '50%' }}
+                      />
+                      {color.abletonName}
+                    </Flex>
+                  </Select.Item>
+                );
+              })}
             </Select.Content>
           </Select.Root>
           {/* Removed edit button previously */}

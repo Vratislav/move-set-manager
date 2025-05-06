@@ -6,6 +6,7 @@ export interface ReactSetData {
   id: string;
   name: string;
   revision: string;
+  colorIndex: number;
   color: string; // e.g., 'var(--cyan-9)' or '#aabbcc'
   alias?: string;
 }
