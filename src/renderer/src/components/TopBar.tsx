@@ -16,9 +16,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({ children, onClick }) => {
 };
 
 interface TopBarProps {
-  pages: string[]; // Example: ["Page 1", "Page 2"]
-  selectedPage: string;
-  onSelectPage: (page: string) => void;
+  pages: Array<{ id: string; name: string }>; // Updated: Array of page objects
+  selectedPage: string | null; // Updated: page ID, can be null
+  onSelectPage: (pageId: string) => void; // Updated: expects page ID
   onDuplicatePage: () => void;
   onUpdatePage: () => void;
   onUploadPage: () => void;
@@ -36,12 +36,12 @@ export const TopBar: React.FC<TopBarProps> = ({
     <Flex direction="column" align="center" gap="3" mb="4">
       <Heading size="7">Move Manager</Heading>
       <Flex justify="between" align="center" width="100%" px="5">
-        <Select.Root value={selectedPage} onValueChange={onSelectPage}>
+        <Select.Root value={selectedPage || ''} onValueChange={onSelectPage}>
           <Select.Trigger variant="soft" placeholder="Select a page…" />
           <Select.Content position="popper">
             {pages.map((page) => (
-              <Select.Item key={page} value={page}>
-                {page}
+              <Select.Item key={page.id} value={page.id}>
+                {page.name}
               </Select.Item>
             ))}
           </Select.Content>

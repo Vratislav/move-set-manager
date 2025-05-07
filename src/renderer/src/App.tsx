@@ -108,7 +108,7 @@ function App(): React.JSX.Element {
 
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
-  const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
+  const pagesObjects = useMemo(() => dataPages?.map(p => ({ id: p.id, name: p.name })) ?? [], [dataPages]);
 
   // Map fetched sets (MoveSet[]) to the ReactSetData format
   const allSetsReactData: ReactSetData[] = useMemo(() => {
@@ -127,14 +127,14 @@ function App(): React.JSX.Element {
   }, [dataSets]);
 
   // Select the first page from the fetched data, or empty string if none exist or still loading
-  const [selectedPage, setSelectedPage] = useState<string>('');
+  const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
 
   // Update selected page when pages load
   useEffect(() => {
-    if (pages.length > 0 && !selectedPage) {
-        setSelectedPage(pages[0]);
+    if (pagesObjects.length > 0 && !selectedPageId) {
+        setSelectedPageId(pagesObjects[0].id);
     }
-  }, [pages, selectedPage]);
+  }, [pagesObjects, selectedPageId]);
 
   // State for the sets currently displayed on the grid for the selected page (using logical index: 0 = bottom-left)
   const [currentPageSets, setCurrentPageSets] = useState<(ReactSetData | null)[]>(Array(GRID_SIZE).fill(null));
@@ -148,8 +148,8 @@ function App(): React.JSX.Element {
 
   // Effect to update the grid sets when the selected page or the fetched data changes
   useEffect(() => {
-    if (selectedPage && dataPages && allSetsReactData.length > 0) {
-      const currentPageData = dataPages.find(p => p.name === selectedPage);
+    if (selectedPageId && dataPages && allSetsReactData.length > 0) {
+      const currentPageData = dataPages.find(p => p.id === selectedPageId);
       if (currentPageData) {
         const setMap = new Map(allSetsReactData.map(s => [s.id, s]));
         
@@ -168,7 +168,7 @@ function App(): React.JSX.Element {
         });
 
         setCurrentPageSets(newGridSets);
-        console.log(`Updated grid for page: ${selectedPage} using logical indices`);
+        console.log(`Updated grid for page ID: ${selectedPageId} using logical indices`);
       } else {
         // Page data not found, clear the grid
         setCurrentPageSets(Array(GRID_SIZE).fill(null));
@@ -180,7 +180,7 @@ function App(): React.JSX.Element {
     } else if (!isLoadingPages && !isLoadingSets) {
         setCurrentPageSets(Array(GRID_SIZE).fill(null));
     }
-  }, [selectedPage, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
+  }, [selectedPageId, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
 
   // Effect to show error modal for sync operations
   useEffect(() => {
@@ -196,14 +196,13 @@ function App(): React.JSX.Element {
     uploadPageMutation.isError, uploadPageMutation.error, uploadPageMutation
   ]);
 
-  const handleSelectPage = (page: string) => {
-    setSelectedPage(page);
-    //setCurrentPageSets(generateMockSets(page));
+  const handleSelectPage = (pageId: string) => {
+    setSelectedPageId(pageId);
     setSelectedSet(null);
     setIsSidebarOpen(false);
     setSidebarMode(null);
     setSelectedSlotIndex(null);
-    console.log(`Selected page: ${page}`);
+    console.log(`Selected page ID: ${pageId}`);
   };
 
   const handleSlotClick = (abletonMoveIndex: number, set: ReactSetData | null) => {
@@ -249,19 +248,14 @@ function App(): React.JSX.Element {
     downloadAllSetsMutation.mutate()
   }
   const handleUploadPage = () => {
-    console.log('Upload page to move clicked for page:', selectedPage);
-    if (!selectedPage) {
+    console.log('Upload page to move clicked for page ID:', selectedPageId);
+    if (!selectedPageId) {
       setSyncError("No page selected to upload.");
       return;
     }
-    // Find the selected page details from dataPages to get its ID
-    const pageToUpload = dataPages?.find(p => p.name === selectedPage);
-    if (!pageToUpload) {
-        setSyncError(`Could not find details for page: ${selectedPage}`);
-        return;
-    }
+    // The pageId is already selectedPageId
     setSyncError(null); // Clear previous errors
-    uploadPageMutation.mutate(pageToUpload.id);
+    uploadPageMutation.mutate(selectedPageId);
   };
   const handleUpdateSet = (id: string, updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
@@ -397,8 +391,8 @@ function App(): React.JSX.Element {
 
           <Flex direction="column" gap="4" p="4">
             <TopBar
-              pages={pages}
-              selectedPage={selectedPage}
+              pages={pagesObjects}
+              selectedPage={selectedPageId}
               onSelectPage={handleSelectPage}
               onDuplicatePage={handleDuplicatePage}
               onUpdatePage={handleDownloadPage}
