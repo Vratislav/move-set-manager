@@ -260,20 +260,17 @@ function App(): React.JSX.Element {
     setSyncError(null); // Clear previous errors
     uploadPageMutation.mutate(pageToUpload.id);
   };
-  const handleUpdateSet = (updatedSet: Partial<ReactSetData>) => {
+  const handleUpdateSet = (id: string, updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
-    // For example:
-    // setCurrentPageSets(prevSets => prevSets.map(s => {
-    //   if (s && s.id === updatedSet.id) {
-    //     const newSetData = { ...s, ...updatedSet };
-    //     // if (updatedSet.colorIndex !== undefined) { // No need to derive color string here anymore
-    //     //   const newColorInfo = getColorForColorIndex(updatedSet.colorIndex);
-    //     //   newSetData.color = `var(--${newColorInfo.name}-${newColorInfo.grade})`;
-    //     // }
-    //     return newSetData;
-    //   }
-    //   return s;
-    // }));
+    //For example:
+    setCurrentPageSets(prevSets => prevSets.map(s => {
+      if (s && s.id === id) {
+        const newSetData = { ...s, ...updatedSet };
+        return newSetData;
+      }
+      return s;
+    }));
+    setIsSidebarOpen(false);
   };
 
   // Handler for assigning a set from the AssignSetToGridForm

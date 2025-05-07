@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Flex,
   Select,
   Separator,
   Box,
+  Button,
 } from '@radix-ui/themes';
 import { ReactSetData } from './MoveGridSet';
-import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorStringForColorIndex } from '../utils/setColors';
+import { COLORS, type Color as SetColorType, getColorStringForColorIndex } from '../utils/setColors';
 import {
   LabeledSection,
   EditableTextField,
@@ -14,11 +15,10 @@ import {
   VersionInfo,
 } from './SidebarComponents';
 
-
 interface EditSetFormProps {
   set: ReactSetData;
   otherVersions: VersionInfo[];
-  onUpdateSet: (updatedSet: Partial<ReactSetData>) => void;
+  onUpdateSet: (id: string, updatedSet: Partial<ReactSetData>) => void;
 }
 
 export const EditSetForm: React.FC<EditSetFormProps> = ({
@@ -32,21 +32,21 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
   const [localColorIndex, setLocalColorIndex] = useState(set.colorIndex);
   // ------------------------------------ //
 
-  // Internal state for version selection and locking
+  // --- Internal state for version selection and locking --- //
   const [selectedVersionId, setSelectedVersionId] = useState('current');
   const [lockedVersionId, setLockedVersionId] = useState<string | null>(null);
+  // ------------------------------------------------------ //
 
-  // Reset internal state when the set prop changes
+  // Reset internal state and form fields when the set prop changes
   useEffect(() => {
-    setSelectedVersionId('current');
-    setLockedVersionId(null);
-    // Reset form fields when the set ID changes
     setLocalName(set.name);
     setLocalAlias(set.alias ?? '');
     setLocalColorIndex(set.colorIndex);
-  }, [set.id, set.name, set.alias, set.colorIndex]); // Added dependencies
+    setSelectedVersionId('current');
+    setLockedVersionId(null);
+  }, [set]);
 
-  // --- Field Change Handlers (Update Local State) ---
+  // --- Field Change Handlers (Update Local State Only) ---
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalName(e.target.value);
   };
@@ -57,32 +57,37 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
     const newColorIndex = parseInt(colorIndexString, 10);
     if (!isNaN(newColorIndex)) {
       setLocalColorIndex(newColorIndex);
-      onUpdateSet({ colorIndex: newColorIndex }); // Update parent immediately for color
     }
   };
   // ------------------------------------------------------ //
 
-  // --- Blur Handlers (Propagate to Parent) ---
-  const handleNameBlur = () => {
-    if (localName !== set.name) { // Only update if changed
-      onUpdateSet({ name: localName });
+  // --- Determine if form has changes --- //
+  const isChanged = useMemo(() => {
+    return localName !== set.name || localAlias !== (set.alias ?? '') || localColorIndex !== set.colorIndex;
+  }, [localName, localAlias, localColorIndex, set.name, set.alias, set.colorIndex]);
+  // ------------------------------------------------------ //
+
+  // --- Save Handler (Propagate all changes to Parent) ---
+  const handleSaveChanges = () => {
+    const updates: Partial<ReactSetData> = {};
+    if (localName !== set.name) updates.name = localName;
+    const originalAlias = set.alias ?? '';
+    if (localAlias !== originalAlias) {
+      updates.alias = localAlias === '' ? undefined : localAlias;
     }
-  };
-  const handleAliasBlur = () => {
-    const currentAlias = set.alias ?? '';
-    if (localAlias !== currentAlias) { // Only update if changed
-      onUpdateSet({ alias: localAlias });
+    if (localColorIndex !== set.colorIndex) updates.colorIndex = localColorIndex;
+
+    if (Object.keys(updates).length > 0) {
+      onUpdateSet(set.id, updates);
     }
   };
   // ------------------------------------------------------ //
-
 
   // --- Internal Handlers (Versioning - unchanged) --- //
   const handleVersionChange = (versionId: string) => {
     console.log('Form: Version changed:', versionId);
     setSelectedVersionId(versionId);
   };
-
   const handleLockVersionToggle = (versionId: string) => {
     const newLockedId = lockedVersionId === versionId ? null : versionId;
     setLockedVersionId(newLockedId);
@@ -91,65 +96,80 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
   // ------------------------------------------------------ //
 
   return (
-    <Flex direction="column" gap="4">
-      {/* Set Name - Using EditableTextField */}
-      <EditableTextField
-        label="Set name"
-        value={localName} // Use local state
-        placeholder="Enter set name"
-        onChange={handleNameChange} // Updates local state
-        onBlur={handleNameBlur} // Propagates to parent
-      />
-
-      {/* Alias - Using EditableTextField */}
-      <EditableTextField
-        label="Alias on this page"
-        value={localAlias} // Use local state
-        placeholder="Enter alias (optional)"
-        onChange={handleAliasChange} // Updates local state
-        onBlur={handleAliasBlur} // Propagates to parent
-      />
-
-      {/* Color - Using LabeledSection */}
-      <LabeledSection label="Color">
-        <Flex align="center" gap="2">
-          <Select.Root
-            value={localColorIndex.toString()} // Use local state
-            onValueChange={handleColorChange} // Updates local state & propagates
-          >
-            <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />
-            <Select.Content position="popper">
-              {COLORS.map((color: SetColorType, index: number) => {
-                const colorValueString = getColorStringForColorIndex(index); // Get string for display
-                return (
-                  <Select.Item key={index} value={index.toString()}>
-                    <Flex align="center" gap="2">
-                      <Box
-                        width="12px"
-                        height="12px"
-                        style={{ backgroundColor: colorValueString, borderRadius: '50%' }}
-                      />
-                      {color.abletonName}
-                    </Flex>
-                  </Select.Item>
-                );
-              })}
-            </Select.Content>
-          </Select.Root>
+    <Flex direction="column" style={{ height: '100%' }}>
+      {/* Scrollable area for form fields */}
+      <Box style={{ flexGrow: 1, overflowY: 'auto' }}>
+        {/* Form content container - p="0" because Sidebar provides overall padding */}
+        <Flex direction="column" gap="4" p="0">
+          <EditableTextField
+            label="Set name"
+            value={localName}
+            placeholder="Enter set name"
+            onChange={handleNameChange}
+          />
+          <EditableTextField
+            label="Alias on this page"
+            value={localAlias}
+            placeholder="Enter alias (optional)"
+            onChange={handleAliasChange}
+          />
+          <LabeledSection label="Color">
+            <Flex align="center" gap="2">
+              <Select.Root
+                value={localColorIndex.toString()}
+                onValueChange={handleColorChange}
+              >
+                <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />
+                <Select.Content position="popper">
+                  {COLORS.map((color: SetColorType, index: number) => {
+                    const colorValueString = getColorStringForColorIndex(index);
+                    return (
+                      <Select.Item key={index} value={index.toString()}>
+                        <Flex align="center" gap="2">
+                          <Box
+                            width="12px"
+                            height="12px"
+                            style={{ backgroundColor: colorValueString, borderRadius: '50%' }}
+                          />
+                          {color.abletonName}
+                        </Flex>
+                      </Select.Item>
+                    );
+                  })}
+                </Select.Content>
+              </Select.Root>
+            </Flex>
+          </LabeledSection>
+          <Separator size="4" />
+          <VersionsSection
+            currentRevision={set.revision}
+            otherVersions={otherVersions}
+            selectedVersionId={selectedVersionId}
+            lockedVersionId={lockedVersionId}
+            onVersionChange={handleVersionChange}
+            onLockVersionToggle={handleLockVersionToggle}
+          />
         </Flex>
-      </LabeledSection>
+      </Box>
 
-      <Separator size="4" />
-
-      {/* Versions Section */}
-      <VersionsSection
-        currentRevision={set.revision}
-        otherVersions={otherVersions}
-        selectedVersionId={selectedVersionId}
-        lockedVersionId={lockedVersionId}
-        onVersionChange={handleVersionChange}
-        onLockVersionToggle={handleLockVersionToggle}
-      />
+      {/* Sticky Save Button Area */}
+      <Box
+        style={{
+          position: 'sticky',
+          bottom: 0,
+          paddingTop: 'var(--space-4)',
+          paddingBottom: 'var(--space-1)',
+          background: 'var(--color-panel-solid)', // Or a more specific theme variable if available
+          borderTop: '1px solid var(--gray-a5)',
+          zIndex: 1,
+        }}
+      >
+        <Flex justify="center">
+          <Button onClick={handleSaveChanges} disabled={!isChanged} variant="solid" size="3" style={{ width: '100%' }}>
+            Save Changes
+          </Button>
+        </Flex>
+      </Box>
     </Flex>
   );
 }; 
