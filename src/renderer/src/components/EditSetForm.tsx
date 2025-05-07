@@ -107,7 +107,7 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
       <LabeledSection label="Color">
         <Flex align="center" gap="2">
           <Select.Root
-            value={set.colorIndex !== undefined ? getColorStringForColorIndex(set.colorIndex) : ''}
+            value={set.colorIndex !== undefined ? set.colorIndex.toString() : ''}
             onValueChange={handleColorChange}
           >
             <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />
@@ -115,7 +115,7 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
               {COLORS.map((color: SetColorType, index: number) => {
                 const colorValue = `var(--${color.name}-${color.grade})`;
                 return (
-                  <Select.Item key={colorValue} value={colorValue}>
+                  <Select.Item key={index} value={index.toString()}>
                     <Flex align="center" gap="2">
                       <Box
                         width="12px"
