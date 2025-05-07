@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { trpcClient } from "./trpc"
 import { MovePage } from "../../main/moveManagerLib/model/page"
 import { UserSettings } from "../../main/moveManagerLib/model/userSettings"
-
+import { MoveSetInPage } from "../../main/moveManagerLib/model/set"
 
 const key = {
     allDevices: ['devices'] as const,
@@ -101,6 +101,20 @@ export function useUploadPage() {
         mutationFn: async (pageId: string) => {
             console.log('Uploading page', pageId)
             return await trpcClient.uploadPage.mutate({ pageId })
+        }
+    })
+}
+
+export function useUpdateSetInPage() {
+    return useMutation({
+        mutationFn: async (variables: { page: MovePage, set: MoveSetInPage, setName: string }) => {
+            console.log('Updating set', variables.set)
+            return await trpcClient.updateSetInPage.mutate({ page: variables.page, moveSetInPage: {
+                id: variables.set.id,
+                color: variables.set.color,
+                index: variables.set.index,
+                alias: variables.set.alias
+            }, setName: variables.setName })   
         }
     })
 }

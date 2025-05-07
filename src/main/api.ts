@@ -4,6 +4,7 @@ import { MovePageZod } from './moveManagerLib/model/page'
 import { z } from 'zod'
 import { UserSettingsZod } from './moveManagerLib/model/userSettings'
 import { dialog } from 'electron'
+import { MoveSetInPageZod } from './moveManagerLib/model/set'
 const moveManager: IMoveManager = undefined as any
 
 type GetPageParams = {
@@ -42,6 +43,16 @@ export const appRouter = router({
   uploadPage: procedure.input(z.object({ pageId: z.string() })).mutation((opts) => {
     return opts.ctx.moveManager.uploadPage(opts.input.pageId)
   }),
+
+  updateSetInPage: procedure
+    .input(z.object({ page: MovePageZod, moveSetInPage: MoveSetInPageZod, setName: z.string() }))
+    .mutation((opts) => {
+      return opts.ctx.moveManager.updateSetInPage(
+        opts.input.page,
+        opts.input.moveSetInPage,
+        opts.input.setName
+      )
+    }),
 
   createPage: procedure
     .input(z.object({ deviceId: z.string().optional(), page: MovePageZod }))

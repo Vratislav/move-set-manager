@@ -2,7 +2,7 @@ import { SetColorOutOfRangeError, SetIndexOutOfRangeError, SetIndexTakenError } 
 import { initLocalDb, LocalDb } from '../localDb/localDB'
 import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
-import { MoveSet } from '../model/set'
+import { MoveSet, MoveSetInPage } from '../model/set'
 import { UserSettings } from '../model/userSettings'
 import { MoveSSHClient } from '../moveClient/MoveSSHClient'
 import { IMoveManager } from './IMoveManager'
@@ -252,6 +252,27 @@ export class MoveManager implements IMoveManager {
     await this.localDb.init()
     await this.localDb.updatePage(page)
     await this.localDb.commitDbUpdate(`Updated page: ${page.name} (${page.id})`)
+  }
+
+  public async updateSetInPage(
+    page: MovePage,
+    set: MoveSetInPage,
+    setName: string
+  ): Promise<MovePage> {
+    await this.localDb.init()
+    page.sets = page.sets.map((s) => (s.id === set.id ? set : s))
+    await this.localDb.updatePage(page)
+    const setInDb = await this.localDb.getSet(set.id)
+    if (setInDb) {
+      setInDb.meta.name = setName
+      await this.localDb.updateSetMetadata({
+        setId: setInDb.meta.id,
+        meta: setInDb.meta,
+        managerMeta: setInDb.managerMeta
+      })
+    }
+    await this.localDb.commitDbUpdate(`Updated set ${setName} in page ${page.name} (${page.id})`)
+    return page
   }
 
   public async setActivePage(pageId: string, deviceId: string) {

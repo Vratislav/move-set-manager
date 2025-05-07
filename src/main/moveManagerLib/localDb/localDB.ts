@@ -317,6 +317,11 @@ export class LocalDb {
     })
   }
 
+  public async updateSetMetadata(metadata: CompleteSetMetadata) {
+    const metaPath = path.join(this.metaDirPath, `${metadata.setId}.json`)
+    await fs.promises.writeFile(metaPath, JSON.stringify(metadata, null, 2))
+  }
+
   public async saveSet(
     set: MoveSet,
     deviceId: string,

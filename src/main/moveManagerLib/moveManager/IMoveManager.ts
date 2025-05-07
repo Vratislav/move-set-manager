@@ -1,6 +1,6 @@
 import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
-import { MoveSet } from '../model/set'
+import { MoveSet, MoveSetInPage } from '../model/set'
 import { UserSettings } from '../model/userSettings'
 
 export interface IMoveManager {
@@ -14,6 +14,7 @@ export interface IMoveManager {
   getPage(pageId: string): Promise<MovePage | undefined>
   createPage(page: MovePage, deviceId: string | undefined): Promise<void>
   updatePage(page: MovePage): Promise<void>
+  updateSetInPage(page: MovePage, set: MoveSetInPage, setName: string): Promise<MovePage>
   setActivePage(pageId: string, deviceId: string): Promise<void>
   getUserSettings(): Promise<UserSettings | undefined>
   updateUserSettings(userSettings: UserSettings): Promise<void>

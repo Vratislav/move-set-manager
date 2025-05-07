@@ -20,7 +20,8 @@ import {
     useGetAllPages,
     useGetAllSets,
     useDownloadAllSets,
-    useUploadPage
+    useUploadPage,
+    useUpdateSetInPage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
@@ -103,6 +104,8 @@ function App(): React.JSX.Element {
   const updateUserSettingsMutation = useUpdateUserSettings();
   const downloadAllSetsMutation = useDownloadAllSets();
   const uploadPageMutation = useUploadPage();
+  const updateSetMutation = useUpdateSetInPage();
+
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pages = useMemo(() => dataPages?.map(p => p.name) ?? [], [dataPages]);
@@ -262,14 +265,17 @@ function App(): React.JSX.Element {
   };
   const handleUpdateSet = (id: string, updatedSet: Partial<ReactSetData>) => {
     console.log('Update set (from sidebar - placeholder):', updatedSet);
+    
     //For example:
     setCurrentPageSets(prevSets => prevSets.map(s => {
       if (s && s.id === id) {
         const newSetData = { ...s, ...updatedSet };
+        updatedSet = newSetData;
         return newSetData;
       }
       return s;
     }));
+
     setIsSidebarOpen(false);
   };
 
