@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Select,
@@ -6,7 +6,7 @@ import {
   Box,
 } from '@radix-ui/themes';
 import { ReactSetData } from './MoveGridSet';
-import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorIndexForColor, getColorStringForColorIndex } from '../utils/setColors';
+import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorStringForColorIndex } from '../utils/setColors';
 import {
   LabeledSection,
   EditableTextField,
@@ -26,6 +26,12 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
   otherVersions,
   onUpdateSet,
 }) => {
+  // --- Local State for Form Fields --- //
+  const [localName, setLocalName] = useState(set.name);
+  const [localAlias, setLocalAlias] = useState(set.alias ?? '');
+  const [localColorIndex, setLocalColorIndex] = useState(set.colorIndex);
+  // ------------------------------------ //
+
   // Internal state for version selection and locking
   const [selectedVersionId, setSelectedVersionId] = useState('current');
   const [lockedVersionId, setLockedVersionId] = useState<string | null>(null);
@@ -34,45 +40,44 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
   useEffect(() => {
     setSelectedVersionId('current');
     setLockedVersionId(null);
-    // Note: If text fields were controlled, reset their state here too.
-    // Since we are using the `key` prop on EditSetForm now, their
-    // internal state is reset by React remounting them.
-  }, [set.id]); // Dependency array ensures this runs when the set ID changes
+    // Reset form fields when the set ID changes
+    setLocalName(set.name);
+    setLocalAlias(set.alias ?? '');
+    setLocalColorIndex(set.colorIndex);
+  }, [set.id, set.name, set.alias, set.colorIndex]); // Added dependencies
 
-  // --- Mock Handlers (pointing to console logs for now) ---
-  // These could eventually call onUpdateSet
+  // --- Field Change Handlers (Update Local State) ---
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Form: Name changed:', e.target.value);
-    // onUpdateSet({ name: e.target.value });
+    setLocalName(e.target.value);
   };
   const handleAliasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Form: Alias changed:', e.target.value);
-    // onUpdateSet({ alias: e.target.value });
+    setLocalAlias(e.target.value);
   };
-  const handleColorChange = (colorValueString: string) => {
-    console.log('Form: Color changed to value:', colorValueString);
-    // Parse colorValueString 'var(--name-grade)' to find the matching color object
-    const match = colorValueString.match(/var\(--(.*?)-(\d+)\)/);
-    if (match) {
-      const name = match[1];
-      const grade = parseInt(match[2], 10);
-      const selectedColorObject = COLORS.find(c => c.name === name && c.grade === grade);
-      if (selectedColorObject) {
-        const newColorIndex = getColorIndexForColor(selectedColorObject);
-        console.log('Form: New color index:', newColorIndex);
-        onUpdateSet({ colorIndex: newColorIndex });
-        // If onUpdateSet also needs the color string for some reason:
-        // onUpdateSet({ colorIndex: newColorIndex, color: colorValueString });
-      } else {
-        console.error('Could not find color object for:', colorValueString);
-      }
-    } else {
-      console.error('Could not parse color string:', colorValueString);
+  const handleColorChange = (colorIndexString: string) => {
+    const newColorIndex = parseInt(colorIndexString, 10);
+    if (!isNaN(newColorIndex)) {
+      setLocalColorIndex(newColorIndex);
+      onUpdateSet({ colorIndex: newColorIndex }); // Update parent immediately for color
     }
   };
   // ------------------------------------------------------ //
 
-  // --- Internal Handlers --- //
+  // --- Blur Handlers (Propagate to Parent) ---
+  const handleNameBlur = () => {
+    if (localName !== set.name) { // Only update if changed
+      onUpdateSet({ name: localName });
+    }
+  };
+  const handleAliasBlur = () => {
+    const currentAlias = set.alias ?? '';
+    if (localAlias !== currentAlias) { // Only update if changed
+      onUpdateSet({ alias: localAlias });
+    }
+  };
+  // ------------------------------------------------------ //
+
+
+  // --- Internal Handlers (Versioning - unchanged) --- //
   const handleVersionChange = (versionId: string) => {
     console.log('Form: Version changed:', versionId);
     setSelectedVersionId(versionId);
@@ -90,37 +95,39 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
       {/* Set Name - Using EditableTextField */}
       <EditableTextField
         label="Set name"
-        value={set.name}
+        value={localName} // Use local state
         placeholder="Enter set name"
-        onChange={handleNameChange}
+        onChange={handleNameChange} // Updates local state
+        onBlur={handleNameBlur} // Propagates to parent
       />
 
       {/* Alias - Using EditableTextField */}
       <EditableTextField
         label="Alias on this page"
-        value={set.alias}
+        value={localAlias} // Use local state
         placeholder="Enter alias (optional)"
-        onChange={handleAliasChange}
+        onChange={handleAliasChange} // Updates local state
+        onBlur={handleAliasBlur} // Propagates to parent
       />
 
       {/* Color - Using LabeledSection */}
       <LabeledSection label="Color">
         <Flex align="center" gap="2">
           <Select.Root
-            value={set.colorIndex !== undefined ? set.colorIndex.toString() : ''}
-            onValueChange={handleColorChange}
+            value={localColorIndex.toString()} // Use local state
+            onValueChange={handleColorChange} // Updates local state & propagates
           >
             <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />
             <Select.Content position="popper">
               {COLORS.map((color: SetColorType, index: number) => {
-                const colorValue = `var(--${color.name}-${color.grade})`;
+                const colorValueString = getColorStringForColorIndex(index); // Get string for display
                 return (
                   <Select.Item key={index} value={index.toString()}>
                     <Flex align="center" gap="2">
                       <Box
                         width="12px"
                         height="12px"
-                        style={{ backgroundColor: colorValue, borderRadius: '50%' }}
+                        style={{ backgroundColor: colorValueString, borderRadius: '50%' }}
                       />
                       {color.abletonName}
                     </Flex>
@@ -129,7 +136,6 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
               })}
             </Select.Content>
           </Select.Root>
-          {/* Removed edit button previously */}
         </Flex>
       </LabeledSection>
 

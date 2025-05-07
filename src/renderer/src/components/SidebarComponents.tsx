@@ -23,6 +23,7 @@ interface EditableTextFieldProps {
   value: string | undefined;
   placeholder: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   // onEditClick?: () => void; // Optional: Add if edit button needs specific logic
 }
 
@@ -31,15 +32,17 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
   value,
   placeholder,
   onChange,
+  onBlur,
   // onEditClick,
 }) => {
   return (
     <LabeledSection label={label}>
       <Flex align="center" gap="2">
         <TextField.Root
-          defaultValue={value ?? ''}
+          value={value ?? ''}
           placeholder={placeholder}
           onChange={onChange}
+          onBlur={onBlur}
           style={{ flexGrow: 1 }}
         />
       </Flex>
