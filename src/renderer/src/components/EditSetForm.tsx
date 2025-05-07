@@ -6,7 +6,7 @@ import {
   Box,
 } from '@radix-ui/themes';
 import { ReactSetData } from './MoveGridSet';
-import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorIndexForColor } from '../utils/setColors';
+import { COLORS, type Color as SetColorType, getColorForColorIndex, getColorIndexForColor, getColorStringForColorIndex } from '../utils/setColors';
 import {
   LabeledSection,
   EditableTextField,
@@ -107,7 +107,7 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
       <LabeledSection label="Color">
         <Flex align="center" gap="2">
           <Select.Root
-            value={set.colorIndex !== undefined ? `var(--${getColorForColorIndex(set.colorIndex).name}-${getColorForColorIndex(set.colorIndex).grade})` : ''}
+            value={set.colorIndex !== undefined ? getColorStringForColorIndex(set.colorIndex) : ''}
             onValueChange={handleColorChange}
           >
             <Select.Trigger placeholder="Select color…" style={{ flexGrow: 1 }} />

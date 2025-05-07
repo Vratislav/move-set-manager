@@ -71,3 +71,8 @@ export function getColorForColorIndex(colorIndex: number): Color {
 export function getColorIndexForColor(color: Color): number {
   return COLORS.findIndex((c) => c.name === color.name)
 }
+
+export function getColorStringForColorIndex(colorIndex: number): string {
+  const color = getColorForColorIndex(colorIndex)
+  return `var(--${color.name}-${color.grade})`
+}

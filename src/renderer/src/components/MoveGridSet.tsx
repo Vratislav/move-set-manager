@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Text, Flex, IconButton } from '@radix-ui/themes';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { getColorStringForColorIndex } from '../utils/setColors';
 
 export interface ReactSetData {
   id: string;
   name: string;
   revision: string;
   colorIndex: number;
-  color: string; // e.g., 'var(--cyan-9)' or '#aabbcc'
   alias?: string;
 }
 
@@ -28,7 +28,7 @@ export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete
     }
   };
 
-  const bgColor = set ? set.color : 'var(--gray-3)';
+  const bgColor = set ? getColorStringForColorIndex(set.colorIndex) : 'var(--gray-3)';
   const hoverBgColor = set ? 'var(--gray-a4)' : 'var(--gray-4)';
 
   return (
