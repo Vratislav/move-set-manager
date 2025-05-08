@@ -299,16 +299,7 @@ function App(): React.JSX.Element {
     }
 
     const newPageData: MovePage = {
-      // The backend should assign a new unique ID. Sending current ID or a placeholder.
-      // For TRPC, it's often best to omit ID for creation if backend generates it.
-      // However, our MovePage type requires an ID. Let's use a temporary one for the call,
-      // assuming the backend replaces it or is fine with it for a create-as-copy operation.
-      // A safer approach is if the backend trpcClient.createPage.mutate allows omitting id.
-      // For now, we will provide a temporary ID to satisfy the type, or even better, let the backend handle it.
-      // Let's assume the backend handles ID generation for a new page.
-      // To conform to the type `MovePage` requiring an id, we pass a dummy one.
-      // This will likely be ignored by the backend if it's a proper create endpoint.
-      id: `temp-id-${Date.now()}`, // Placeholder ID, backend should generate the real one.
+      id: `page-${Date.now()}`, // Placeholder ID, backend should generate the real one.
       name: `${currentPageData.name} (copy)`,
       sets: currentPageData.sets.map(s => ({ ...s })) // Shallow copy of sets array and its objects
     };
