@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Flex, Button, Select, Heading, IconButton } from '@radix-ui/themes';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 import { EditPageModal } from './EditPageModal';
+import './TopBar.css';
 
 interface ActionButtonProps {
   children: React.ReactNode;
@@ -79,8 +80,9 @@ export const TopBar: React.FC<TopBarProps> = ({
               <Pencil1Icon />
             </IconButton>
             <IconButton
+              className="delete-icon-button"
               variant="ghost"
-              color="red"
+              color="gray"
               onClick={handleDelete} 
               disabled={!selectedPage}
               aria-label="Delete page"

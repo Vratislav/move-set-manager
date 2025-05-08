@@ -1,0 +1,7 @@
+.delete-icon-button:hover {
+  background-color: var(--red-3) !important; /* Or another red shade from Radix */
+}
+
+.delete-icon-button:hover svg {
+  color: var(--red-11) !important; /* Or another red shade for the icon itself */
+} 
