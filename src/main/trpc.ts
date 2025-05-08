@@ -5,6 +5,7 @@ import { LocalDb } from './moveManagerLib/localDb/localDB'
 import { MoveManager } from './moveManagerLib/moveManager/MoveManager'
 import { IMoveSSHClient, MoveSSHClient } from './moveManagerLib/moveClient/MoveSSHClient'
 import path from 'path'
+import { getDbPath } from './dbManagement'
 
 export type RouterContext = {
   moveManager: IMoveManager
@@ -18,7 +19,7 @@ const ssh = new MoveSSHClient({
   privKeyPath: path.join(process.env.HOME!, '.ssh/ableton')
 })
 
-const moveManager = new MoveManager(new LocalDb('./db'), ssh)
+const moveManager = new MoveManager(new LocalDb(getDbPath()), ssh)
 
 export const createContext = async (opts: CreateContextOptions): Promise<RouterContext> => {
   return {
