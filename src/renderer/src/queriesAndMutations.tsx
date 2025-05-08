@@ -106,6 +106,19 @@ export function useUploadPage() {
     })
 }
 
+export function useUpdatePage() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (variables: { page: MovePage }) => {
+            return await trpcClient.updatePage.mutate({ page: variables.page })
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: key.allPages })
+        }
+    })
+}
+
+
 export function useUpdateSetInPage() {
     const queryClient = useQueryClient()
     return useMutation({

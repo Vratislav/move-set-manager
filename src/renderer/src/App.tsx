@@ -20,7 +20,8 @@ import {
     useGetAllSets,
     useDownloadAllSets,
     useUploadPage,
-    useUpdateSetInPage
+    useUpdateSetInPage,
+    useUpdatePage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
@@ -68,7 +69,7 @@ function App(): React.JSX.Element {
   const downloadAllSetsMutation = useDownloadAllSets();
   const uploadPageMutation = useUploadPage();
   const updateSetMutation = useUpdateSetInPage();
-
+  const updatePageMutation = useUpdatePage();
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pagesObjects = useMemo(() => dataPages?.map(p => ({ id: p.id, name: p.name })) ?? [], [dataPages]);
@@ -213,6 +214,11 @@ function App(): React.JSX.Element {
       setSelectedSet(null);
       setIsSidebarOpen(false);
     }
+    const currentPage = dataPages!.find(p => p.id === selectedPageId)!;
+    //filter out sets so it does not include the set with the id setId
+    currentPage.sets = currentPage.sets.filter(s => s.id !== setId);
+    updatePageMutation.mutate({ page: currentPage });
+    
     console.log(`Deleted set: ${setId}`);
   };
 
