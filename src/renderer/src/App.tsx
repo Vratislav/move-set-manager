@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useMemo, useEffect } from 'react';
 import { trpcClient } from './trpc';
 import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
@@ -57,6 +57,7 @@ const mapGridIndex = (index: number): number => {
 };
 
 function App(): React.JSX.Element {     
+  const queryClient = useQueryClient(); // Instantiate queryClient
   // --- Data Fetching --- //
   const {data: dataDevices} = useQuery({queryKey: ['devices'], queryFn: async () => {
     console.log('Fetching devices')
@@ -278,6 +279,26 @@ function App(): React.JSX.Element {
     setIsDeleteConfirmModalOpen(false); // Ensure modal closes
   };
   // ------------------------------- //
+
+  const handleCreateNewPage = () => {
+    let newPageName = 'New Page';
+
+    const newPageData: MovePage = {
+      id: `page-${Date.now()}`,
+      name: newPageName,
+      sets: [],
+    };
+
+    console.log('Attempting to create new page with data:', newPageData);
+    updatePageMutation.mutate({ page: newPageData }, {
+      onSuccess: () => {
+        setSelectedPageId(newPageData.id);
+      },
+      onError: (error) => {
+        setSyncError(error.message || 'Failed to create page.');
+      }
+    });
+  };
 
   const handleDuplicatePageRequest = () => {
     if (updatePageMutation.isPending) {
@@ -520,6 +541,7 @@ function App(): React.JSX.Element {
               onPageNameEdited={handleUpdatePageName}
               currentPageName={selectedPageObject?.name}
               onDeletePage={handleRequestDeletePage}
+              onCreateNewPage={handleCreateNewPage}
             />
             <MoveGrid
               sets={displayGridSets} // Pass the move index ordered sets

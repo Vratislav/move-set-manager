@@ -21,6 +21,7 @@ interface TopBarProps {
   pages: Array<{ id: string; name: string }>;
   selectedPage: string | null;
   onSelectPage: (pageId: string) => void;
+  onCreateNewPage?: () => void;
   onDuplicatePage: () => void;
   onUpdatePage: () => void;
   onUploadPage: () => void;
@@ -29,10 +30,13 @@ interface TopBarProps {
   currentPageName?: string;
 }
 
+const NEW_PAGE_SENTINEL = "__NEW_PAGE_SENTINEL__";
+
 export const TopBar: React.FC<TopBarProps> = ({
   pages,
   selectedPage,
   onSelectPage,
+  onCreateNewPage,
   onDuplicatePage,
   onUpdatePage,
   onUploadPage,
@@ -60,7 +64,18 @@ export const TopBar: React.FC<TopBarProps> = ({
         <Heading size="7">Move Manager</Heading>
         <Flex justify="between" align="center" width="100%" px="5">
           <Flex align="center" gap="2">
-            <Select.Root value={selectedPage || ''} onValueChange={onSelectPage}>
+            <Select.Root 
+              value={selectedPage || ''} 
+              onValueChange={(value) => {
+                if (value === NEW_PAGE_SENTINEL) {
+                  if (onCreateNewPage) {
+                    onCreateNewPage();
+                  }
+                } else {
+                  onSelectPage(value);
+                }
+              }}
+            >
               <Select.Trigger variant="soft" placeholder="Select a page…" />
               <Select.Content position="popper">
                 {pages.map((page) => (
@@ -68,6 +83,10 @@ export const TopBar: React.FC<TopBarProps> = ({
                     {page.name}
                   </Select.Item>
                 ))}
+                <Select.Separator />
+                <Select.Item value={NEW_PAGE_SENTINEL}>
+                  Create New Page...
+                </Select.Item>
               </Select.Content>
             </Select.Root>
             <IconButton 

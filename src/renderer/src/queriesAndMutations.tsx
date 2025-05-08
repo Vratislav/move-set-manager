@@ -111,7 +111,7 @@ export function useUpdatePage() {
     return useMutation({
         mutationFn: async (variables: { page: MovePage }) => {
             console.log('Mutation: Updating page', variables.page.id)
-            return await trpcClient.updatePage.mutate({ page: variables.page })
+            await trpcClient.updatePage.mutate({ page: variables.page })
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: key.allPages })
