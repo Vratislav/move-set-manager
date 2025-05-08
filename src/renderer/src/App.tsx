@@ -59,10 +59,7 @@ function App(): React.JSX.Element {
     const devices = await trpcClient.getAllDevices.query()
     return devices
   }})
-  if(dataDevices){
-    console.log('-------------DEVICES---------------')
-    console.log(dataDevices)  
-  }
+
 
   const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
   const { data: dataSets, isLoading: isLoadingSets, error: errorSets } = useGetAllSets(); // Fetch sets
@@ -75,7 +72,9 @@ function App(): React.JSX.Element {
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pagesObjects = useMemo(() => dataPages?.map(p => ({ id: p.id, name: p.name })) ?? [], [dataPages]);
-
+  // Select the first page from the fetched data, or empty string if none exist or still loading
+  const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+  const allSetsMap = useMemo(() => new Map(dataSets?.map(s => [s.meta.id, s])), [dataSets]);
   // Map fetched sets (MoveSet[]) to the ReactSetData format
   const allSetsReactData: ReactSetData[] = useMemo(() => {
     if (!dataSets) return [];
@@ -92,8 +91,25 @@ function App(): React.JSX.Element {
     });
   }, [dataSets]);
 
-  // Select the first page from the fetched data, or empty string if none exist or still loading
-  const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+  const setsOnPageReactData: ReactSetData[] = useMemo(() => {
+    if (!dataPages) return [];
+    if (selectedPageId === null) return [];
+    const currentPage = dataPages.find(p => p.id === selectedPageId);
+    if (!currentPage) return [];
+    return currentPage.sets.map(s => {
+      const origSetData = allSetsMap.get(s.id);
+      const setData: ReactSetData = {
+        id: s.id,
+        colorIndex: s.color || origSetData!.meta.color,
+        name: origSetData!.meta.name,
+        revision: '(rev?)',
+        alias: s.alias
+      }
+      return setData;
+    });
+  }, [dataPages, allSetsMap, selectedPageId]);
+
+
 
   // Update selected page when pages load
   useEffect(() => {
@@ -117,7 +133,7 @@ function App(): React.JSX.Element {
     if (selectedPageId && dataPages && allSetsReactData.length > 0) {
       const currentPageData = dataPages.find(p => p.id === selectedPageId);
       if (currentPageData) {
-        const setMap = new Map(allSetsReactData.map(s => [s.id, s]));
+        const setMap = new Map(setsOnPageReactData.map(s => [s.id, s]));
         
         // Initialize an empty grid (logical indices)
         const newGridSets = Array(GRID_SIZE).fill(null);
@@ -146,7 +162,7 @@ function App(): React.JSX.Element {
     } else if (!isLoadingPages && !isLoadingSets) {
         setCurrentPageSets(Array(GRID_SIZE).fill(null));
     }
-  }, [selectedPageId, dataPages, allSetsReactData, isLoadingPages, isLoadingSets]);
+  }, [selectedPageId, dataPages, isLoadingPages, isLoadingSets, setsOnPageReactData]);
 
   // Effect to show error modal for sync operations
   useEffect(() => {

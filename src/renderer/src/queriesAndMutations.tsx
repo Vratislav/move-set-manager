@@ -110,7 +110,6 @@ export function useUpdateSetInPage() {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (variables: { page: MovePage, set: MoveSetInPage, setName: string }) => {
-            console.log('Updating set', variables.set)
             return await trpcClient.updateSetInPage.mutate({ page: variables.page, moveSetInPage: {
                 id: variables.set.id,
                 color: variables.set.color,
