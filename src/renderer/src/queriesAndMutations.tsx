@@ -97,6 +97,7 @@ export function useDownloadAllSets() {
 }
 
 export function useUploadPage() {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (pageId: string) => {
             console.log('Uploading page', pageId)
@@ -106,6 +107,7 @@ export function useUploadPage() {
 }
 
 export function useUpdateSetInPage() {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (variables: { page: MovePage, set: MoveSetInPage, setName: string }) => {
             console.log('Updating set', variables.set)
@@ -115,7 +117,10 @@ export function useUpdateSetInPage() {
                 index: variables.set.index,
                 alias: variables.set.alias
             }, setName: variables.setName })   
-        }
+        },onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: key.allSets })
+            queryClient.invalidateQueries({ queryKey: key.allPages })
+        },
     })
 }
 

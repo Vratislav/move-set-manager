@@ -1,5 +1,4 @@
-import { ipcLink } from 'electron-trpc/renderer';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState, useMemo, useEffect } from 'react';
 import { trpcClient } from './trpc';
 import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
@@ -24,45 +23,12 @@ import {
     useUpdateSetInPage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
-import type { MoveSet } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
+import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
-import { COLORS, getColorForColorIndex, getColorStringForColorIndex } from './utils/setColors'; // Import color utility and new helper
+import { COLORS } from './utils/setColors'; // Import color utility and new helper
 
-// --- Mock Data --- //
-// const mockPages = ['Page 1', 'Page 2', 'Empty Page']; // Removed mock pages
 
-// Generate a larger pool of potential sets
-const allPossibleSets: ReactSetData[] = Array.from({ length: 50 }, (_, i) => {
-  const colorIndex = i % COLORS.length; // Use actual color index
-  // const colorInfo = getColorForColorIndex(colorIndex); // No longer needed here
-  return {
-    id: `Set-${i + 1}`,
-    name: `Awesome Set ${i + 1}`,
-    revision: `rev${Math.floor(Math.random() * 10)}`,
-    colorIndex: colorIndex, // Assign colorIndex
-    // color: `var(--${colorInfo.name}-${colorInfo.grade})`, // Removed color property
-    alias: Math.random() > 0.8 ? `Alias ${i}` : undefined,
-  };
-});
-
-const generateMockSets = (pageName: string): (ReactSetData | null)[] => {
-  if (pageName === 'Empty Page') {
-    return Array(32).fill(null);
-  }
-  const sets: (ReactSetData | null)[] = Array(32).fill(null);
-  // Sprinkle some sets from the pool onto the page
-  const setsForThisPage = [...allPossibleSets].sort(() => 0.5 - Math.random()).slice(0, 15); // Take 15 random sets
-  let placedCount = 0;
-  while (placedCount < setsForThisPage.length) {
-    const index = Math.floor(Math.random() * 32);
-    if (sets[index] === null) {
-      sets[index] = setsForThisPage[placedCount];
-      placedCount++;
-    }
-  }
-  return sets;
-};
 
 // Mock data for other versions - Moved here from Sidebar
 const mockOtherVersions: VersionInfo[] = [
@@ -269,6 +235,21 @@ function App(): React.JSX.Element {
       }
       return s;
     }));
+    const currentPage = dataPages!.find(p => p.id === selectedPageId)!;
+    const originalSet = allSetsReactData.find(s => s.id === id)!;
+    const currentSetInPage = currentPage.sets.find(s => s.id === id)!;
+    const setUpdate: MoveSetInPage = {
+      id: id,
+      color: updatedSet.colorIndex || currentSetInPage.color,
+      index: currentSetInPage.index,
+      alias: updatedSet.alias || currentSetInPage.alias
+    }
+
+    updateSetMutation.mutate({
+      page: currentPage,
+      set: setUpdate,
+      setName: updatedSet.name || originalSet.name
+    })
 
     setIsSidebarOpen(false);
   };
