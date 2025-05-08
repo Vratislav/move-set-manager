@@ -298,6 +298,16 @@ function App(): React.JSX.Element {
       return newSets;
     });
 
+    const currentPage = dataPages!.find(p => p.id === selectedPageId)!; 
+    const setToAssignRawData = allSetsMap.get(setId)!;
+    currentPage.sets.push({
+      id: setId,
+      color: setToAssignRawData.meta.color,
+      index: selectedSlotIndex,
+      alias: undefined
+    })
+    updatePageMutation.mutate({ page: currentPage });
+
     handleCloseSidebar();
   };
 
@@ -392,7 +402,7 @@ function App(): React.JSX.Element {
             </IconButton>
           </Flex>
 
-          <Flex direction="column" gap="4" p="4">
+          <Flex direction="column" gap="6" p="4">
             <TopBar
               pages={pagesObjects}
               selectedPage={selectedPageId}
