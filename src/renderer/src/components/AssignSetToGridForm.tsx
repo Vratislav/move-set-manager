@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Flex,
   TextField,
@@ -19,6 +19,7 @@ export const AssignSetToGridForm: React.FC<AssignSetToGridFormProps> = ({
   onAssignSet,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const filteredSets = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
@@ -35,9 +36,16 @@ export const AssignSetToGridForm: React.FC<AssignSetToGridFormProps> = ({
       .sort((a, b) => a.name.localeCompare(b.name)); // Keep sorted
   }, [availableSets, searchQuery]);
 
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
+
   return (
     <Flex direction="column" gap="3" height="100%">
       <TextField.Root
+        ref={searchInputRef}
         placeholder="Search by name or ID…"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

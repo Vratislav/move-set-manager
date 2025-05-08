@@ -563,8 +563,9 @@ function App(): React.JSX.Element {
                 onUpdateSet={handleUpdateSet}
               />
             )}
-            {sidebarMode === 'assign' && (
+            {sidebarMode === 'assign' && selectedSlotIndex !== null && (
               <AssignSetToGridForm
+                key={`assign-form-${selectedSlotIndex}`}
                 availableSets={availableSetsForAssignment}
                 onAssignSet={handleAssignSet}
               />
