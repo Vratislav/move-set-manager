@@ -63,7 +63,7 @@ function App(): React.JSX.Element {
 
   const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
   const { data: dataSets, isLoading: isLoadingSets, error: errorSets } = useGetAllSets(); // Fetch sets
-  const { data: userSettingsData } = useGetUserSettings();
+  const { data: userSettingsData, isFetched: isFetchedUserSettings } = useGetUserSettings();
   const updateUserSettingsMutation = useUpdateUserSettings();
   const downloadAllSetsMutation = useDownloadAllSets();
   const uploadPageMutation = useUploadPage();
@@ -382,7 +382,7 @@ function App(): React.JSX.Element {
             align="center"
             style={{ position: 'absolute', top: 'var(--space-5)', right: 'var(--space-4)', zIndex: 10 }}
           >
-            {userSettingsData && !userSettingsData.sshPrivateKeyPath && (
+            {((isFetchedUserSettings && !userSettingsData) || (userSettingsData && !userSettingsData.sshPrivateKeyPath)) && (
               <Badge color="yellow" variant="soft" size="2">
                 <Flex gap="1" align="center">
                   <ExclamationTriangleIcon width="14" height="14" />
