@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState, useMemo, useEffect } from 'react';
 import { trpcClient } from './trpc';
 import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
@@ -24,7 +24,6 @@ import {
     useUpdateSetInPage,
     useUpdatePage,
     useDeletePage,
-    useCreatePage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
@@ -57,7 +56,6 @@ const mapGridIndex = (index: number): number => {
 };
 
 function App(): React.JSX.Element {     
-  const queryClient = useQueryClient(); // Instantiate queryClient
   // --- Data Fetching --- //
   const {data: dataDevices} = useQuery({queryKey: ['devices'], queryFn: async () => {
     console.log('Fetching devices')
@@ -66,8 +64,8 @@ function App(): React.JSX.Element {
   }})
 
 
-  const { data: dataPages, isLoading: isLoadingPages, error: errorPages } = useGetAllPages(); // Fetch pages
-  const { data: dataSets, isLoading: isLoadingSets, error: errorSets } = useGetAllSets(); // Fetch sets
+  const { data: dataPages, isLoading: isLoadingPages } = useGetAllPages(); // Fetch pages
+  const { data: dataSets, isLoading: isLoadingSets } = useGetAllSets(); // Fetch sets
   const { data: userSettingsData, isFetched: isFetchedUserSettings } = useGetUserSettings();
   const updateUserSettingsMutation = useUpdateUserSettings();
   const downloadAllSetsMutation = useDownloadAllSets();
