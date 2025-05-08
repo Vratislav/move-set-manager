@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Button, Select, Heading, IconButton } from '@radix-ui/themes';
-import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import { Pencil1Icon, TrashIcon, CopyIcon } from '@radix-ui/react-icons';
 import { EditPageModal } from './EditPageModal';
 import './TopBar.css';
 
@@ -80,6 +80,15 @@ export const TopBar: React.FC<TopBarProps> = ({
               <Pencil1Icon />
             </IconButton>
             <IconButton
+              variant="ghost"
+              color="gray"
+              onClick={onDuplicatePage}
+              disabled={!selectedPage}
+              aria-label="Duplicate page"
+            >
+              <CopyIcon />
+            </IconButton>
+            <IconButton
               className="delete-icon-button"
               variant="ghost"
               color="gray"
@@ -92,7 +101,6 @@ export const TopBar: React.FC<TopBarProps> = ({
           </Flex>
 
           <Flex gap="3">
-            <ActionButton onClick={onDuplicatePage}>Duplicate page</ActionButton>
             <ActionButton onClick={onUpdatePage}>Download page from move</ActionButton>
             <ActionButton onClick={onUploadPage}>Upload page to move</ActionButton>
           </Flex>

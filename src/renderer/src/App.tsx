@@ -23,10 +23,12 @@ import {
     useUploadPage,
     useUpdateSetInPage,
     useUpdatePage,
-    useDeletePage
+    useDeletePage,
+    useCreatePage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
+import type { MovePage } from '../../main/moveManagerLib/model/page'; // Import MovePage type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
 
@@ -72,6 +74,8 @@ function App(): React.JSX.Element {
   const updateSetMutation = useUpdateSetInPage();
   const updatePageMutation = useUpdatePage();
   const deletePageMutation = useDeletePage();
+// Initialize useCreatePage
+
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pagesObjects = useMemo(() => dataPages?.map(p => ({ id: p.id, name: p.name })) ?? [], [dataPages]);
@@ -99,6 +103,7 @@ function App(): React.JSX.Element {
     if (selectedPageId === null) return [];
     const currentPage = dataPages.find(p => p.id === selectedPageId);
     if (!currentPage) return [];
+    if(!allSetsMap || allSetsMap.size === 0) return [];
     return currentPage.sets.map(s => {
       const origSetData = allSetsMap.get(s.id);
       const setData: ReactSetData = {
@@ -274,8 +279,55 @@ function App(): React.JSX.Element {
   };
   // ------------------------------- //
 
+  const handleDuplicatePageRequest = () => {
+    if (updatePageMutation.isPending) {
+      console.warn('Duplicate page request is already in progress.');
+      return;
+    }
+
+    if (!selectedPageId || !dataPages) {
+      console.warn('No page selected or pages data not available for duplication.');
+      setSyncError('No page selected to duplicate.');
+      return;
+    }
+
+    const currentPageData = dataPages.find(p => p.id === selectedPageId);
+    if (!currentPageData) {
+      console.error(`Page with ID ${selectedPageId} not found for duplication.`);
+      setSyncError('Selected page data not found.');
+      return;
+    }
+
+    const newPageData: MovePage = {
+      // The backend should assign a new unique ID. Sending current ID or a placeholder.
+      // For TRPC, it's often best to omit ID for creation if backend generates it.
+      // However, our MovePage type requires an ID. Let's use a temporary one for the call,
+      // assuming the backend replaces it or is fine with it for a create-as-copy operation.
+      // A safer approach is if the backend trpcClient.createPage.mutate allows omitting id.
+      // For now, we will provide a temporary ID to satisfy the type, or even better, let the backend handle it.
+      // Let's assume the backend handles ID generation for a new page.
+      // To conform to the type `MovePage` requiring an id, we pass a dummy one.
+      // This will likely be ignored by the backend if it's a proper create endpoint.
+      id: `temp-id-${Date.now()}`, // Placeholder ID, backend should generate the real one.
+      name: `${currentPageData.name} (copy)`,
+      sets: currentPageData.sets.map(s => ({ ...s })) // Shallow copy of sets array and its objects
+    };
+
+    console.log('Attempting to duplicate page:', currentPageData.name, 'as:', newPageData.name);
+    updatePageMutation.mutate({ page: newPageData }, {
+      onSuccess: (createdPage) => { // Assuming backend returns the created page
+        console.log('Page duplicated successfully', createdPage);
+        // Optionally, select the new page - would need its ID from backend response.
+        // queryClient.invalidateQueries({ queryKey: key.allPages }) is handled by useCreatePage hook
+      },
+      onError: (error) => {
+        console.error('Error duplicating page:', error);
+        setSyncError(error.message || 'Failed to duplicate page.');
+      }
+    });
+  };
+
   // Mock handlers for TopBar actions
-  const handleDuplicatePage = () => console.log('Duplicate page clicked');
   const handleDownloadPage = () => {
     console.log('Update page from move clicked')
     setSyncError(null); // Clear previous errors
@@ -471,7 +523,7 @@ function App(): React.JSX.Element {
               pages={pagesObjects}
               selectedPage={selectedPageId}
               onSelectPage={handleSelectPage}
-              onDuplicatePage={handleDuplicatePage}
+              onDuplicatePage={handleDuplicatePageRequest}
               onUpdatePage={handleDownloadPage}
               onUploadPage={handleUploadPage}
               onPageNameEdited={handleUpdatePageName}
