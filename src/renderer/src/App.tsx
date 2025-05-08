@@ -11,6 +11,7 @@ import { AssignSetToGridForm } from './components/AssignSetToGridForm';
 import { Modal } from './components/Modal';
 import { UserSettings } from './components/UserSettings';
 import { ConfirmationModal } from './components/ConfirmationModal';
+import { DisclaimerModal } from './components/DisclaimerModal';
 import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
@@ -501,6 +502,11 @@ function App(): React.JSX.Element {
     return dataPages.find(p => p.id === selectedPageId);
   }, [dataPages, selectedPageId]);
 
+  const handleDisclaimerClose = () => {
+    updateUserSettingsMutation.mutate({...userSettingsData!, onboardingCompleted: true});
+    console.log('Disclaimer has been agreed to and closed.');
+  };
+
   return (
     <>
         <Box style={{ position: 'relative', minHeight: '100vh' }}>
@@ -615,6 +621,14 @@ function App(): React.JSX.Element {
             message={`Are you sure you want to delete page "${dataPages?.find(p => p.id === pageToDeleteId)?.name || ''}"? This action cannot be undone.`}
             confirmButtonText="Delete"
           />
+
+          {/* Disclaimer Modal - shows if onboarding is not completed */}
+          {isFetchedUserSettings && (
+            <DisclaimerModal 
+              isOpen={!userSettingsData?.onboardingCompleted}
+              onClose={handleDisclaimerClose}
+            />
+          )}
 
         </Box>
     </>
