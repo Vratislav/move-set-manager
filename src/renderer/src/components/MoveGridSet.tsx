@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Text, Flex, IconButton } from '@radix-ui/themes';
+import { Box, Text, IconButton } from '@radix-ui/themes';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { getColorStringForColorIndex } from '../utils/setColors';
 

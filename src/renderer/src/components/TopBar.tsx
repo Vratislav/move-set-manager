@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Button, Select, Text, Heading } from '@radix-ui/themes';
-import { CaretDownIcon } from '@radix-ui/react-icons';
+import { Flex, Button, Select, Heading } from '@radix-ui/themes';
 
 interface ActionButtonProps {
   children: React.ReactNode;

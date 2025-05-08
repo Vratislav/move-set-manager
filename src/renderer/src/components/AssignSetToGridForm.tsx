@@ -5,7 +5,6 @@ import {
   ScrollArea,
   Text,
   Box,
-  Heading,
 } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { ReactSetData } from './MoveGridSet';

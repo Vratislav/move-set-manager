@@ -1,15 +1,9 @@
 import { procedure, router } from './trpc'
-import { IMoveManager } from './moveManagerLib/moveManager/IMoveManager'
 import { MovePageZod } from './moveManagerLib/model/page'
 import { z } from 'zod'
 import { UserSettingsZod } from './moveManagerLib/model/userSettings'
 import { dialog } from 'electron'
 import { MoveSetInPageZod } from './moveManagerLib/model/set'
-const moveManager: IMoveManager = undefined as any
-
-type GetPageParams = {
-  pageId: string
-}
 
 export const appRouter = router({
   userList: procedure.query(() => {

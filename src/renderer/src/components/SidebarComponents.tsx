@@ -1,6 +1,6 @@
 import React from 'react';
-import { Flex, Text, TextField, IconButton, RadioCards, Box } from '@radix-ui/themes';
-import { Pencil1Icon, LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons';
+import { Flex, Text, TextField, IconButton, RadioCards } from '@radix-ui/themes';
+import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons';
 
 // --- LabeledSection --- //
 interface LabeledSectionProps {

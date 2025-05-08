@@ -27,7 +27,6 @@ import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
-import { COLORS } from './utils/setColors'; // Import color utility and new helper
 
 
 

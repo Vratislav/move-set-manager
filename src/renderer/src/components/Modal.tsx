@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, IconButton, Dialog, VisuallyHidden } from '@radix-ui/themes';
+import { Flex, Heading, IconButton, Dialog } from '@radix-ui/themes';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import './Modal.css'; // We'll need to create this CSS file
 

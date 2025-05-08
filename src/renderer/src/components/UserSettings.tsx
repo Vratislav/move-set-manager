@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, Heading, TextField, Button, Text, Checkbox, Separator } from '@radix-ui/themes';
-import { FileTextIcon } from '@radix-ui/react-icons'; // Example icon
 import { trpcClient } from '../trpc'; // Assuming trpcClient is set up for IPC
-import type { UserSettings as UserSettingsType } from '../../../main/moveManagerLib/model/userSettings'; // Import the type for structure
 
 // Define a more specific type for the subset of settings handled by this form
 // Note: We only pass back the relevant fields, not the full UserSettingsType onSave
