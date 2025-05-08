@@ -64,6 +64,7 @@ async function ensureLocalDbDirsExists(rootDir: string) {
   if (!fs.existsSync(gitignorePath)) {
     const gitignoreSrcPath = path.join('.', 'db.gitignore')
     console.log(`Copying ${gitignoreSrcPath} to ${gitignorePath}`)
+    console.log('Initializing git repo')
     fs.copyFileSync(gitignoreSrcPath, gitignorePath)
     await git.init()
     await git.add('.gitignore')
@@ -72,6 +73,7 @@ async function ensureLocalDbDirsExists(rootDir: string) {
 }
 
 export async function initLocalDb(rootDirPath: string) {
+  console.log('Initializing local db at:', rootDirPath)
   await ensureLocalDbDirsExists(rootDirPath)
 }
 
@@ -88,6 +90,7 @@ export class LocalDb {
     if (!fs.existsSync(this.rootDirPath)) {
       fs.mkdirSync(this.rootDirPath, { recursive: true })
     }
+    console.log('DB Root path:', this.rootDirPath)
     this.git = simpleGit(rootDir)
   }
 
@@ -294,7 +297,17 @@ export class LocalDb {
 
   public async updatePage(page: MovePage) {
     const pagesPath = path.join(this.rootDirPath, PAGES_DIR, `${page.id}.json`)
+    console.log('Updating page', page.id, 'at path', pagesPath)
     await fs.promises.writeFile(pagesPath, JSON.stringify(page, null, 2))
+    console.log('Page updated')
+  }
+
+  public async deletePage(pageId: string) {
+    const pagesPath = path.join(this.rootDirPath, PAGES_DIR, `${pageId}.json`)
+    if (!fs.existsSync(pagesPath)) {
+      return
+    }
+    await fs.promises.unlink(pagesPath)
   }
 
   public async getPage(pageId: string): Promise<MovePage | undefined> {

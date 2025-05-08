@@ -10,6 +10,7 @@ import { EditSetForm } from './components/EditSetForm';
 import { AssignSetToGridForm } from './components/AssignSetToGridForm';
 import { Modal } from './components/Modal';
 import { UserSettings } from './components/UserSettings';
+import { ConfirmationModal } from './components/ConfirmationModal';
 import { ReactSetData } from './components/MoveGridSet';
 import { VersionInfo } from './components/SidebarComponents';
 import './App.css'; // Import global styles
@@ -21,7 +22,8 @@ import {
     useDownloadAllSets,
     useUploadPage,
     useUpdateSetInPage,
-    useUpdatePage
+    useUpdatePage,
+    useDeletePage
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
@@ -69,6 +71,7 @@ function App(): React.JSX.Element {
   const uploadPageMutation = useUploadPage();
   const updateSetMutation = useUpdateSetInPage();
   const updatePageMutation = useUpdatePage();
+  const deletePageMutation = useDeletePage();
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
   const pagesObjects = useMemo(() => dataPages?.map(p => ({ id: p.id, name: p.name })) ?? [], [dataPages]);
@@ -127,6 +130,8 @@ function App(): React.JSX.Element {
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
   const [syncError, setSyncError] = useState<string | null>(null); // State for sync error message
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState<boolean>(false); // State for delete confirmation modal
+  const [pageToDeleteId, setPageToDeleteId] = useState<string | null>(null); // State for page to delete ID
 
   // Effect to update the grid sets when the selected page or the fetched data changes
   useEffect(() => {
@@ -216,6 +221,8 @@ function App(): React.JSX.Element {
     const currentPage = dataPages!.find(p => p.id === selectedPageId)!;
     //filter out sets so it does not include the set with the id setId
     currentPage.sets = currentPage.sets.filter(s => s.id !== setId);
+    //Log out set that is being deleted
+    console.log('Deleting set:', setId, 'in page:', currentPage.id);
     updatePageMutation.mutate({ page: currentPage });
     
     console.log(`Deleted set: ${setId}`);
@@ -226,6 +233,46 @@ function App(): React.JSX.Element {
     setSidebarMode(null);
     setSelectedSlotIndex(null);
   };
+
+  // --- Page Deletion Handlers --- //
+  const handleRequestDeletePage = () => {
+    if (selectedPageId) {
+      setPageToDeleteId(selectedPageId);
+      setIsDeleteConfirmModalOpen(true);
+      console.log(`Requesting delete for page ID: ${selectedPageId}`);
+    }
+  };
+
+  const handleCloseDeleteConfirmModal = () => {
+    setIsDeleteConfirmModalOpen(false);
+    setPageToDeleteId(null);
+  };
+
+  const handleConfirmDeletePage = () => {
+    if (pageToDeleteId) {
+      deletePageMutation.mutate(pageToDeleteId, {
+        onSuccess: () => {
+          console.log(`Page ${pageToDeleteId} deleted successfully.`);
+          if (selectedPageId === pageToDeleteId) {
+            const remainingPages = dataPages?.filter(p => p.id !== pageToDeleteId) ?? [];
+            if (remainingPages.length > 0) {
+              setSelectedPageId(remainingPages[0].id);
+            } else {
+              setSelectedPageId(null);
+            }
+          }
+          setPageToDeleteId(null); // Clear the page to delete ID
+          // The modal will be closed by its own logic if onConfirm also calls onClose
+        },
+        onError: (error) => {
+          setSyncError(error.message || 'Failed to delete page.');
+          setPageToDeleteId(null); // Clear the page to delete ID
+        }
+      });
+    }
+    setIsDeleteConfirmModalOpen(false); // Ensure modal closes
+  };
+  // ------------------------------- //
 
   // Mock handlers for TopBar actions
   const handleDuplicatePage = () => console.log('Duplicate page clicked');
@@ -372,7 +419,25 @@ function App(): React.JSX.Element {
     handleCloseSettingsModal();
   };
 
+  const handleUpdatePageName = (newPageName: string) => {
+    if (!selectedPageId || !dataPages) return;
+
+    const pageToUpdate = dataPages.find(p => p.id === selectedPageId);
+    if (pageToUpdate) {
+      const updatedPage = { ...pageToUpdate, name: newPageName };
+      updatePageMutation.mutate({ page: updatedPage });
+      console.log(`Updating page name for ID: ${selectedPageId} to "${newPageName}"`);
+    } else {
+      console.error(`Page with ID ${selectedPageId} not found for renaming.`);
+    }
+  };
+
   const isSyncing = downloadAllSetsMutation.isPending || uploadPageMutation.isPending;
+
+  const selectedPageObject = useMemo(() => {
+    if (!selectedPageId || !dataPages) return undefined;
+    return dataPages.find(p => p.id === selectedPageId);
+  }, [dataPages, selectedPageId]);
 
   return (
     <>
@@ -409,6 +474,9 @@ function App(): React.JSX.Element {
               onDuplicatePage={handleDuplicatePage}
               onUpdatePage={handleDownloadPage}
               onUploadPage={handleUploadPage}
+              onPageNameEdited={handleUpdatePageName}
+              currentPageName={selectedPageObject?.name}
+              onDeletePage={handleRequestDeletePage}
             />
             <MoveGrid
               sets={displayGridSets} // Pass the move index ordered sets
@@ -473,6 +541,16 @@ function App(): React.JSX.Element {
           >
             {syncError && <ErrorDisplay errorMessage={syncError} onDismiss={() => setSyncError(null)} />}
           </Modal>
+
+          {/* Confirmation Modal for Page Deletion */}
+          <ConfirmationModal
+            isOpen={isDeleteConfirmModalOpen}
+            onClose={handleCloseDeleteConfirmModal}
+            onConfirm={handleConfirmDeletePage}
+            title="Delete Page"
+            message={`Are you sure you want to delete page "${dataPages?.find(p => p.id === pageToDeleteId)?.name || ''}"? This action cannot be undone.`}
+            confirmButtonText="Delete"
+          />
 
         </Box>
     </>

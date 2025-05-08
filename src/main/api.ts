@@ -42,6 +42,10 @@ export const appRouter = router({
     return opts.ctx.moveManager.updatePage(opts.input.page)
   }),
 
+  deletePage: procedure.input(z.object({ pageId: z.string() })).mutation((opts) => {
+    return opts.ctx.moveManager.deletePage(opts.input.pageId)
+  }),
+
   updateSetInPage: procedure
     .input(z.object({ page: MovePageZod, moveSetInPage: MoveSetInPageZod, setName: z.string() }))
     .mutation((opts) => {

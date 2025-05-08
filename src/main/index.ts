@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import { createIPCHandler } from 'electron-trpc/main'
 import { appRouter } from './api'
 import { createContext } from './trpc'
-import { createDbFolderIfNotExists } from './dbManagement'
+import { createDbFolderIfNotExists, getDbPath } from './dbManagement'
 
 function createWindow(): void {
   // Create the browser window.
@@ -46,6 +46,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createDbFolderIfNotExists()
+  console.log('Loading db from:', getDbPath())
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 

@@ -254,6 +254,12 @@ export class MoveManager implements IMoveManager {
     await this.localDb.commitDbUpdate(`Updated page: ${page.name} (${page.id})`)
   }
 
+  public async deletePage(pageId: string) {
+    await this.localDb.init()
+    await this.localDb.deletePage(pageId)
+    await this.localDb.commitDbUpdate(`Deleted page: ${pageId}`)
+  }
+
   public async updateSetInPage(
     page: MovePage,
     set: MoveSetInPage,

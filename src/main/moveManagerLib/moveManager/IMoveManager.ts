@@ -14,6 +14,7 @@ export interface IMoveManager {
   getPage(pageId: string): Promise<MovePage | undefined>
   createPage(page: MovePage, deviceId: string | undefined): Promise<void>
   updatePage(page: MovePage): Promise<void>
+  deletePage(pageId: string): Promise<void>
   updateSetInPage(page: MovePage, set: MoveSetInPage, setName: string): Promise<MovePage>
   setActivePage(pageId: string, deviceId: string): Promise<void>
   getUserSettings(): Promise<UserSettings | undefined>

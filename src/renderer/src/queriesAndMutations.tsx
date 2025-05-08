@@ -110,6 +110,7 @@ export function useUpdatePage() {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (variables: { page: MovePage }) => {
+            console.log('Mutation: Updating page', variables.page.id)
             return await trpcClient.updatePage.mutate({ page: variables.page })
         },
         onSuccess: () => {
@@ -117,6 +118,20 @@ export function useUpdatePage() {
         }
     })
 }
+
+export function useDeletePage() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (pageId: string) => {
+            console.log('Mutation: Deleting page', pageId)  
+            return await trpcClient.deletePage.mutate({ pageId })
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: key.allPages })
+        }
+    })
+}
+
 
 
 export function useUpdateSetInPage() {
