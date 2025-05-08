@@ -60,9 +60,9 @@ export const MoveGridSet: React.FC<MoveGridSetProps> = ({ set, onClick, onDelete
           <Text size="2" weight="bold" align="center" style={{ color: 'var(--gray-12)' }}>
             {set.name}
           </Text>
-          <Text size="1" style={{ color: 'var(--gray-11)' }}>
+          {/* <Text size="1" style={{ color: 'var(--gray-11)' }}>
             ({set.revision})
-          </Text>
+          </Text> */}
           {isHovered && (
             <IconButton
               variant="ghost"

@@ -141,6 +141,7 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
             </Flex>
           </LabeledSection>
           <Separator size="4" />
+          {/*
           <VersionsSection
             currentRevision={set.revision}
             otherVersions={otherVersions}
@@ -149,6 +150,7 @@ export const EditSetForm: React.FC<EditSetFormProps> = ({
             onVersionChange={handleVersionChange}
             onLockVersionToggle={handleLockVersionToggle}
           />
+          */}
         </Flex>
       </Box>
 
