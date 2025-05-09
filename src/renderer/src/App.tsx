@@ -631,6 +631,10 @@ function App(): React.JSX.Element {
           )}
 
         </Box>
+        
+        <Text size="1" style={{ position: 'fixed', bottom: 'var(--space-2)', left: 'var(--space-2)', color: 'var(--gray-a10)' }}>
+          v{window.appVersion || 'loading...'}
+        </Text>
     </>
   );
 }
