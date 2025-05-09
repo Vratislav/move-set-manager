@@ -61,7 +61,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   return (
     <>
       <Flex direction="column" align="center" gap="3" mb="4">
-        <Heading size="7">Move Manager</Heading>
+        <Heading size="7">Move Set Manager</Heading>
         <Flex justify="between" align="center" width="100%" px="5">
           <Flex align="center" gap="2">
             <Select.Root 
