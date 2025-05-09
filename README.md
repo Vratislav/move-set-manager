@@ -18,13 +18,16 @@ Follow these instructions to get Move Set Manager up and running on your system.
 ### Prerequisites
 
 *   **SSH Access to your Move:** You'll need to have SSH access configured for your Ableton Move.
-    *   Add an SSH key (preferably without a passphrase for ease of use, but ensure it's secured) at `http://move.local/development/ssh`.
+    *   Add an at `http://move.local/development/ssh`.
+    *   Right now only SSH keys without passphrase are supported by the Move Set Manager. Support for passphrases will be added soon.
     *   If you don't have an SSH key, you can generate one. GitHub provides excellent documentation on [generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
     *   Once your public key (e.g., `id_rsa.pub`) is added via the Move's web interface, you'll need to configure the path to your private SSH key within Move Set Manager's settings.
 *   **Git:** This software uses Git for versioning your sets. Make sure [Git](https://git-scm.com) is installed and available in your system's command line.
 *   **Node.js:** Node.js version 22 or higher is required. You can download it from [nodejs.org](https://nodejs.org/).
 
 ### Installation & Usage
+
+**Disclaimer**: The Move Set Manager has been tested only on MacOS. Feel free to try it on different operating systems.
 
 1.  **Clone the repository:**
     ```bash
@@ -68,10 +71,11 @@ To run the test suite (Docker is required):
 ```bash
 npm test
 ```
-To run tests in watch mode:
-```bash
-npm run test:watch
-```
+
+### Development stack
+* Electron based app in TypeScript
+    * Backend is properly coded and MoveManageLib is covered with rudimentary tests
+    * Frontend is React/RadixUI/trpc/TanstackQuery based. I have vibe coded it. It's a mess. I am so sorry. Any PRs improving the code structure are welcome.
 
 ## Contributors
 
