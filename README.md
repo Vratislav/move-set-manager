@@ -91,5 +91,5 @@ This project is not affiliated with, authorized by, or endorsed by Ableton. Use 
 
 *   This tool is third-party and requires SSH access to your Ableton Move. There's a real risk of breaking things, including potentially bricking your device.
 *   Ableton cannot offer individual support if something goes wrong while using this tool.
-*   If issues do arise, the documented restore procedure for your Ableton Move is the fallback. You use this software at your own risk.
+*   If issues do arise, the [documented](https://ableton.centercode.com/project/article/item.html?cap=ecd3942a1fe3405eb27a806608401a0b&arttypeid=%7Be70be312-f44a-418b-bb74-ed1030e3a49a%7D&artid=%7BC0A2D9E2-D52F-4DEB-8BEE-356B65C8942E%7D) restore procedure for your Ableton Move is the fallback. You use this software at your own risk.
 *   The authors and contributors of this tool cannot be held responsible for any damage or issues that may occur to your equipment or for any potential data loss. Always refer to official Ableton documentation when modifying your hardware.
