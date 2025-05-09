@@ -4,6 +4,8 @@
 
 Move Set Manager is a powerful tool designed to enhance your Ableton Move experience by providing robust set management capabilities.
 
+![Interface screenshot](./doc/img/ui.png)
+
 ## Features
 
 *   💾 **Backup and Restoration:** Easily back up your Ableton Move sets and restore them when needed.
