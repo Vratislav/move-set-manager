@@ -8,7 +8,7 @@ Move Set Manager is a powerful tool designed to enhance your Ableton Move experi
 
 *   💾 **Backup and Restoration:** Easily back up your Ableton Move sets and restore them when needed.
 *   📄 **Paging Support:** Organize your sets into pages. Upload an entire page of sets to your Move in seconds.
-*   ✏️ **Metadata Editing:** Modify set details such_as song name and pad color.
+*   ✏️ **Metadata Editing:** Modify set details such as song name and pad color.
 *   ⏳ **(Coming Soon!) Versioning Support:** Keep track of changes to your sets with version control.
 
 ## Getting Started
@@ -18,7 +18,7 @@ Follow these instructions to get Move Set Manager up and running on your system.
 ### Prerequisites
 
 *   **SSH Access to your Move:** You'll need to have SSH access configured for your Ableton Move.
-    *   Add an at `http://move.local/development/ssh`.
+    *   Add an SSH key at `http://move.local/development/ssh`.
     *   Right now only SSH keys without passphrase are supported by the Move Set Manager. Support for passphrases will be added soon.
     *   If you don't have an SSH key, you can generate one. GitHub provides excellent documentation on [generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
     *   Once your public key (e.g., `id_rsa.pub`) is added via the Move's web interface, you'll need to configure the path to your private SSH key within Move Set Manager's settings.
