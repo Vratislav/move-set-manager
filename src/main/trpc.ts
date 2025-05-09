@@ -34,9 +34,24 @@ export const createContext = async (opts: CreateContextOptions): Promise<RouterC
  */
 const t = initTRPC.context<typeof createContext>().create({ isServer: true })
 
+export const loggedProcedure = t.procedure.use(async (opts) => {
+  const start = Date.now()
+
+  const result = await opts.next()
+
+  const durationMs = Date.now() - start
+  const meta = { path: opts.path, type: opts.type, durationMs }
+
+  result.ok ? console.log('OK request:', meta) : console.error('NOK request:', meta)
+  if (!result.ok) {
+    console.error('Error:', result.error)
+  }
+  return result
+})
+
 /**
  * Export reusable router and procedure helpers
  * that can be used throughout the router
  */
 export const router = t.router
-export const procedure = t.procedure
+export const procedure = loggedProcedure
