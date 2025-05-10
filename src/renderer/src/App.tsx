@@ -546,6 +546,7 @@ function App(): React.JSX.Element {
               currentPageName={selectedPageObject?.name}
               onDeletePage={handleRequestDeletePage}
               onCreateNewPage={handleCreateNewPage}
+              areAnySetsAvailable={allSetsReactData.length > 0}
             />
             <MoveGrid
               sets={displayGridSets} // Pass the move index ordered sets

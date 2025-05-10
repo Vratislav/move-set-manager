@@ -7,11 +7,12 @@ import './TopBar.css';
 interface ActionButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({ children, onClick }) => {
+const ActionButton: React.FC<ActionButtonProps> = ({ children, onClick, disabled }) => {
   return (
-    <Button variant="soft" color="gray" onClick={onClick}>
+    <Button variant="soft" color="gray" onClick={onClick} disabled={disabled}>
       {children}
     </Button>
   );
@@ -20,6 +21,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({ children, onClick }) => {
 interface TopBarProps {
   pages: Array<{ id: string; name: string }>;
   selectedPage: string | null;
+  areAnySetsAvailable: boolean;
   onSelectPage: (pageId: string) => void;
   onCreateNewPage?: () => void;
   onDuplicatePage: () => void;
@@ -35,6 +37,7 @@ const NEW_PAGE_SENTINEL = "__NEW_PAGE_SENTINEL__";
 export const TopBar: React.FC<TopBarProps> = ({
   pages,
   selectedPage,
+  areAnySetsAvailable,
   onSelectPage,
   onCreateNewPage,
   onDuplicatePage,
@@ -121,7 +124,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
           <Flex gap="3">
             <ActionButton onClick={onUpdatePage}>Download page from move</ActionButton>
-            <ActionButton onClick={onUploadPage}>Upload page to move</ActionButton>
+            <ActionButton onClick={onUploadPage} disabled={!areAnySetsAvailable}>Upload page to move</ActionButton>
           </Flex>
         </Flex>
       </Flex>
