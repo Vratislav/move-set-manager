@@ -100,6 +100,10 @@ export const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClos
           <Text as="p">
             This software uses Git for versioning your sets. Make sure <RadixLink href="https://git-scm.com" target="_blank" rel="noopener noreferrer">Git</RadixLink> is installed and available in the command line.
           </Text>
+          <Heading size="3" mt="2">Caveats</Heading>
+          <Text as="p">
+          🚫☁️ This tool does not play well with cloud synced sets. Please disable cloud syncing for sets if you want to use the upload functionality.
+          </Text>
         </Flex>
         <Flex
           justify="center"
@@ -110,6 +114,7 @@ export const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ isOpen, onClos
             marginTop: 'auto', // Pushes to bottom if content is short, works with parent Flex
           }}
         >
+
           <Button color="green" size="3" onClick={handleAgree}>
             Ok, I understand and Agree
           </Button>

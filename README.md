@@ -13,6 +13,11 @@ Move Set Manager is a powerful tool designed to enhance your Ableton Move experi
 *   ✏️ **Metadata Editing:** Modify set details such as song name and pad color.
 *   ⏳ **(Coming Soon!) Versioning Support:** Keep track of changes to your sets with version control.
 
+## Caveats
+
+*   🚫☁️ This tool does not play well with cloud synced sets. Please disable cloud syncing for sets if you want to use the upload functionality.
+*   Syncing sets between devices works only for sets that do not have any custom samples. Proper support for this will be added soon.
+
 ## Getting Started
 
 Follow these instructions to get Move Set Manager up and running on your system.
