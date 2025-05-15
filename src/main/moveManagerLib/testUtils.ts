@@ -65,7 +65,7 @@ async function setupSetExtendedAttributes(sftp: SFTPWrapper, ssh: NodeSSH): Prom
   let setIndex = 0
   let colorIndex = 0
   for (const setDirStat of setsDirStats) {
-    const setDirPath = path.join(setsDir, setDirStat.filename)
+    const setDirPath = path.posix.join(setsDir, setDirStat.filename)
     const value = ['-n', 'user.song-index', '-v', setIndex.toString(), setDirPath]
     // console.log("setfattr ", value.join(" "));
     await ssh.exec('setfattr', value)
@@ -111,7 +111,7 @@ export async function startMockAbletonMoveServer() {
   })
   let i = 0
   let serverStarted = false
-  while (i < 10) {
+  while (i < 20) {
     try {
       await refreshTestDataInContainer()
       serverStarted = true

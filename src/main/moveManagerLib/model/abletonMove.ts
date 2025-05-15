@@ -1,8 +1,8 @@
 import path from 'path'
 
-export const MOVE_USER_LIBRARY_PATH = '/data/UserData/UserLibrary'
+export const MOVE_USER_LIBRARY_PATH = path.posix.join('/', 'data', 'UserData', 'UserLibrary')
 export const MOVE_SET_DIR = 'Sets'
-export const MOVE_SET_DIR_PATH = path.join(MOVE_USER_LIBRARY_PATH, MOVE_SET_DIR)
+export const MOVE_SET_DIR_PATH = path.posix.join(MOVE_USER_LIBRARY_PATH, MOVE_SET_DIR)
 
 export const XATTR_LAST_MODIFIED_TIME = 'user.last-modified-time'
 export const XATTR_LOCAL_CLOUD_STATE = 'user.local-cloud-state'

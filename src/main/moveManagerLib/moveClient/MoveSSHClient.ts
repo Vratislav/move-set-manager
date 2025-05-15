@@ -82,7 +82,7 @@ export class MoveSSHClient implements IMoveSSHClient {
   }
 
   private async getSetMetadata(setId: string): Promise<MoveSetMetadata> {
-    const setDirPath = path.join(MOVE_SET_DIR_PATH, setId)
+    const setDirPath = path.posix.join(MOVE_SET_DIR_PATH, setId)
     //console.log(`Getting attributes for ${setDirPath}`);
     const attributes = await this.getExtendedAttributes(setDirPath)
     const setDirContents = await this.getDirectoryListing(setDirPath)
@@ -104,14 +104,14 @@ export class MoveSSHClient implements IMoveSSHClient {
   }
 
   async listSets(): Promise<MoveSet[]> {
-    const setsRootDir = path.join(MOVE_USER_LIBRARY_PATH, MOVE_SET_DIR)
+    const setsRootDir = path.posix.join(MOVE_USER_LIBRARY_PATH, MOVE_SET_DIR)
     const setsInDirStats = await this.getDirectoryListing(setsRootDir)
     const setDirStats = setsInDirStats.filter((stat) => stat.attrs.isDirectory())
 
     const sets: MoveSet[] = [] // Initialize empty array to store results
     let setsCount = 0
     for (const setDirStat of setDirStats) {
-      const setDirPath = path.join(setsRootDir, setDirStat.filename)
+      const setDirPath = path.posix.join(setsRootDir, setDirStat.filename)
       const metadata = await this.getSetMetadata(setDirStat.filename)
       const set: MoveSet = {
         path: setDirPath,
@@ -170,13 +170,13 @@ export class MoveSSHClient implements IMoveSSHClient {
       throw new Error('SFTP client not initialized')
     }
     const metadata = await this.getSetMetadata(setId)
-    const remoteSetDir = path.join(MOVE_SET_DIR_PATH, setId)
+    const remoteSetDir = path.posix.join(MOVE_SET_DIR_PATH, setId)
 
     //console.log(`Downloading set from ${remoteSetDir} to ${targetDir}`);
     await this.copyRecursiveFromRemote(targetDir, remoteSetDir)
 
     // The local path will be the target directory plus the set ID directory
-    const localSetPath = path.join(targetDir, setId)
+    const localSetPath = path.posix.join(targetDir, setId)
 
     return {
       path: localSetPath, // Update the path to the local download location
@@ -210,7 +210,7 @@ export class MoveSSHClient implements IMoveSSHClient {
     const remoteSetDirParent = MOVE_SET_DIR_PATH // e.g., /Users/ableton/Move/Sets
     const localSetPath = set.path // e.g., /local/tmp/download/set_id
     const setId = set.meta.id // e.g., set_id
-    const remoteSetIdDirPath = path.join(remoteSetDirParent, setId) // e.g., /Users/ableton/Move/Sets/set_id
+    const remoteSetIdDirPath = path.posix.join(remoteSetDirParent, setId) // e.g., /Users/ableton/Move/Sets/set_id
 
     // 1. Copy set recursive to remote
     // This will copy the contents of localSetPath into remoteSetIdDirPath
@@ -218,8 +218,8 @@ export class MoveSSHClient implements IMoveSSHClient {
     await this.copyRecursiveToRemote(localSetPath, remoteSetDirParent)
 
     // 2. Rename the internal "_set" directory to the actual song name.
-    const remoteInternalSetPath = path.join(remoteSetIdDirPath, '_set') // e.g., /Users/ableton/Move/Sets/set_id/_set
-    const remoteTargetNamePath = path.join(remoteSetIdDirPath, name) // e.g., /Users/ableton/Move/Sets/set_id/Actual Song Name
+    const remoteInternalSetPath = path.posix.join(remoteSetIdDirPath, '_set') // e.g., /Users/ableton/Move/Sets/set_id/_set
+    const remoteTargetNamePath = path.posix.join(remoteSetIdDirPath, name) // e.g., /Users/ableton/Move/Sets/set_id/Actual Song Name
     await this.renameRemoteDirectoryOrFile(remoteInternalSetPath, remoteTargetNamePath)
 
     // 3. Set attributes from metadata on the parent directory (the one named after setId)
@@ -251,7 +251,7 @@ export class MoveSSHClient implements IMoveSSHClient {
     return { ...set, path: remoteSetIdDirPath }
   }
   async deleteSet(setId: string): Promise<void> {
-    await this.ssh.execCommand(`rm -r ${path.join(MOVE_SET_DIR_PATH, setId)}`)
+    await this.ssh.execCommand(`rm -r ${path.posix.join(MOVE_SET_DIR_PATH, setId)}`)
   }
 
   /**
