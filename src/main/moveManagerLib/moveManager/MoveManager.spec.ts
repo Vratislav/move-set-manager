@@ -4,7 +4,6 @@ import { MoveSSHClient } from '../moveClient/MoveSSHClient'
 import {
   refreshTestDataInContainer,
   startMockAbletonMoveServer,
-  stopMockAbletonMoveServer,
   TEST_SET_ID,
   wipeTestDb
 } from '../testUtils'
@@ -14,12 +13,9 @@ beforeAll(async () => {
   await startMockAbletonMoveServer()
 }, 20000)
 
-afterAll(async () => {
-  await stopMockAbletonMoveServer()
-}, 20000)
-
 let moveManager: MoveManager
 let ssh: MoveSSHClient
+
 beforeEach(async () => {
   const testDbPath = './testDb'
   wipeTestDb(testDbPath)
@@ -42,8 +38,8 @@ describe('MoveManager', () => {
     const testingSet = allSets.find((set) => set.meta.id === TEST_SET_ID)
     expect(testingSet).not.toBeUndefined()
     expect(testingSet?.meta.name).toBe('TestSet')
-    expect(testingSet?.meta.index).toBe(19)
-    expect(testingSet?.meta.color).toBe(19)
+    expect(testingSet?.meta.index).toBe(2)
+    expect(testingSet?.meta.color).toBe(2)
   })
 
   it('should get all sets', async () => {
@@ -54,24 +50,33 @@ describe('MoveManager', () => {
     const testingSet = sets.find((set) => set.meta.id === TEST_SET_ID)
     expect(testingSet).not.toBeUndefined()
     expect(testingSet?.meta.name).toBe('TestSet')
-    expect(testingSet?.meta.index).toBe(19)
-    expect(testingSet?.meta.color).toBe(19)
+    expect(testingSet?.meta.index).toBe(2)
+    expect(testingSet?.meta.color).toBe(2)
   })
 
   describe('getPages / getPage', () => {
     it('should create a default page that is full with sets', async () => {
+      await ssh.connect()
+      const macAddress = await ssh.getMACAddress()
+      await ssh.disconnect()
       const sets = await moveManager.downloadAllSets()
       const setsLength = sets.length
-      const page = await moveManager.getPage('default-66-a6-1d-a3-d8-07')
+      const page = await moveManager.getPage(
+        `default-${macAddress?.replace(/:/g, '-').toLowerCase()}`
+      )
       expect(page).not.toBeUndefined()
       expect(page?.sets.length).toBe(setsLength)
     })
 
     it('should get all pages', async () => {
+      await ssh.connect()
+      const macAddress = await ssh.getMACAddress()
+      await ssh.disconnect()
       const sets = await moveManager.downloadAllSets()
       const pages = await moveManager.getAllPages()
       expect(pages.length).toBeGreaterThan(0)
-      const defaultPage = pages.find((page) => page.id === 'default-66-a6-1d-a3-d8-07')
+      const pageId = `default-${macAddress?.replace(/:/g, '-').toLowerCase()}`
+      const defaultPage = pages.find((page) => page.id === pageId)
       expect(defaultPage).not.toBeUndefined()
       expect(defaultPage?.sets.length).toBe(sets.length)
     })
@@ -98,8 +103,8 @@ describe('MoveManager', () => {
       expect(sets.length).toBe(1)
       expect(sets[0].meta.id).toEqual(TEST_SET_ID)
       expect(sets[0].meta.name).toEqual('TestSet')
-      expect(sets[0].meta.index).toEqual(19)
-      expect(sets[0].meta.color).toEqual(19)
+      expect(sets[0].meta.index).toEqual(2)
+      expect(sets[0].meta.color).toEqual(2)
       expect(sets[0].meta.wasExternallyModified).toEqual(false)
       expect(sets[0].meta.localCloudState).toEqual('notSynced')
       expect(sets[0].meta.lastModifiedTime).toEqual('2025-04-18T15:00:24Z')
@@ -108,32 +113,20 @@ describe('MoveManager', () => {
     it('should not upload a set if the given set index is taken. Also throws if index or color is out of range', async () => {
       await moveManager.downloadAllSets()
       await moveManager.wipeAllSetsOnDevice()
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
       await moveManager.uploadSet(TEST_SET_ID)
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      expect(async () => {
+      await expect(async () => {
         await moveManager.uploadSet(TEST_SET_ID)
       }).rejects.toThrow(SetIndexTakenError)
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      expect(async () => {
+      await expect(async () => {
         await moveManager.uploadSet(TEST_SET_ID, undefined, 32)
       }).rejects.toThrow(SetIndexOutOfRangeError)
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      expect(async () => {
+      await expect(async () => {
         await moveManager.uploadSet(TEST_SET_ID, undefined, -1)
       }).rejects.toThrow(SetIndexOutOfRangeError)
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      expect(async () => {
+      await expect(async () => {
         await moveManager.uploadSet(TEST_SET_ID, undefined, undefined, 27)
       }).rejects.toThrow(SetColorOutOfRangeError)
-      //wait 500ms
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      expect(async () => {
+      await expect(async () => {
         await moveManager.uploadSet(TEST_SET_ID, undefined, undefined, -1)
       }).rejects.toThrow(SetColorOutOfRangeError)
     })

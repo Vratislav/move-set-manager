@@ -1,0 +1,129 @@
+name: CI Pipeline
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify your project's Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint # Test job now depends on lint job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify your project's Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      # Ensure test.key has correct permissions if it's checked into the repo
+      - name: Set permissions for SSH private key (Linux/macOS)
+        run: |
+          if [ -f "test.key" ]; then
+            chmod 600 test.key
+            echo "Permissions set for test.key"
+          else
+            echo "WARNING: test.key not found. SSH operations might fail."
+          fi
+
+      - name: Start Docker Compose services
+        run: docker compose up -d
+
+      - name: Wait for SSH service
+        run: |
+          echo "Waiting for SSH server on localhost:2222..."
+          timeout 30s bash -c 'until nc -z localhost 2222; do sleep 1; done'
+          echo "SSH server is responsive."
+        
+
+      - name: Run tests
+        run: npm test -- --testTimeout=120000
+
+      - name: Tear down Docker Compose services
+        if: always() # This ensures cleanup even if tests fail
+        run: docker compose down 
+
+  # test-win:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20' # Specify your project's Node.js version
+
+  #     - name: Install dependencies
+  #       run: npm install
+
+  #     # Ensure test.key has correct permissions if it's checked into the repo
+  #     # For Windows, `chmod` might require Git Bash. If issues arise, consider alternatives like `icacls`.
+  #     - name: Set permissions for SSH private key (Windows)
+  #       shell: bash # Explicitly use bash for chmod
+  #       run: |
+  #         if [ -f "test.key" ]; then
+  #           chmod 600 test.key
+  #           echo "Permissions set for test.key"
+  #         else
+  #           echo "WARNING: test.key not found. SSH operations might fail."
+  #         fi
+
+  #     - name: Start Docker Compose services
+  #       run: docker compose up -d
+
+  #     - name: Wait for SSH service
+  #       # nc might be available with Git Bash. If not, alternative PowerShell command:
+  #       # Test-NetConnection -ComputerName localhost -Port 2222 -InformationLevel Quiet
+  #       # This loop is a bit more complex in PowerShell. Sticking to bash for now.
+  #       shell: bash # Explicitly use bash for nc and timeout
+  #       run: |
+  #         echo "Waiting for SSH server on localhost:2222..."
+  #         timeout 30s bash -c 'until nc -z localhost 2222; do sleep 1; done'
+  #         echo "SSH server is responsive."
+
+  #     - name: Run tests
+  #       run: npm test -- --testTimeout=60000
+
+  #     - name: Tear down Docker Compose services
+  #       if: always() # This ensures cleanup even if tests fail
+  #       run: docker compose down
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test] # Updated dependency
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Specify your project's Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build 

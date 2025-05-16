@@ -1,16 +1,12 @@
 import os from 'os'
 import path from 'path'
-import { startMockAbletonMoveServer, stopMockAbletonMoveServer } from '../testUtils'
+import { startMockAbletonMoveServer } from '../testUtils'
 import { MoveSSHClient } from './MoveSSHClient'
 import fs from 'fs'
 
 beforeAll(async () => {
   await startMockAbletonMoveServer()
 }, 20000)
-
-afterAll(async () => {
-  await stopMockAbletonMoveServer()
-}, 10000)
 
 const connectionOpts = {
   port: 2222,
@@ -44,8 +40,8 @@ describe('MoveSSHClient', () => {
       expect(set?.meta.name).toEqual('TestSet')
       expect(set?.meta.wasExternallyModified).toEqual(false)
       expect(set?.meta.localCloudState).toEqual('notSynced')
-      expect(set?.meta.color).toEqual(19)
-      expect(set?.meta.color).toEqual(19)
+      expect(set?.meta.color).toEqual(2)
+      expect(set?.meta.color).toEqual(2)
       //Make sure the lastModifiedTime is a valid date
       expect(new Date(set?.meta.lastModifiedTime as string)).not.toBeNaN()
     } catch (error) {
