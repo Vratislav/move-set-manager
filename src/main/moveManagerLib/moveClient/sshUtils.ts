@@ -114,7 +114,7 @@ export async function copyRecursiveToRemote(
   const baseName = path.basename(localFileOrDir)
   const remotePath = path.join(remoteBaseDir, baseName)
 
-  if (localPathStat.isFile()) {
+  if (localPathStat.isFile() && !localFileOrDir.endsWith('.DS_Store')) {
     //console.log(`Copying local file ${localFileOrDir} to ${remotePath}`);
     await new Promise<void>((resolve, reject) => {
       sftp.fastPut(localFileOrDir, remotePath, (err) => {

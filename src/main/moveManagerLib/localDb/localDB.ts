@@ -67,8 +67,25 @@ async function ensureLocalDbDirsExists(rootDir: string) {
     console.log('Initializing git repo')
     fs.copyFileSync(gitignoreSrcPath, gitignorePath)
     await git.init()
+    await ensureGitConfigurationIsValid(git)
     await git.add('.gitignore')
     await git.commit('Initial commit')
+  }
+}
+
+async function ensureGitConfigurationIsValid(git: SimpleGit) {
+  //Check if name and email are set
+  const name = await git.getConfig('user.name', 'global')
+  const email = await git.getConfig('user.email', 'global')
+  // If name is not set, set it to 'Move Manager'
+  if (!name.value) {
+    await git.addConfig('user.name', 'Move Manager', false, 'local')
+    console.log('Set git user name to Move Manager')
+  }
+  // If email is not set, set it to 'movemanager@example.com'
+  if (!email.value) {
+    await git.addConfig('user.email', 'movemanager@example.com', false, 'local')
+    console.log('Set git user email to movemanager@example.com')
   }
 }
 
@@ -101,7 +118,7 @@ export class LocalDb {
     }
   }
 
-  public isInited() {
+  public isInited(): boolean {
     return this._isInited
   }
 

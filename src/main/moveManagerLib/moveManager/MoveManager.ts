@@ -1,5 +1,5 @@
 import { SetColorOutOfRangeError, SetIndexOutOfRangeError, SetIndexTakenError } from '../errors'
-import { initLocalDb, LocalDb } from '../localDb/localDB'
+import { LocalDb } from '../localDb/localDB'
 import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
 import { MoveSet, MoveSetInPage } from '../model/set'
@@ -110,7 +110,7 @@ export class MoveManager implements IMoveManager {
         throw new Error(`Page ${pageId} not found`)
       }
       const moveMacAddress = (await this.ssh.getMACAddress()) || 'UNKNOWN'
-      let moveDevice = await this.localDb.getDevice(moveMacAddress)
+      const moveDevice = await this.localDb.getDevice(moveMacAddress)
       //Check that every index in the page is unique
       const indices = new Set()
       for (const setInPage of page.sets) {
@@ -203,8 +203,6 @@ export class MoveManager implements IMoveManager {
       await this.localDb.updatePage(page)
       await this.localDb.commitDbUpdate(`Downloaded current sets from ${moveMacAddress}`)
       return sets
-    } catch (e) {
-      throw e
     } finally {
       await this.end()
     }

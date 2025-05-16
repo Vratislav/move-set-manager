@@ -109,7 +109,6 @@ export class MoveSSHClient implements IMoveSSHClient {
     const setDirStats = setsInDirStats.filter((stat) => stat.attrs.isDirectory())
 
     const sets: MoveSet[] = [] // Initialize empty array to store results
-    let setsCount = 0
     for (const setDirStat of setDirStats) {
       const setDirPath = path.posix.join(setsRootDir, setDirStat.filename)
       const metadata = await this.getSetMetadata(setDirStat.filename)
