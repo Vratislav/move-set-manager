@@ -82,7 +82,37 @@ export const appRouter = router({
       return null
     }
     return filePaths[0]
-  })
+  }),
+
+  openDownloadAllAblBundlesDirectorySelectionDialog: procedure.mutation(async () => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ['openDirectory'],
+      title: 'Select directory to download all ABL bundles to',
+      buttonLabel: 'Select dir & download'
+    })
+    if (canceled) {
+      return null
+    }
+    return filePaths[0]
+  }),
+
+  startRestApiChallenge: procedure.mutation(async (opts) => {
+    return opts.ctx.moveManager.startRestApiChallenge()
+  }),
+
+  submitRestApiChallengeResponse: procedure
+    .input(z.object({ secret: z.string() }))
+    .mutation(async (opts) => {
+      const { secret } = opts.input
+      return opts.ctx.moveManager.submitRestApiChallengeResponse(secret)
+    }),
+
+  downloadAllAblBundles: procedure
+    .input(z.object({ targetDir: z.string() }))
+    .mutation(async (opts) => {
+      const { targetDir } = opts.input
+      return opts.ctx.moveManager.downloadAllAblBundles(targetDir)
+    })
 })
 // Export type router type signature,
 // NOT the router itself.
