@@ -4,6 +4,7 @@ import { MoveDevice } from '../model/device'
 import { MovePage } from '../model/page'
 import { MoveSet, MoveSetInPage } from '../model/set'
 import { UserSettings } from '../model/userSettings'
+import { MoveRestApiClient } from '../moveClient/MoveRestApiClient'
 import { MoveSSHClient } from '../moveClient/MoveSSHClient'
 import { IMoveManager } from './IMoveManager'
 
@@ -12,10 +13,37 @@ export class MoveManager implements IMoveManager {
   private readonly ssh: MoveSSHClient
   private isPerformingOperation = false
   private sshConfigLoadedFromSettings = false
+  private restApi: MoveRestApiClient
 
   constructor(localDb: LocalDb, ssh: MoveSSHClient) {
     this.localDb = localDb
     this.ssh = ssh
+    this.restApi = new MoveRestApiClient(
+      `http://${this.ssh.getConnectionOpts().host || 'move.local'}`
+    )
+  }
+  async downloadAllAblBundles(targetDir: string): Promise<string[]> {
+    try {
+      await this.begin()
+      const sets = await this.ssh.listSets()
+      const ablBundles = []
+      for (const set of sets) {
+        const ablBundle = await this.downloadSetAblBundle(set.meta.id, targetDir)
+        ablBundles.push(ablBundle)
+      }
+      return ablBundles
+    } finally {
+      await this.end()
+    }
+  }
+  startRestApiChallenge(): Promise<void> {
+    return this.restApi.getChallenge()
+  }
+  submitRestApiChallengeResponse(secret: string): Promise<string | null> {
+    return this.restApi.submitChallengeResponse(secret)
+  }
+  downloadSetAblBundle(setId: string, targetDir: string): Promise<string> {
+    return this.restApi.downloadSetAblBundle(setId, targetDir)
   }
 
   private async begin() {
@@ -31,6 +59,7 @@ export class MoveManager implements IMoveManager {
           port: userSettings.sshCustomPort,
           username: userSettings.sshCustomUsername
         })
+        this.restApi.baseUrl = `http://${userSettings.sshCustomHostname || 'move.local'}`
       }
       this.sshConfigLoadedFromSettings = true
     }
@@ -311,6 +340,7 @@ export class MoveManager implements IMoveManager {
       port: userSettings.sshCustomPort,
       username: userSettings.sshCustomUsername
     })
+    this.restApi.baseUrl = `http://${userSettings.sshCustomHostname || 'move.local'}`
     await this.localDb.commitDbUpdate(`Updated user settings`)
   }
 }

@@ -123,8 +123,8 @@ export const TopBar: React.FC<TopBarProps> = ({
           </Flex>
 
           <Flex gap="3">
-            <ActionButton onClick={onUpdatePage}>Download page from move</ActionButton>
-            <ActionButton onClick={onUploadPage} disabled={!areAnySetsAvailable}>Upload page to move</ActionButton>
+            <ActionButton onClick={onUpdatePage}>Download page from Move</ActionButton>
+            <ActionButton onClick={onUploadPage} disabled={!areAnySetsAvailable}>Upload page to Move</ActionButton>
           </Flex>
         </Flex>
       </Flex>
