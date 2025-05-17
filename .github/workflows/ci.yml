@@ -107,29 +107,23 @@ jobs:
         id: changelog_notes
         run: |
           TAG_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
-          # Escape for regex: replace . with \\.
-          TAG_VERSION_ESCAPED=$(echo $TAG_VERSION | sed 's/\\./\\\\./g')
-          # Pattern to find the start of the version section, allowing for " - YYYY-MM-DD" or " - UNRELEASED" or nothing after the version
-          START_PATTERN="^## \\[${TAG_VERSION_ESCAPED}\\]"
-          # Read the changelog, find the line with the version, then print until the next version heading or EOF
-          # Note: Using awk for multiline processing.
-          # 1. Find the line with the version tag. Set a flag 'p'.
-          # 2. If 'p' is set, print the line.
-          # 3. If 'p' is set and another '## [' line is found (but not the one we started with), unset 'p' and stop.
-          NOTES=$(awk -v start_pattern="$START_PATTERN" '
-            $0 ~ start_pattern { p=1; next }  # Start printing from the line AFTER the tag
-            p && /^## \\[/ { p=0; exit }       # Stop if another version tag is found
-            p { print }                        # Print lines in the desired section
-          ' CHANGELOG.md)
-          # Truncate if notes are too long for GitHub release body (optional, adjust limit as needed)
-          # MAX_LENGTH=65536 
-          # if [ ${#NOTES} -gt $MAX_LENGTH ]; then
-          #   NOTES=$(echo "$NOTES" | head -c $MAX_LENGTH)
-          #   NOTES="$NOTES\\n\\n... (changelog truncated)"
-          # fi
-          echo "Extracted Notes Length: ${#NOTES}"
-          # Escape special characters for JSON and set as output
-          NOTES=$(echo "$NOTES" | sed 's/\\r$//' | sed -z 's/\\n/\\\\n/g' | sed -z 's/"/\\\\"/g') # Clean carriage returns, escape newlines and quotes for JSON
+          echo "Extracting changelog for version: $TAG_VERSION from ${{ github.ref_name }}"
+
+          if [ ! -f "CHANGELOG.md" ]; then
+            echo "Error: CHANGELOG.md not found in workspace root." >&2 # Ensure errors go to stderr
+            # Set empty notes if changelog is missing, or fail the step
+            # For now, let's set empty notes and the release will have an empty body
+            NOTES=""
+          else
+            # Run the TypeScript script to get changelog notes
+            # Using npx to ensure it uses the project's ts-node
+            # All stdout from the script will be captured in NOTES. stderr from script will go to Actions log.
+            NOTES=$(npx ts-node scripts/getChangelog.ts "$TAG_VERSION")
+          fi
+          
+          echo "Raw extracted notes length: ${#NOTES}"
+          
+          # Set the output for the release body using a HEREDOC for multiline support
           echo "changelog_content<<EOF" >> $GITHUB_OUTPUT
           echo "$NOTES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
