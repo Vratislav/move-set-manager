@@ -128,11 +128,28 @@ jobs:
           echo "$NOTES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Read macOS Build Instructions
+        id: macos_build_instructions
+        run: |
+          if [ -f "doc/macOSBuild.md" ]; then
+            CONTENT=$(cat doc/macOSBuild.md)
+            echo "Content of doc/macOSBuild.md captured."
+          else
+            echo "Warning: doc/macOSBuild.md not found." >&2
+            CONTENT=""
+          fi
+          echo "build_instructions_content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release and Upload macOS Artifacts
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ steps.changelog_notes.outputs.changelog_content }}
+          body: |
+            ${{ steps.macos_build_instructions.outputs.build_instructions_content }}
+          
+            ---
+            ${{ steps.changelog_notes.outputs.changelog_content }}
           files: |
             dist/*.dmg
             dist/*.zip
