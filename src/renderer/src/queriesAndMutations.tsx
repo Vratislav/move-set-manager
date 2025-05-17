@@ -169,6 +169,38 @@ export function useOpenSSHKeyFileSelectionDialog() {
     })
 }
 
+export function useOpenDownloadAllAblBundlesDirectorySelectionDialog() {
+    return useMutation({
+        mutationFn: async () => {
+            console.log('Opening download all ABL bundles directory selection dialog')
+            return await trpcClient.openDownloadAllAblBundlesDirectorySelectionDialog.mutate()
+        }
+    })
+}
 
+export function useStartRestApiChallenge() {
+    return useMutation({
+        mutationFn: async () => {
+            console.log('Starting REST API challenge')
+            return await trpcClient.startRestApiChallenge.mutate()
+        }
+    })
+}
 
+export function useSubmitRestApiChallengeResponse() {       
+    return useMutation({
+        mutationFn: async (secret: string) => {
+            console.log('Submitting REST API challenge response', secret)
+            return await trpcClient.submitRestApiChallengeResponse.mutate({ secret })
+        }
+    })
+}
 
+export function useDownloadAllAblBundles() {
+    return useMutation({
+        mutationFn: async (targetDir: string) => {
+            console.log('Downloading all ABL bundles to', targetDir)
+            return await trpcClient.downloadAllAblBundles.mutate({ targetDir })
+        }
+    })
+}

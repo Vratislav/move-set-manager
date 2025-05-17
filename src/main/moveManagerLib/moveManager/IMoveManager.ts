@@ -19,4 +19,8 @@ export interface IMoveManager {
   setActivePage(pageId: string, deviceId: string): Promise<void>
   getUserSettings(): Promise<UserSettings | undefined>
   updateUserSettings(userSettings: UserSettings): Promise<void>
+  startRestApiChallenge(): Promise<void>
+  submitRestApiChallengeResponse(secret: string): Promise<string | null>
+  downloadSetAblBundle(setId: string, targetDir: string): Promise<string>
+  downloadAllAblBundles(targetDir: string): Promise<string[]>
 }
