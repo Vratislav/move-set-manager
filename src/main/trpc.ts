@@ -6,6 +6,7 @@ import { MoveManager } from './moveManagerLib/moveManager/MoveManager'
 import { IMoveSSHClient, MoveSSHClient } from './moveManagerLib/moveClient/MoveSSHClient'
 import path from 'path'
 import { getDbPath } from './dbManagement'
+import { app } from 'electron'
 
 export type RouterContext = {
   moveManager: IMoveManager
@@ -16,7 +17,7 @@ const ssh = new MoveSSHClient({
   host: 'move.local',
   port: 22,
   username: 'ableton',
-  privKeyPath: path.join(process.env.HOME!, '.ssh/ableton')
+  privKeyPath: path.join(app.getPath('home'), '.ssh', 'ableton')
 })
 
 const moveManager = new MoveManager(new LocalDb(getDbPath()), ssh)
