@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: move-manager-app
+productName: "Move Set Manager"
 directories:
   buildResources: build
 files:
@@ -20,7 +20,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: move-manager-app
+  executableName: "Move Set Manager"
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

@@ -64,51 +64,6 @@ jobs:
         if: always() # This ensures cleanup even if tests fail
         run: docker compose down 
 
-  # test-win:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20' # Specify your project's Node.js version
-
-  #     - name: Install dependencies
-  #       run: npm install
-
-  #     # Ensure test.key has correct permissions if it's checked into the repo
-  #     # For Windows, `chmod` might require Git Bash. If issues arise, consider alternatives like `icacls`.
-  #     - name: Set permissions for SSH private key (Windows)
-  #       shell: bash # Explicitly use bash for chmod
-  #       run: |
-  #         if [ -f "test.key" ]; then
-  #           chmod 600 test.key
-  #           echo "Permissions set for test.key"
-  #         else
-  #           echo "WARNING: test.key not found. SSH operations might fail."
-  #         fi
-
-  #     - name: Start Docker Compose services
-  #       run: docker compose up -d
-
-  #     - name: Wait for SSH service
-  #       # nc might be available with Git Bash. If not, alternative PowerShell command:
-  #       # Test-NetConnection -ComputerName localhost -Port 2222 -InformationLevel Quiet
-  #       # This loop is a bit more complex in PowerShell. Sticking to bash for now.
-  #       shell: bash # Explicitly use bash for nc and timeout
-  #       run: |
-  #         echo "Waiting for SSH server on localhost:2222..."
-  #         timeout 30s bash -c 'until nc -z localhost 2222; do sleep 1; done'
-  #         echo "SSH server is responsive."
-
-  #     - name: Run tests
-  #       run: npm test -- --testTimeout=60000
-
-  #     - name: Tear down Docker Compose services
-  #       if: always() # This ensures cleanup even if tests fail
-  #       run: docker compose down
 
   build:
     runs-on: ubuntu-latest
@@ -127,3 +82,78 @@ jobs:
 
       - name: Build project
         run: npm run build 
+
+  release-mac:
+    name: Release macOS
+    runs-on: macos-latest
+    needs: [build] # Depends on both Linux and Windows tests
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Consistent with other jobs
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build macOS application
+        run: npm run build:mac # Script from package.json: "electron-vite build && electron-builder --mac"
+
+      - name: Extract Changelog Notes
+        id: changelog_notes
+        run: |
+          TAG_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
+          echo "Extracting changelog for version: $TAG_VERSION from ${{ github.ref_name }}"
+
+          if [ ! -f "CHANGELOG.md" ]; then
+            echo "Error: CHANGELOG.md not found in workspace root." >&2 # Ensure errors go to stderr
+            # Set empty notes if changelog is missing, or fail the step
+            # For now, let's set empty notes and the release will have an empty body
+            NOTES=""
+          else
+            # Run the TypeScript script to get changelog notes
+            # Using npx to ensure it uses the project's ts-node
+            # All stdout from the script will be captured in NOTES. stderr from script will go to Actions log.
+            NOTES=$(npx ts-node scripts/getChangelog.ts "$TAG_VERSION")
+          fi
+          
+          echo "Raw extracted notes length: ${#NOTES}"
+          
+          # Set the output for the release body using a HEREDOC for multiline support
+          echo "changelog_content<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Read macOS Build Instructions
+        id: macos_build_instructions
+        run: |
+          if [ -f "doc/macOSBuild.md" ]; then
+            CONTENT=$(cat doc/macOSBuild.md)
+            echo "Content of doc/macOSBuild.md captured."
+          else
+            echo "Warning: doc/macOSBuild.md not found." >&2
+            CONTENT=""
+          fi
+          echo "build_instructions_content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release and Upload macOS Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            ${{ steps.macos_build_instructions.outputs.build_instructions_content }}
+          
+            ---
+            ${{ steps.changelog_notes.outputs.changelog_content }}
+          files: |
+            dist/*.dmg
+            dist/*.zip
+            dist/latest-mac.yml
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
