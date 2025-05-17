@@ -21,6 +21,10 @@ asarUnpack:
   - resources/**
 win:
   executableName: "Move Set Manager"
+  target:
+    - nsis
+    - portable
+    - zip
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

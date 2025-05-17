@@ -243,6 +243,6 @@ jobs:
             artifacts/windows/*.msi
             artifacts/windows/*.zip
             artifacts/windows/latest.yml
-          fail_on_unmatched_files: true # Set to false if some files might be optional
+          fail_on_unmatched_files: false # Set to false if some files might be optional
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
