@@ -157,3 +157,86 @@ jobs:
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
+  release-windows:
+    name: Release Windows
+    runs-on: windows-latest
+    needs: [build] # Depends on the build job
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Consistent with other jobs
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Windows application
+        run: npm run build:win # Script from package.json for Windows
+
+      - name: Extract Changelog Notes
+        id: changelog_notes
+        run: |
+          $TAG_VERSION = (${{ github.ref_name }} -replace '^v', '')
+          Write-Host "Extracting changelog for version: $TAG_VERSION from ${{ github.ref_name }}"
+
+          if (-not (Test-Path "CHANGELOG.md")) {
+            Write-Error "Error: CHANGELOG.md not found in workspace root."
+            # Set empty notes if changelog is missing
+            $NOTES = ""
+          } else {
+            # Using npx to ensure it uses the project's ts-node
+            # All stdout from the script will be captured in NOTES. stderr from script will go to Actions log.
+            $NOTES = npx ts-node scripts/getChangelog.ts "$TAG_VERSION"
+          }
+          
+          Write-Host "Raw extracted notes length: $($NOTES.Length)"
+          
+          # Set the output for the release body
+          # Using a temporary file for multiline content in PowerShell
+          $notesContent = $NOTES
+          Set-Content -Path "notes_content.tmp" -Value $notesContent
+          echo "changelog_content<<EOF" >> $env:GITHUB_OUTPUT
+          Get-Content "notes_content.tmp" | ForEach-Object { echo $_ >> $env:GITHUB_OUTPUT }
+          echo "EOF" >> $env:GITHUB_OUTPUT
+          Remove-Item "notes_content.tmp" -ErrorAction SilentlyContinue
+
+
+      - name: Read Windows Build Instructions
+        id: windows_build_instructions
+        run: |
+          if (Test-Path "doc/WindowsBuild.md") {
+            $CONTENT = Get-Content -Path "doc/WindowsBuild.md" -Raw
+            Write-Host "Content of doc/WindowsBuild.md captured."
+          } else {
+            Write-Warning "Warning: doc/WindowsBuild.md not found."
+            $CONTENT = ""
+          }
+          # Using a temporary file for multiline content in PowerShell
+          $instructionsContent = $CONTENT
+          Set-Content -Path "instructions_content.tmp" -Value $instructionsContent
+          echo "build_instructions_content<<EOF" >> $env:GITHUB_OUTPUT
+          Get-Content "instructions_content.tmp" | ForEach-Object { echo $_ >> $env:GITHUB_OUTPUT }
+          echo "EOF" >> $env:GITHUB_OUTPUT
+          Remove-Item "instructions_content.tmp" -ErrorAction SilentlyContinue
+
+      - name: Create Release and Upload Windows Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            ${{ steps.windows_build_instructions.outputs.build_instructions_content }}
+          
+            ---
+            ${{ steps.changelog_notes.outputs.changelog_content }}
+          files: |
+            dist/*.exe
+            dist/*.msi
+            dist/*.zip
+            dist/latest.yml 
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

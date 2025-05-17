@@ -1,6 +1,6 @@
 {
   "name": "move-manager-app",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
