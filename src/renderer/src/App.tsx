@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState, useMemo, useEffect } from 'react';
 import { trpcClient } from './trpc';
-import { Flex, Box, IconButton, Text, Badge } from '@radix-ui/themes';
+import { Flex, Box, IconButton, Text, Badge, Button } from '@radix-ui/themes';
 import { GearIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { TopBar } from './components/TopBar';
 import { MoveGrid } from './components/MoveGrid';
@@ -25,12 +25,17 @@ import {
     useUpdateSetInPage,
     useUpdatePage,
     useDeletePage,
+    useOpenDownloadAllAblBundlesDirectorySelectionDialog,
+    useStartRestApiChallenge,
+    useSubmitRestApiChallengeResponse,
+    useDownloadAllAblBundles,
 } from './queriesAndMutations';
 import type { UserSettings as UserSettingsType } from '../../main/moveManagerLib/model/userSettings'; // Import the type
 import type { MoveSetInPage } from '../../main/moveManagerLib/model/set'; // Import MoveSet type
 import type { MovePage } from '../../main/moveManagerLib/model/page'; // Import MovePage type
 import { SyncingIndicator } from './components/SyncingIndicator'; // Import the new component
 import { ErrorDisplay } from './components/ErrorDisplay'; // Import ErrorDisplay
+import { ChallengeSecretModal } from './components/ChallengeSecretModal'; // Import ChallengeSecretModal
 
 
 
@@ -74,7 +79,12 @@ function App(): React.JSX.Element {
   const updateSetMutation = useUpdateSetInPage();
   const updatePageMutation = useUpdatePage();
   const deletePageMutation = useDeletePage();
-// Initialize useCreatePage
+
+  // Mutations for Download All ABL Bundles flow
+  const openDirDialogMutation = useOpenDownloadAllAblBundlesDirectorySelectionDialog();
+  const startChallengeMutation = useStartRestApiChallenge();
+  const submitChallengeMutation = useSubmitRestApiChallengeResponse();
+  const downloadAllAblBundlesMutation = useDownloadAllAblBundles();
 
   // --- State --- //
   // Derive pages from fetched data, providing an empty array as a fallback
@@ -138,6 +148,13 @@ function App(): React.JSX.Element {
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState<boolean>(false); // State for delete confirmation modal
   const [pageToDeleteId, setPageToDeleteId] = useState<string | null>(null); // State for page to delete ID
 
+  // State for Download All ABL Bundles flow
+  const [isChallengeModalOpen, setIsChallengeModalOpen] = useState<boolean>(false);
+  const [selectedDownloadDir, setSelectedDownloadDir] = useState<string | null>(null);
+  const [ablDownloadError, setAblDownloadError] = useState<string | null>(null); // Specific error state for this flow
+  const [syncingModalMessage, setSyncingModalMessage] = useState<string>("Syncing..."); // Message for the generic syncing modal
+  const [downloadSuccessMessage, setDownloadSuccessMessage] = useState<string | null>(null); // For ABL bundle download success
+
   // Effect to update the grid sets when the selected page or the fetched data changes
   useEffect(() => {
     if (selectedPageId && dataPages && allSetsReactData.length > 0) {
@@ -179,13 +196,38 @@ function App(): React.JSX.Element {
     if (downloadAllSetsMutation.isError && downloadAllSetsMutation.error) {
       setSyncError(downloadAllSetsMutation.error.message || 'An unknown error occurred during download sync.');
       downloadAllSetsMutation.reset(); // Reset mutation state after handling error
+      setSyncingModalMessage("Syncing..."); // Reset message
     } else if (uploadPageMutation.isError && uploadPageMutation.error) {
       setSyncError(uploadPageMutation.error.message || 'An unknown error occurred during upload sync.');
       uploadPageMutation.reset(); // Reset mutation state after handling error
+      setSyncingModalMessage("Syncing..."); // Reset message
     }
   }, [
     downloadAllSetsMutation.isError, downloadAllSetsMutation.error, downloadAllSetsMutation,
     uploadPageMutation.isError, uploadPageMutation.error, uploadPageMutation
+  ]);
+
+  // Effect to handle errors from ABL download mutations
+  useEffect(() => {
+    if (openDirDialogMutation.isError) {
+      setAblDownloadError(openDirDialogMutation.error?.message || 'Failed to open directory selection dialog.');
+      openDirDialogMutation.reset();
+    } else if (startChallengeMutation.isError) {
+      setAblDownloadError(startChallengeMutation.error?.message || 'Failed to start REST API challenge.');
+      startChallengeMutation.reset();
+    } else if (submitChallengeMutation.isError) {
+      setAblDownloadError(submitChallengeMutation.error?.message || 'Failed to submit challenge response.');
+      submitChallengeMutation.reset();
+    } else if (downloadAllAblBundlesMutation.isError) {
+      setAblDownloadError(downloadAllAblBundlesMutation.error?.message || 'Failed to download ABL bundles.');
+      downloadAllAblBundlesMutation.reset();
+      setSyncingModalMessage("Syncing..."); // Reset message on error
+    }
+  }, [
+    openDirDialogMutation.isError, openDirDialogMutation.error, openDirDialogMutation,
+    startChallengeMutation.isError, startChallengeMutation.error, startChallengeMutation,
+    submitChallengeMutation.isError, submitChallengeMutation.error, submitChallengeMutation,
+    downloadAllAblBundlesMutation.isError, downloadAllAblBundlesMutation.error, downloadAllAblBundlesMutation
   ]);
 
   const handleSelectPage = (pageId: string) => {
@@ -342,6 +384,7 @@ function App(): React.JSX.Element {
   const handleDownloadPage = () => {
     console.log('Update page from move clicked')
     setSyncError(null); // Clear previous errors
+    setSyncingModalMessage("Syncing page data...");
     downloadAllSetsMutation.mutate()
   }
   const handleUploadPage = () => {
@@ -352,6 +395,7 @@ function App(): React.JSX.Element {
     }
     // The pageId is already selectedPageId
     setSyncError(null); // Clear previous errors
+    setSyncingModalMessage("Syncing page data...");
     uploadPageMutation.mutate(selectedPageId);
   };
   const handleUpdateSet = (id: string, updatedSet: Partial<ReactSetData>) => {
@@ -495,7 +539,8 @@ function App(): React.JSX.Element {
     }
   };
 
-  const isSyncing = downloadAllSetsMutation.isPending || uploadPageMutation.isPending;
+  const isSyncing = downloadAllSetsMutation.isPending || uploadPageMutation.isPending || downloadAllAblBundlesMutation.isPending || submitChallengeMutation.isPending;
+  const isChallengeProcessActive = startChallengeMutation.isPending || submitChallengeMutation.isPending || downloadAllAblBundlesMutation.isPending;
 
   const selectedPageObject = useMemo(() => {
     if (!selectedPageId || !dataPages) return undefined;
@@ -505,6 +550,76 @@ function App(): React.JSX.Element {
   const handleDisclaimerClose = () => {
     updateUserSettingsMutation.mutate({...userSettingsData!, onboardingCompleted: true});
     console.log('Disclaimer has been agreed to and closed.');
+  };
+
+  // --- Download All ABL Bundles Flow Handlers ---
+  const handleStartDownloadAllAblBundles = async () => {
+    setAblDownloadError(null);
+    setSyncError(null);
+    setSyncingModalMessage("Preparing download..."); // Initial message
+    try {
+      console.log('Starting Download All ABL Bundles flow...');
+      const directoryPath = await openDirDialogMutation.mutateAsync();
+      if (directoryPath) {
+        console.log('Directory selected:', directoryPath);
+        setSelectedDownloadDir(directoryPath);
+        await startChallengeMutation.mutateAsync();
+        console.log('REST API challenge started. Opening challenge modal.');
+        setIsChallengeModalOpen(true);
+      } else {
+        console.log('Directory selection was cancelled or failed.');
+      }
+    } catch (error: any) {
+      console.error('Error in Download All ABL Bundles flow (directory/start challenge):', error);
+      setAblDownloadError(error.message || 'An unexpected error occurred.');
+    }
+  };
+
+  const handleSubmitChallengeSecret = async (secret: string) => {
+    setAblDownloadError(null);
+    try {
+      console.log('Submitting challenge secret...');
+      setSyncingModalMessage("Verifying challenge...");
+      await submitChallengeMutation.mutateAsync(secret);
+      // If submitChallengeMutation is successful, the cookie is obtained by the client internally.
+      // Now, attempt to download all ABL bundles.
+      if (selectedDownloadDir) {
+        console.log(`Challenge successful. Downloading all ABL bundles to: ${selectedDownloadDir}`);
+        setSyncingModalMessage("Downloading .ablbundles. This may take a while...");
+        await downloadAllAblBundlesMutation.mutateAsync(selectedDownloadDir, {
+          onSuccess: () => {
+            setDownloadSuccessMessage(`Bundles downloaded to: ${selectedDownloadDir}`);
+            setSelectedDownloadDir(null); // Clear dir after successful download
+            setSyncingModalMessage("Syncing..."); // Reset message
+          },
+          onError: () => { // onError is also handled by the useEffect, but good to reset message here too
+            setSyncingModalMessage("Syncing...");
+          }
+        });
+        console.log('Download all ABL bundles command issued successfully.');
+        // Actual success/failure of download will be reflected in its own mutation state
+        // and potentially an event/notification from the main process if it's a long operation.
+        // For now, we assume the command to download has been sent.
+      } else {
+        throw new Error('Selected download directory is not set.');
+      }
+    } catch (error: any) {
+      console.error('Error submitting challenge or starting download:', error);
+      setAblDownloadError(error.message || 'Failed to process challenge or start download.');
+    } finally {
+      setIsChallengeModalOpen(false); // Close modal regardless of outcome, error is shown elsewhere
+    }
+  };
+
+  const handleCloseChallengeModal = () => {
+    setIsChallengeModalOpen(false);
+    // Reset mutations that might be in an error state if modal is closed manually
+    startChallengeMutation.reset();
+    submitChallengeMutation.reset();
+    // Do not reset downloadAllAblBundlesMutation as it might be in progress
+    // or its error should persist until explicitly cleared.
+    setSelectedDownloadDir(null); // Clear selected directory if flow is abandoned
+    console.log('Challenge modal closed.');
   };
 
   return (
@@ -547,6 +662,7 @@ function App(): React.JSX.Element {
               onDeletePage={handleRequestDeletePage}
               onCreateNewPage={handleCreateNewPage}
               areAnySetsAvailable={allSetsReactData.length > 0}
+              onDownloadAllAblBundles={handleStartDownloadAllAblBundles} // Pass the new handler
             />
             <MoveGrid
               sets={displayGridSets} // Pass the move index ordered sets
@@ -601,7 +717,7 @@ function App(): React.JSX.Element {
             title="Syncing"
             hideCloseButton={true}
           >
-            <SyncingIndicator />
+            <SyncingIndicator message={syncingModalMessage} />
           </Modal>
 
           {/* Error Modal for Syncing */}
@@ -612,6 +728,37 @@ function App(): React.JSX.Element {
           >
             {syncError && <ErrorDisplay errorMessage={syncError} onDismiss={() => setSyncError(null)} />}
           </Modal>
+
+          {/* Error Modal for ABL Download Flow */} 
+          <Modal
+            isOpen={!!ablDownloadError}
+            onClose={() => setAblDownloadError(null)}
+            title="Download Error"
+          >
+            {ablDownloadError && <ErrorDisplay errorMessage={ablDownloadError} onDismiss={() => setAblDownloadError(null)} />}
+          </Modal>
+
+          {/* Challenge Secret Modal */}
+          <ChallengeSecretModal
+            isOpen={isChallengeModalOpen}
+            onClose={handleCloseChallengeModal} // Use a specific close handler for cleanup
+            onSubmit={handleSubmitChallengeSecret}
+            isLoading={isChallengeProcessActive}
+          />
+
+          {/* Download Success Modal */}
+          {downloadSuccessMessage && (
+            <Modal
+              isOpen={!!downloadSuccessMessage}
+              onClose={() => setDownloadSuccessMessage(null)}
+              title="Download Complete"
+            >
+              <Text as="p" size="3" mb="4">{downloadSuccessMessage}</Text>
+              <Flex justify="end" mt="4">
+                <Button onClick={() => setDownloadSuccessMessage(null)}>OK</Button>
+              </Flex>
+            </Modal>
+          )}
 
           {/* Confirmation Modal for Page Deletion */}
           <ConfirmationModal

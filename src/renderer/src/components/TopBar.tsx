@@ -30,6 +30,7 @@ interface TopBarProps {
   onPageNameEdited: (newPageName: string) => void;
   onDeletePage: () => void;
   currentPageName?: string;
+  onDownloadAllAblBundles?: () => void;
 }
 
 const NEW_PAGE_SENTINEL = "__NEW_PAGE_SENTINEL__";
@@ -45,7 +46,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   onUploadPage,
   onPageNameEdited,
   onDeletePage,
-  currentPageName = ''
+  currentPageName = '',
+  onDownloadAllAblBundles
 }) => {
   const [isEditPageModalOpen, setIsEditPageModalOpen] = useState(false);
 
@@ -65,6 +67,16 @@ export const TopBar: React.FC<TopBarProps> = ({
     <>
       <Flex direction="column" align="center" gap="3" mb="4">
         <Heading size="7">Move Set Manager</Heading>
+
+        {/* New row for the Download All ABL Bundles button */}
+        {onDownloadAllAblBundles && (
+          <Flex justify="end" width="100%" px="5"> 
+            <ActionButton onClick={onDownloadAllAblBundles}>
+              Download all .ablbundles
+            </ActionButton>
+          </Flex>
+        )}
+
         <Flex justify="between" align="center" width="100%" px="5">
           <Flex align="center" gap="2">
             <Select.Root 

@@ -86,7 +86,7 @@ export const appRouter = router({
 
   openDownloadAllAblBundlesDirectorySelectionDialog: procedure.mutation(async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog({
-      properties: ['openDirectory'],
+      properties: ['openDirectory', 'createDirectory'],
       title: 'Select directory to download all ABL bundles to',
       buttonLabel: 'Select dir & download'
     })
