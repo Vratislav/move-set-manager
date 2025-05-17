@@ -26,7 +26,7 @@ export class MoveManager implements IMoveManager {
     try {
       await this.begin()
       const sets = await this.ssh.listSets()
-      const ablBundles = []
+      const ablBundles: string[] = []
       for (const set of sets) {
         const ablBundle = await this.downloadSetAblBundle(set.meta.id, targetDir)
         ablBundles.push(ablBundle)
