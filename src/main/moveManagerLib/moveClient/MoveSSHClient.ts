@@ -83,6 +83,7 @@ export class MoveSSHClient implements IMoveSSHClient {
 
   private async getSetMetadata(setId: string): Promise<MoveSetMetadata> {
     const setDirPath = path.posix.join(MOVE_SET_DIR_PATH, setId)
+    console.log(`SSHClient: Getting set metadata for ${setDirPath}`)
     //console.log(`Getting attributes for ${setDirPath}`);
     const attributes = await this.getExtendedAttributes(setDirPath)
     const setDirContents = await this.getDirectoryListing(setDirPath)
@@ -104,6 +105,7 @@ export class MoveSSHClient implements IMoveSSHClient {
   }
 
   async listSets(): Promise<MoveSet[]> {
+    console.log('SSHClient: Listing sets...')
     const setsRootDir = path.posix.join(MOVE_USER_LIBRARY_PATH, MOVE_SET_DIR)
     const setsInDirStats = await this.getDirectoryListing(setsRootDir)
     const setDirStats = setsInDirStats.filter((stat) => stat.attrs.isDirectory())
@@ -118,11 +120,12 @@ export class MoveSSHClient implements IMoveSSHClient {
       }
       sets.push(set)
     }
-
+    console.log('SSHClient: Listing sets COMPLETED')
     return sets // Return the populated array (or empty if no sets found/processed)
   }
 
   private async getDirectoryListing(dir: string): Promise<FileEntryWithStats[]> {
+    console.log(`SSHClient: Getting dir listing of ${dir}`)
     if (!this.sftp) {
       throw new Error('SFTP client not initialized')
     }
@@ -165,6 +168,7 @@ export class MoveSSHClient implements IMoveSSHClient {
   }
 
   async downloadSet(setId: string, targetDir: string): Promise<MoveSet> {
+    console.log(`SSHClient: downloading set: ${setId} into ${targetDir}`)
     if (!this.sftp) {
       throw new Error('SFTP client not initialized')
     }
@@ -172,10 +176,11 @@ export class MoveSSHClient implements IMoveSSHClient {
     const remoteSetDir = path.posix.join(MOVE_SET_DIR_PATH, setId)
 
     //console.log(`Downloading set from ${remoteSetDir} to ${targetDir}`);
+    console.log(`SSHClient: starting recursive copy at ${remoteSetDir}`)
     await this.copyRecursiveFromRemote(targetDir, remoteSetDir)
 
     // The local path will be the target directory plus the set ID directory
-    const localSetPath = path.posix.join(targetDir, setId)
+    const localSetPath = path.join(targetDir, setId)
 
     return {
       path: localSetPath, // Update the path to the local download location
