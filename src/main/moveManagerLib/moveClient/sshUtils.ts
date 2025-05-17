@@ -72,7 +72,7 @@ export async function copyRecursiveFromRemote(
   remoteFileOrDir: string
 ): Promise<void> {
   const remotePathStat = await getPathStat(sftp, remoteFileOrDir)
-  const baseName = path.basename(remoteFileOrDir)
+  const baseName = path.posix.basename(remoteFileOrDir)
   //console.log(`Local path: ${localBaseDir} + ${baseName}`);
   const localPath = path.join(localBaseDir, baseName)
 
@@ -95,7 +95,7 @@ export async function copyRecursiveFromRemote(
     //console.log(`Listing remote directory ${remoteFileOrDir}`);
     const entries = await getDirectoryListing(sftp, remoteFileOrDir)
     for (const entry of entries) {
-      const remoteEntryPath = path.join(remoteFileOrDir, entry.filename)
+      const remoteEntryPath = path.posix.join(remoteFileOrDir, entry.filename)
       // Note: We pass localPath as the *new* base directory for recursive calls
       await copyRecursiveFromRemote(sftp, localPath, remoteEntryPath)
     }
@@ -112,7 +112,7 @@ export async function copyRecursiveToRemote(
 ): Promise<void> {
   const localPathStat = await fs.promises.stat(localFileOrDir)
   const baseName = path.basename(localFileOrDir)
-  const remotePath = path.join(remoteBaseDir, baseName)
+  const remotePath = path.posix.join(remoteBaseDir, baseName)
 
   if (localPathStat.isFile() && !localFileOrDir.endsWith('.DS_Store')) {
     //console.log(`Copying local file ${localFileOrDir} to ${remotePath}`);

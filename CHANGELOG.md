@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed the Windows build process
-- Fixed crash in the compiled windows application due to empty process.env.HOME
+- (Win) Fixed the Windows build process
+- (Win) Fixed crash in the compiled windows application due to empty process.env.HOME
+- (Win) Fixed nonfunctional download and upload page functionality
 
 ## [0.3.8] - 2025-05-17
 
