@@ -36,6 +36,13 @@ Follow these instructions to get Move Set Manager up and running on your system.
 
 **Disclaimer**: The Move Set Manager has been tested only on MacOS. Feel free to try it on different operating systems.
 
+#### From prebuilt binaries
+You can download the prebuilt binaries from the [releases page](https://github.com/Vratislav/move-set-manager/releases).
+
+Only MacOs binaries are available at the moment.
+
+#### From source code
+
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/Vratislav/move-set-manager.git

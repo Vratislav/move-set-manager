@@ -1,4 +1,4 @@
-# MacOS Build instructions 
+# MacOS instructions 
 ⚠️ The app is not notarized so you must run the following command after installation to allow it to run:
 
 ```bash
