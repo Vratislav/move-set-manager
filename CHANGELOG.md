@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ability to download all .ablbundles from the Move device into a selected directory
 
+### Fixed
+
+- Fixed: Some users could get stuck on a disclaimer page
+
+
 ## [0.3.14] - 2025-05-17
 
 ### Fixed
