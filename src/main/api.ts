@@ -69,7 +69,12 @@ export const appRouter = router({
   updateUserSettings: procedure
     .input(z.object({ userSettings: UserSettingsZod }))
     .mutation((opts) => {
-      return opts.ctx.moveManager.updateUserSettings(opts.input.userSettings)
+      return opts.ctx.moveManager.updateUserSettings({
+        ...opts.input.userSettings,
+        sshPrivateKeyPath: opts.input.userSettings.sshPrivateKeyPath || '',
+        sshKeyHasPassphrase: opts.input.userSettings.sshKeyHasPassphrase || false,
+        onboardingCompleted: opts.input.userSettings.onboardingCompleted || false
+      })
     }),
 
   openSSHKeyFileSelectionDialog: procedure.mutation(async () => {
