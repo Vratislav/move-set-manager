@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
+import { parser, Changelog } from 'keep-a-changelog'
 
 const getChangelogEntry = (version: string): string => {
   const changelogPath = path.join(process.cwd(), 'CHANGELOG.md')
@@ -8,71 +9,47 @@ const getChangelogEntry = (version: string): string => {
     process.exit(1)
   }
 
-  const changelogContent = fs.readFileSync(changelogPath, 'utf-8')
-  const lines = changelogContent.split('\n')
+  try {
+    const changelogContent = fs.readFileSync(changelogPath, 'utf-8')
+    const parsedChangelog: Changelog = parser(changelogContent)
 
-  let recording = false
-  const entryLines: string[] = []
-  // Regex to match "## [version]" like "## [1.2.3]"
-  // Need to escape dots in the version string for the regex
-  const escapedVersion = version.replace(/\./g, '\\.')
-  const versionHeaderPattern = new RegExp(`^## \\[${escapedVersion}\\]`)
-  // Regex to match any "## [version]" like line, to stop recording
-  const anyVersionHeaderPattern = /^##\s+\[.+?\]/
+    const release = parsedChangelog.releases.find((r) => r.version === version)
 
-  for (const line of lines) {
-    if (versionHeaderPattern.test(line)) {
-      if (recording) {
-        // This case should ideally not be hit if changelog is well-formed,
-        // but if it is, we stop previous recording.
-        break
+    if (!release) {
+      // If the version is not found, try to find it as "UNRELEASED" if "UNRELEASED" is passed
+      if (version.toUpperCase() === 'UNRELEASED') {
+        const unreleased = parsedChangelog.releases.find((r) => !r.version && !r.date) // Unreleased has no version and no date
+        if (unreleased) {
+          return unreleased.toString().split('\n').slice(1).join('\n').trim() // Return notes, skip header
+        }
       }
-      recording = true
-      continue // Start recording lines *after* the matching version header
-    }
-
-    if (recording) {
-      if (anyVersionHeaderPattern.test(line)) {
-        recording = false // Found the next version's header, so stop
-        break
+      // Or if a specific version is requested that matches the description of an unreleased section
+      const unreleasedSection = parsedChangelog.releases.find(
+        (r) => !r.version && r.description === version
+      )
+      if (unreleasedSection) {
+        return unreleasedSection.toString().split('\n').slice(1).join('\n').trim()
       }
-      entryLines.push(line)
+
+      console.warn(`Warning: Version ${version} not found in CHANGELOG.md`)
+      return ''
     }
-  }
-
-  // Trim leading and trailing empty lines from the collected notes
-  let firstNonEmptyLine = -1
-  let lastNonEmptyLine = -1
-
-  for (let i = 0; i < entryLines.length; i++) {
-    if (entryLines[i].trim() !== '') {
-      firstNonEmptyLine = i
-      break
+    release.setDate(new Date())
+    return release.toString()
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error parsing CHANGELOG.md: ${error.message}`)
+    } else {
+      console.error('An unknown error occurred while parsing CHANGELOG.md.')
     }
+    process.exit(1)
   }
-
-  if (firstNonEmptyLine === -1) {
-    // All lines were empty or no lines recorded
-    return ''
-  }
-
-  for (let i = entryLines.length - 1; i >= firstNonEmptyLine; i--) {
-    if (entryLines[i].trim() !== '') {
-      lastNonEmptyLine = i
-      break
-    }
-  }
-
-  if (lastNonEmptyLine === -1) {
-    // Should not happen if firstNonEmptyLine is not -1
-    return ''
-  }
-
-  return entryLines.slice(firstNonEmptyLine, lastNonEmptyLine + 1).join('\n')
 }
 
 if (process.argv.length < 3) {
-  console.error('Usage: npx ts-node scripts/getChangelog.ts <version_without_v_prefix>')
+  console.error(
+    'Usage: npx ts-node scripts/getChangelog.ts <version_without_v_prefix | UNRELEASED>'
+  )
   process.exit(1)
 }
 
@@ -84,7 +61,16 @@ if (!versionArg || versionArg.trim() === '') {
 
 try {
   const changelogEntry = getChangelogEntry(versionArg)
-  process.stdout.write(changelogEntry)
+  // Check if the result is empty and if so, don't print a trailing newline
+  if (changelogEntry) {
+    process.stdout.write(changelogEntry + '\n')
+  } else if (versionArg.toUpperCase() !== 'UNRELEASED') {
+    // Only print newline if entry was expected but not found (and not UNRELEASED)
+    // For UNRELEASED, if it's empty, it means no unreleased changes, so print nothing.
+    // If a specific version was requested and not found, it prints a warning and then an empty string.
+    // If we want to ensure a newline for "not found" specific versions:
+    // process.stdout.write('\n')
+  }
 } catch (error) {
   if (error instanceof Error) {
     console.error(`Error during changelog extraction: ${error.message}`)
