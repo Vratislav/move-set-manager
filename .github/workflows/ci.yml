@@ -127,3 +127,67 @@ jobs:
 
       - name: Build project
         run: npm run build 
+
+  release-mac:
+    name: Release macOS
+    runs-on: macos-latest
+    needs: [test, test-win] # Depends on both Linux and Windows tests
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Consistent with other jobs
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build macOS application
+        run: npm run build:mac # Script from package.json: "electron-vite build && electron-builder --mac"
+
+      - name: Extract Changelog Notes
+        id: changelog_notes
+        run: |
+          TAG_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
+          # Escape for regex: replace . with \\.
+          TAG_VERSION_ESCAPED=$(echo $TAG_VERSION | sed 's/\\./\\\\./g')
+          # Pattern to find the start of the version section, allowing for " - YYYY-MM-DD" or " - UNRELEASED" or nothing after the version
+          START_PATTERN="^## \\[${TAG_VERSION_ESCAPED}\\]"
+          # Read the changelog, find the line with the version, then print until the next version heading or EOF
+          # Note: Using awk for multiline processing.
+          # 1. Find the line with the version tag. Set a flag 'p'.
+          # 2. If 'p' is set, print the line.
+          # 3. If 'p' is set and another '## [' line is found (but not the one we started with), unset 'p' and stop.
+          NOTES=$(awk -v start_pattern="$START_PATTERN" '
+            $0 ~ start_pattern { p=1; next }  # Start printing from the line AFTER the tag
+            p && /^## \\[/ { p=0; exit }       # Stop if another version tag is found
+            p { print }                        # Print lines in the desired section
+          ' CHANGELOG.md)
+          # Truncate if notes are too long for GitHub release body (optional, adjust limit as needed)
+          # MAX_LENGTH=65536 
+          # if [ ${#NOTES} -gt $MAX_LENGTH ]; then
+          #   NOTES=$(echo "$NOTES" | head -c $MAX_LENGTH)
+          #   NOTES="$NOTES\\n\\n... (changelog truncated)"
+          # fi
+          echo "Extracted Notes Length: ${#NOTES}"
+          # Escape special characters for JSON and set as output
+          NOTES=$(echo "$NOTES" | sed 's/\\r$//' | sed -z 's/\\n/\\\\n/g' | sed -z 's/"/\\\\"/g') # Clean carriage returns, escape newlines and quotes for JSON
+          echo "changelog_content<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+
+      - name: Create Release and Upload macOS Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.changelog_notes.outputs.changelog_content }}
+          files: |
+            dist/mac/*.dmg
+            dist/mac/*.zip
+            dist/mac/latest-mac.yml
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
