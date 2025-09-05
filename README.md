@@ -1,4 +1,6 @@
 # Move Set Manager
+⚠️ With the release of Ableton Move firmware version 1.6., this manager is obsolete. This repository is thus archived. ⚠️
+
 
 *The Set Manager you wish came with Ableton Move.*
 
